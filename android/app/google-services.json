@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "627235334254",
+    "project_id": "sidar-ede21",
+    "storage_bucket": "sidar-ede21.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627235334254:android:f5715db6fa489273cdde7f",
+        "android_client_info": {
+          "package_name": "com.sidarai.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWSz4OuLlDJWm_LnXXkyzcZq4FSZRzFzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
