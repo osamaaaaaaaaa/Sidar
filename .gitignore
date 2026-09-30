@@ -6,12 +6,7 @@ dist/
 npm-debug.log*
 
 # Local browser profiles and QA artefacts
-.chrome-debug/
-.chrome-dom/
-.chrome-dom-*/
-.chrome-preview/
-.chrome-profile/
-.chrome-profile-*/
+.chrome-*/
 dashboard-*.png
 supabase/.temp/
 
