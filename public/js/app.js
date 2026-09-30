@@ -853,11 +853,13 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
 
     const mobileMenuLinks = document.querySelectorAll('#mobileMenu .mobile-drawer-links a');
     const mobileKeys = [
-      langMap.nav_my_account,
       langMap.nav_home,
       langMap.nav_how,
-      langMap.nav_pricing,
+      langMap.nav_partners,
       langMap.nav_faq,
+      langMap.nav_investors,
+      langMap.nav_pricing,
+      langMap.nav_about,
       langMap.nav_contact,
     ];
     mobileMenuLinks.forEach((a, i) => {
@@ -3892,7 +3894,7 @@ function renderProducts(container, items, showPrice = true) {
     if (elements.mobileAccountBtn) elements.mobileAccountBtn.setAttribute('href', isLoggedIn ? '#account' : '#auth');
     if (elements.mobileAccountTitle) elements.mobileAccountTitle.textContent = isLoggedIn
       ? (state.profile?.full_name || state.currentUser?.user_metadata?.full_name || state.currentUser?.email?.split('@')[0] || t('profile_default_name'))
-      : t('mobile_account_guest_title');
+      : (state.lang === 'ar' ? 'تسجيل الدخول أو إنشاء حساب' : 'Sign in or create an account');
     if (elements.mobileAccountDetail) elements.mobileAccountDetail.textContent = isLoggedIn
       ? (state.currentUser?.email || state.profile?.email || '')
       : t('mobile_account_guest_detail');
