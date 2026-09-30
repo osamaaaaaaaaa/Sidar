@@ -1081,3 +1081,25 @@ body.camera-direct-open .camera-status{position:relative;z-index:6;display:block
 #analysisLoading.analysis-loading{position:fixed!important;inset:0!important;z-index:2147483000!important;display:grid!important;place-items:center!important;isolation:isolate}
 #analysisLoading .analysis-loading-card{position:relative!important;z-index:1!important}
 #analysisLoading[hidden]{display:none!important}
+
+/* Editorial routes: the reading path is deliberately centred; form fields remain easy to scan. */
+#about .about-intro .wrap-sm{max-width:900px;margin-inline:auto;text-align:center}
+#about .about-intro .eyebrow,#about .about-intro .lead{margin-inline:auto}
+#about .mission-split{max-width:900px;margin-inline:auto}
+#about .ms-card{text-align:center}
+#about .sec>.wrap{text-align:center}
+#about .sec>.wrap>.lead{max-width:760px;margin-inline:auto}
+#about .values-grid{max-width:1100px;margin-inline:auto}
+#about .val-card{text-align:center}
+#about .sec>.wrap>div[style*="grid-template-columns:repeat(3"]{max-width:1000px;margin-inline:auto}
+
+#contact .sec>.wrap{max-width:760px;margin-inline:auto;text-align:center}
+#contact .eyebrow{display:block}
+#contact .contact-layout{display:block;max-width:680px;margin:42px auto 0;text-align:start}
+#contact .cform>.h3,#contact .form-ok{text-align:center}
+#contact .cform .btn-primary{width:100%;margin-top:4px}
+
+/* Investors: neutral SVG line icons replace the old emoji artwork. */
+#investors .vi-ico{display:grid;place-items:center;width:42px;height:42px;border:1px solid rgba(194,160,231,.35);background:rgba(108,63,168,.14);color:#d2b6ee}
+#investors .vi-ico svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.65}
+@media(max-width:640px){#about .about-intro .wrap-sm{max-width:100%}#contact .contact-layout{margin-top:28px}#about .mission-split{gap:1px}}
