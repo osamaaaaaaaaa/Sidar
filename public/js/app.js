@@ -1515,7 +1515,6 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
   async function startCamera() {
     stopCamera();
     if (!navigator.mediaDevices?.getUserMedia) {
-      elements.cameraStatus.textContent = state.lang === 'ar' ? 'المتصفح لا يدعم المعاينة المباشرة. سيتم فتح كاميرا الجهاز.' : 'Live preview is unavailable. Your device camera will open instead.';
       elements.cameraStatus.textContent = state.lang === 'ar' ? 'الكاميرا المباشرة غير مدعومة في هذا المتصفح.' : 'Direct camera is unavailable in this browser.';
       return;
     }
@@ -1531,7 +1530,6 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
       elements.cameraStatus.textContent = state.lang === 'ar' ? 'ثبت المنطقة داخل الإطار ثم التقط الصورة.' : 'Hold the selected area inside the frame, then capture.';
     } catch (error) {
       console.error('Camera access failed', error);
-      elements.cameraStatus.textContent = state.lang === 'ar' ? 'تعذر فتح المعاينة. يمكنك استخدام كاميرا الجهاز بدلًا من ذلك.' : 'Could not open live preview. You can use your device camera instead.';
       elements.cameraStatus.textContent = state.lang === 'ar' ? 'تعذر تشغيل الكاميرا. تأكد من السماح بإذن الكاميرا ثم أعد المحاولة.' : 'Could not start the camera. Allow camera permission and try again.';
     }
   }
