@@ -354,7 +354,7 @@
 
             <div id="cameraCaptureModal" class="camera-capture-modal" hidden aria-hidden="true">
               <div class="camera-capture-sheet" role="dialog" aria-modal="true" aria-label="Camera capture">
-                <div class="camera-sheet-head"><div><small data-i18n="camera_label">CAMERA CAPTURE</small><h3 data-i18n="camera_title">Frame your photo</h3></div><button id="cameraCloseBtn" type="button" class="camera-close-btn" aria-label="Close">×</button></div>
+                <div class="camera-sheet-head"><div><small data-i18n="camera_label">CAMERA CAPTURE</small><h3 data-i18n="camera_title">Frame your photo</h3></div><button id="cameraCloseBtn" type="button" class="camera-close-btn" aria-label="Close"><span>×</span><b>إغلاق</b></button></div>
                 <p class="camera-sheet-copy" data-i18n="camera_intro">Choose the area first. We will show a guide frame for a clearer photo.</p>
                 <div id="cameraTargetOptions" class="camera-target-options">
                   <button type="button" class="camera-target active" data-camera-target="face"><span>◯</span><b data-i18n="camera_face">Face</b></button>
@@ -492,11 +492,12 @@
               </details>
             </div>
 
-            <div class="footer-actions-row scan-submit-bar">
-              <button class="btn btn-primary" type="submit" data-i18n="analyze_now">Analyze Now</button>
-              <button id="clearScanBtn" class="btn btn-ghost" type="button" data-i18n="clear">Re-analyze</button>
-            </div>
           </form>
+        </div>
+
+        <div class="sidar-analyze-launch">
+          <span>READY WHEN YOU ARE</span>
+          <button class="btn btn-primary" type="submit" form="scanForm" data-i18n="analyze_now">Analyze Now <i>↗</i></button>
         </div>
 
         <div class="analysis-panel reveal-up" hidden>
