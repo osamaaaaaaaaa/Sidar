@@ -144,7 +144,7 @@
 
 <div id="analysisLoading" class="analysis-loading" hidden role="status" aria-live="polite" aria-busy="true">
   <div class="analysis-loading-card">
-    <div class="analysis-visual" aria-hidden="true"><div class="analysis-scan-core"><i></i><b>AI</b><em></em></div><span></span><span></span><span></span></div>
+    <div class="analysis-visual" aria-hidden="true"><img id="analysisLoadingPreview" alt="" /><div class="analysis-scan-core"><i></i><b>AI</b><em></em></div><span></span><span></span><span></span></div>
     <span class="analysis-loading-kicker">SIDAR AI</span>
     <h3 id="analysisLoadingTitle">Analyzing Skin &amp; Hair</h3>
     <p id="analysisLoadingCopy">Preparing your private visual review…</p>
@@ -318,16 +318,17 @@
       <div class="scan-shell">
         <div class="glass reveal-up">
           <form id="scanForm" class="scan-form">
-            <div class="uploader-box upload-source-box">
-              <div class="upload-content">
-                <span class="upload-icon">◉</span>
-                <strong data-i18n="upload_title">Add photos for your analysis</strong>
-                <p class="body-text" data-i18n="upload_subtitle">Choose your source — up to 5 clear photos</p>
+            <div class="uploader-box upload-source-box sidar-upload-deck">
+              <div class="sidar-upload-deck-head">
+                <span class="sidar-form-step">01</span>
+                <div><small>START WITH A CLEAR PHOTO</small><strong data-i18n="upload_title">Add photos for your analysis</strong><p data-i18n="upload_subtitle">Choose your source — up to 5 clear photos</p></div>
+                <span class="sidar-upload-secure">PRIVATE <i>•</i> SECURE</span>
               </div>
-              <div class="upload-source-actions">
-                <button id="galleryPickerBtn" class="upload-source-action" type="button"><span>▣</span><b data-i18n="upload_gallery">Choose from gallery</b><small data-i18n="upload_gallery_note">Select saved photos</small></button>
-                <button id="cameraPickerBtn" class="upload-source-action upload-camera-action" type="button"><span>◉</span><b data-i18n="upload_camera">Use camera</b><small data-i18n="upload_camera_note">Frame your Skin &amp; Hair scan</small></button>
+              <div class="upload-source-actions sidar-source-cards">
+                <button id="galleryPickerBtn" class="upload-source-action sidar-source-card" type="button"><span class="sidar-source-icon"><svg><use href="./assets/sidar-icons.svg#gallery"></use></svg></span><span class="sidar-source-copy"><b data-i18n="upload_gallery">Choose from gallery</b><small data-i18n="upload_gallery_note">Select saved photos</small></span><i>↗</i></button>
+                <button id="cameraPickerBtn" class="upload-source-action upload-camera-action sidar-source-card" type="button"><span class="sidar-source-icon"><svg><use href="./assets/sidar-icons.svg#camera"></use></svg></span><span class="sidar-source-copy"><b data-i18n="upload_camera">Use camera</b><small data-i18n="upload_camera_note">Frame your Skin &amp; Hair scan</small></span><i>↗</i></button>
               </div>
+              <div class="sidar-upload-note"><span>✦</span><p>For the clearest review, use soft natural light and avoid filters.</p></div>
               <input id="imageInput" name="images" type="file" accept="image/*" multiple hidden />
               <input id="cameraImageInput" type="file" accept="image/*" capture="environment" hidden />
             </div>

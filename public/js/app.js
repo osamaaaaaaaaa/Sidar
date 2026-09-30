@@ -2067,6 +2067,7 @@ function renderProducts(container, items, showPrice = true) {
   let analysisLoadingTimer = null;
   let analysisLoadingHideTimer = null;
   let analysisLoadingStartedAt = 0;
+  let analysisLoadingPreviewUrl = null;
 
   function setAnalysisLoading(active) {
     const overlay = document.getElementById('analysisLoading');
@@ -2075,6 +2076,7 @@ function renderProducts(container, items, showPrice = true) {
     const progress = document.getElementById('analysisLoadingProgress');
     const percent = document.getElementById('analysisLoadingPercent');
     const stageLabel = document.getElementById('analysisLoadingStage');
+    const preview = document.getElementById('analysisLoadingPreview');
     if (!overlay) return;
 
     clearInterval(analysisLoadingTimer);
@@ -2082,6 +2084,9 @@ function renderProducts(container, items, showPrice = true) {
       const hideOverlay = () => {
         overlay.setAttribute('hidden', '');
         document.body.classList.remove('analysis-in-progress');
+        if (analysisLoadingPreviewUrl) URL.revokeObjectURL(analysisLoadingPreviewUrl);
+        analysisLoadingPreviewUrl = null;
+        if (preview) preview.removeAttribute('src');
       };
       const remainingVisibleTime = Math.max(0, 950 - (Date.now() - analysisLoadingStartedAt));
       clearTimeout(analysisLoadingHideTimer);
@@ -2090,6 +2095,11 @@ function renderProducts(container, items, showPrice = true) {
     }
 
     clearTimeout(analysisLoadingHideTimer);
+    if (preview && state.selectedFiles[0]) {
+      if (analysisLoadingPreviewUrl) URL.revokeObjectURL(analysisLoadingPreviewUrl);
+      analysisLoadingPreviewUrl = URL.createObjectURL(state.selectedFiles[0]);
+      preview.src = analysisLoadingPreviewUrl;
+    }
 
     const stages = state.lang === 'ar'
       ? [
