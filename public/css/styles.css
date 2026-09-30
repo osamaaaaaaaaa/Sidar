@@ -263,8 +263,11 @@ body.lang-ar .nav-links,body.lang-ar .hero-cta,body.lang-ar .footer-actions-row,
 
 /* Investor page: never compress the investment narrative into two unreadable columns. */
 .investor-story-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.about-story-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.3rem}
 @media(max-width:1180px){
   #investors .inv-hero-grid,.investor-story-grid{grid-template-columns:1fr!important;gap:34px!important}
+  #about .about-story-grid{grid-template-columns:1fr!important;max-width:620px;margin-inline:auto}
+  #about .about-story-grid .card{min-height:0!important;text-align:center}
   #investors .market-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
   #investors .lead,#investors .body-text{max-width:680px}
   #investors .vision-items{max-width:720px}
