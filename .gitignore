@@ -1,0 +1,19 @@
+node_modules/
+dist/
+.env
+.env.local
+.env.*.local
+npm-debug.log*
+
+# Local browser profiles and QA artefacts
+.chrome-debug/
+.chrome-dom/
+.chrome-dom-*/
+.chrome-preview/
+.chrome-profile/
+.chrome-profile-*/
+dashboard-*.png
+supabase/.temp/
+
+# Release archives are generated locally, not source-controlled
+*.zip

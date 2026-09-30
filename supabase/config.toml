@@ -1,0 +1,2 @@
+[functions.analyze-skin-scan]
+verify_jwt = true

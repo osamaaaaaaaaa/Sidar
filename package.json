@@ -1,0 +1,25 @@
+{
+  "name": "sidar-dashboard",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "node --check public/js/app.js && node --check public/js/supabase.js && node --check public/js/firebase-ai.js && vite build",
+    "smoke:release": "node scripts/release-smoke.mjs",
+    "audit:privacy": "node scripts/audit-anon-rls.mjs"
+  },
+  "dependencies": {
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.2",
+    "supabase": "^2.118.0",
+    "vite": "^7.1.7"
+  }
+}

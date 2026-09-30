@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title data-i18n="page_title">SIDAR AI — Beauty Intelligence Platform</title>
+<meta name="description" content="SIDAR AI combines artificial intelligence, computer vision, and beauty intelligence to analyze skin and hair and deliver personalized insights." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Tajawal:wght@300;400;500;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/styles.css" />
+<script>
+  (function () {
+    try {
+      var key = 'sidar_splash_last_seen';
+      var lastSeen = Number(localStorage.getItem(key) || 0);
+      var now = Date.now();
+      // The brand intro is for a first visit, not every browser tab.
+      if (now - lastSeen < 12 * 60 * 60 * 1000) document.documentElement.classList.add('sidar-splash-seen');
+      localStorage.setItem(key, String(now));
+    } catch (_) {}
+  })();
+</script>
+
+<style>
+.inv-hero-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:4rem;align-items:center;margin-bottom:4rem;}
+.market-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem;}
+.m-card{padding:1.6rem 1.4rem;text-align:center;background:var(--gold4);border:1px solid var(--border);border-radius:var(--rL);transition:all .3s;}
+.m-card:hover{background:var(--gold3);transform:translateY(-3px);}
+.m-val{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;color:var(--gold);line-height:1;}
+.m-lbl{font-size:.75rem;color:var(--muted);margin-top:.35rem;}
+.vision-items{display:flex;flex-direction:column;gap:.85rem;margin-top:2rem;}
+.vi{display:flex;gap:.9rem;align-items:flex-start;padding:1.1rem;background:rgba(255,255,255,.03);border:1px solid var(--bord2);border-radius:var(--r);transition:all .3s;}
+.vi:hover{border-color:var(--border);background:rgba(108,63,168,.1);}
+.vi-ico{width:38px;height:38px;border-radius:9px;background:var(--gold3);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;}
+.vi-title{font-weight:700;font-size:.9rem;margin-bottom:.2rem;}
+.vi-text{font-size:.8rem;color:var(--muted);line-height:1.65;}
+.inv-cta{padding:3rem 3.5rem;background:linear-gradient(135deg,rgba(108,63,168,.28),rgba(199,199,206,.07));border:1px solid var(--border);border-radius:var(--rXL);text-align:center;position:relative;overflow:hidden;margin-top:3rem;}
+.inv-cta::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.mission-split{grid-template-columns:1fr;}
+.about-intro{text-align:center;padding:6rem 4rem 4rem;background:linear-gradient(180deg,var(--bg),var(--bg2));}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:3rem;}
+.val-card{padding:1.8rem;text-align:center;background:rgba(255,255,255,.03);border:1px solid var(--bord2);border-radius:var(--rL);transition:all .3s;}
+.val-card:hover{border-color:var(--border);background:rgba(108,63,168,.1);transform:translateY(-3px);}
+.val-ico{font-size:1.8rem;margin-bottom:.8rem;}
+.val-t{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;margin-bottom:.45rem;color:var(--gold);}
+.val-txt{font-size:.81rem;color:var(--muted);line-height:1.7;}
+.mission-split{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:2.5rem;}
+.ms-card{padding:2rem;background:var(--gold3);border:1px solid var(--border);border-radius:var(--rL);}
+.steps-layout{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.4rem;}
+.step-card{border:1px solid var(--bord2);border-radius:var(--rL);padding:2.2rem 1.8rem;text-align:center;position:relative;overflow:hidden;transition:all .35s;background:rgba(255,255,255,.03);}
+.step-card:hover{border-color:var(--border);background:rgba(108,63,168,.1);transform:translateY(-4px);}
+.step-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .3s;}
+.step-card:hover::before{opacity:1;}
+.step-n{width:52px;height:52px;border-radius:50%;background:var(--bg2);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--gold);}
+.step-icon{font-size:1.8rem;margin-bottom:.8rem;}
+.step-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;margin-bottom:.7rem;}
+.step-text{font-size:.83rem;color:var(--muted);line-height:1.75;}
+.partners-intro{text-align:center;margin-bottom:4rem;}
+.partners-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;}
+.partner-card{border:1px solid var(--bord2);border-radius:var(--rL);padding:2rem 1.8rem;text-align:center;transition:all .3s;background:rgba(255,255,255,.03);position:relative;overflow:hidden;}
+.partner-card:hover{border-color:var(--border);background:rgba(108,63,168,.1);transform:translateY(-4px);}
+.partner-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .3s;}
+.partner-card:hover::after{opacity:1;}
+.pc-icon{font-size:2.2rem;margin-bottom:1rem;}
+.pc-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;margin-bottom:.6rem;color:var(--gold);}
+.pc-text{font-size:.83rem;color:var(--muted);line-height:1.75;}
+.partner-cta{margin-top:3.5rem;padding:2.5rem;background:var(--gold3);border:1px solid var(--border);border-radius:var(--rXL);text-align:center;}
+.hero-area{padding-top:2.2rem;padding-bottom:1rem;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:2rem}
+.hero-copy h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,3.5vw,4.4rem);line-height:1.05;font-weight:700;margin:0 0 1rem}.hero-copy h1 span{color:var(--gold)}
+.hero-copy p{font-size:1rem;color:var(--muted);max-width:720px;margin:0 0 1.15rem}
+.hero-actions{display:flex;gap:.75rem;flex-wrap:wrap;margin:1.15rem 0 1rem}
+.btn-lg{min-height:44px;padding:.82rem 1.35rem}
+.hero-chips{display:flex;flex-wrap:wrap;gap:.6rem}.info-chip{display:inline-flex;align-items:center;justify-content:center;padding:.48rem .78rem;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid var(--bord2);color:var(--text);font-size:.78rem}
+.hero-visual{display:flex;justify-content:flex-end}.report-card-preview{max-width:440px;width:100%;padding:1.2rem 1.2rem 1rem}.report-header{display:flex;justify-content:space-between;gap:1rem;align-items:center;margin-bottom:1rem}.report-header h3{margin:0;font-family:'Cormorant Garamond',serif;font-size:1.15rem}.report-header span{font-size:.76rem;color:var(--muted)}
+.report-score-preview{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}.ring-shell{width:130px;height:130px;border-radius:50%;background:conic-gradient(var(--gold) 82%, rgba(255,255,255,.06) 0);display:flex;align-items:center;justify-content:center;flex:0 0 130px;position:relative}.ring-shell::before{content:'';position:absolute;inset:10px;border-radius:50%;background:var(--bg2)}.ring-core{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.ring-core strong{font-family:'Cormorant Garamond',serif;font-size:2.3rem;line-height:1;color:var(--gold)}.ring-core span{font-size:.62rem;letter-spacing:.08em;color:var(--muted)}.report-score-preview p{margin:0;color:var(--text);font-size:.92rem}
+.metric-lines{display:flex;flex-direction:column;gap:.72rem}.metric-lines .metric-line{display:block}.metric-lines .metric-line>div:first-child{display:flex;justify-content:space-between;align-items:center;gap:.8rem;margin-bottom:.32rem}.metric-lines .metric-line span{font-size:.83rem;color:var(--muted)}.metric-lines .metric-line strong{font-size:.8rem;color:var(--gold)}.metric-lines .bar{height:8px;border-radius:999px;background:rgba(255,255,255,.06);overflow:hidden}.metric-lines .bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--teal),var(--gold))}
+@media(max-width:980px){.hero-grid{grid-template-columns:1fr}.hero-visual{justify-content:flex-start}.report-card-preview{max-width:100%}}
+@media(max-width:640px){.hero-area{padding-top:1.4rem}.hero-copy h1{font-size:clamp(2rem,8vw,3rem)}.hero-copy p{font-size:.88rem}.hero-actions{gap:.55rem}.btn-lg{min-height:38px;padding:.62rem 1rem}.hero-chips{gap:.45rem}.info-chip{font-size:.68rem;padding:.4rem .6rem}.report-card-preview{padding:1rem}.report-score-preview{align-items:flex-start;gap:.8rem}.ring-shell{width:110px;height:110px;flex-basis:110px}.ring-core strong{font-size:2rem}}
+@media(max-width:960px){
+  nav{padding:.8rem 1.5rem;}
+  .nav-links,.nav-r{display:none;}
+  .ham{display:flex;}
+  .hero{grid-template-columns:1fr;padding:4rem 1.5rem 3rem;}
+  .hero-v{display:none;}
+  .sec{padding:4rem 1.5rem;}
+  .strip{padding:1.5rem;}
+  .steps-layout{grid-template-columns:1fr;}
+  .analysis-grid{grid-template-columns:1fr;}
+  .inv-hero-grid{grid-template-columns:1fr;}
+  .market-cards{grid-template-columns:1fr 1fr;}
+  .partners-grid{grid-template-columns:1fr;}
+  .values-grid{grid-template-columns:1fr 1fr;}
+  .contact-layout{grid-template-columns:1fr;}
+  .mission-split{grid-template-columns:1fr;}
+  .ft{grid-template-columns:1fr 1fr;gap:2rem;}
+  .fb{flex-direction:column;text-align:center;}
+  .about-intro{padding:4rem 1.5rem;}
+}
+@media(max-width:540px){
+  .market-cards{grid-template-columns:1fr;}
+  .values-grid{grid-template-columns:1fr;}
+  .ft{grid-template-columns:1fr;}
+  .frow{grid-template-columns:1fr;}
+  .display{font-size:2.5rem;}
+}
+
+.privacy-shell{display:grid;gap:1.2rem;max-width:980px;margin:0 auto;}
+.privacy-hero{padding:2.2rem;}
+.privacy-copy{padding:2rem 2.2rem;line-height:1.9;}
+.privacy-copy h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--gold);margin:0 0 .85rem;}
+.privacy-copy p,.privacy-copy li{font-size:.92rem;color:var(--muted);}
+.privacy-copy ul{margin:.45rem 0 0;padding-inline-start:1.25rem;}
+.privacy-copy .privacy-divider{height:1px;background:var(--bord2);margin:1.2rem 0;}
+@media(max-width:640px){.privacy-hero,.privacy-copy{padding:1.35rem;}}
+
+</style>
+</head>
+<body>
+<div id="splashScreen" class="splash-screen startup-loader" role="status" aria-live="polite" aria-busy="true">
+  <div class="logo-ring-container">
+    <div class="rings-animated"></div>
+    <div class="logo-static-center">
+      <img src="./assets/logo.jpeg" alt="SIDAR AI" />
+    </div>
+  </div>
+  <div class="splash-title">SIDAR AI</div>
+  <span class="startup-loader-label" data-i18n="startup_loading">Loading SIDAR…</span>
+</div>
+
+<script>
+  // A startup error must never trap someone behind the splash screen.
+  window.setTimeout(function () {
+    var splash = document.getElementById('splashScreen');
+    if (!splash || splash.hidden) return;
+    splash.classList.add('splash-hidden');
+    splash.setAttribute('aria-hidden', 'true');
+    window.setTimeout(function () {
+      splash.hidden = true;
+      splash.style.setProperty('display', 'none', 'important');
+    }, 220);
+  }, 1800);
+</script>
+
+<div id="analysisLoading" class="analysis-loading" hidden role="status" aria-live="polite" aria-busy="true">
+  <div class="analysis-loading-card">
+    <div class="analysis-visual" aria-hidden="true"><div class="analysis-scan-core"><i></i><b>AI</b><em></em></div><span></span><span></span><span></span></div>
+    <span class="analysis-loading-kicker">SIDAR AI</span>
+    <h3 id="analysisLoadingTitle">Analyzing Skin &amp; Hair</h3>
+    <p id="analysisLoadingCopy">Preparing your private visual review…</p>
+    <div class="analysis-loading-track"><span id="analysisLoadingProgress"></span></div>
+    <div class="analysis-loading-progress"><b id="analysisLoadingPercent">18%</b><span id="analysisLoadingStage">1 / 3</span></div>
+    <div class="analysis-loading-steps" aria-hidden="true"><i>1</i><i>2</i><i>3</i></div>
+  </div>
+</div>
+
+<nav id="topNav">
+  <a class="logo" href="#landing">
+    <img src="./assets/logo.jpeg" alt="SIDAR" width="56" height="56" />
+    <span class="logo-type">SIDAR <sup>AI</sup></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#landing" data-p="landing" data-i18n="nav_home">Home</a></li>
+    <li><a href="#how" data-p="how" data-i18n="nav_how">How It Works</a></li>
+    <li><a href="#partners" data-p="partners" data-i18n="nav_partners">Partners</a></li>
+    <li><a href="#faq" data-p="faq" data-i18n="nav_faq">FAQ</a></li>
+    <li><a href="#investors" data-p="investors" data-i18n="nav_investors">Investors</a></li>
+    <li><a href="#pricing" data-p="pricing" data-i18n="nav_pricing">Pricing</a></li>
+    <li><a href="#about" data-p="about" data-i18n="nav_about">About</a></li>
+    <li><a href="#contact" data-p="contact" data-i18n="nav_contact">Contact</a></li>
+    <li><a href="#auth" data-p="auth" data-i18n="nav_my_account">My Account</a></li>
+  </ul>
+  <div class="nav-r">
+    <button id="langToggleBtn" class="lang-mini" type="button">AR</button>
+    <a class="btn-out" id="navLoginBtn" href="#auth" data-i18n="nav_login">Login</a>
+    <button id="logoutBtn" class="btn-out hidden" type="button" data-i18n="nav_logout">Logout</button>
+  </div>
+  <div class="nav-mobile-actions">
+    <button id="mobileTopLangToggleBtn" class="lang-mini mobile-top-lang" type="button">AR</button>
+    <button class="ham" id="menuBtn" type="button" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mob-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-drawer-panel" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <div class="mobile-drawer-head">
+      <a class="mobile-drawer-brand" href="#landing" aria-label="SIDAR AI"><img src="./assets/logo.jpeg" alt="" /><span>SIDAR <small>AI</small></span></a>
+      <button id="mobileDrawerClose" class="mobile-drawer-close" type="button" aria-label="Close menu"><span></span><span></span></button>
+    </div>
+    <a href="#auth" id="mobileAccountBtn" class="mobile-account-card">
+      <span id="mobileAccountAvatar" class="mobile-account-avatar">SI</span>
+      <span class="mobile-account-copy"><b id="mobileAccountTitle">Your SIDAR account</b><small id="mobileAccountDetail">Sign in to save your reports</small></span>
+      <span class="mobile-account-arrow" aria-hidden="true">→</span>
+    </a>
+    <a href="#scan" class="mobile-drawer-cta"><span class="mobile-drawer-cta-icon">✦</span><span><b data-i18n="mobile_start_analysis">Start an AI analysis</b><small data-i18n="mobile_start_analysis_note">Your personal Skin & Hair report</small></span><i aria-hidden="true">→</i></a>
+    <div class="mobile-drawer-label" data-i18n="mobile_explore_label">Explore</div>
+    <nav class="mobile-drawer-links" aria-label="Main navigation">
+      <a href="#landing"><span class="mobile-nav-icon">01</span><b data-i18n="nav_home">Home</b><i aria-hidden="true">→</i></a>
+      <a href="#how"><span class="mobile-nav-icon">02</span><b data-i18n="nav_how">How It Works</b><i aria-hidden="true">→</i></a>
+      <a href="#pricing"><span class="mobile-nav-icon">03</span><b data-i18n="nav_pricing">Pricing</b><i aria-hidden="true">→</i></a>
+      <a href="#faq"><span class="mobile-nav-icon">04</span><b data-i18n="nav_faq">FAQ</b><i aria-hidden="true">→</i></a>
+      <a href="#contact"><span class="mobile-nav-icon">05</span><b data-i18n="nav_contact">Contact</b><i aria-hidden="true">→</i></a>
+    </nav>
+    <div class="mobile-drawer-footer">
+      <button id="mobileDrawerLanguage" class="mobile-drawer-language" type="button"><span>◎</span><b data-i18n="mobile_language">Language</b><em id="mobileDrawerLanguageValue">AR</em></button>
+      <button id="mobileLogoutBtn" class="mobile-drawer-logout hidden" type="button"><span aria-hidden="true">↗</span><b data-i18n="nav_logout">Logout</b></button>
+    </div>
+  </div>
+</div>
+
+<main>
+<section class="route active-route" id="landing" data-route>
+  <section class="section first-section hero-area" id="home-intro">
+    <div class="container hero-grid">
+      <div class="hero-copy reveal-up">
+        <span class="eyebrow" data-i18n="landing_eyebrow">AI Beauty Intelligence Platform</span>
+        <h1 data-i18n="landing_title">Discover the future of beauty analysis with <span>SIDAR AI</span></h1>
+        <p data-i18n="landing_desc">SIDAR AI combines artificial intelligence, computer vision, and beauty intelligence to help users understand their skin and hair health more effectively. Upload a photo, get a premium report, and follow a clearer beauty journey with routines, product guidance, and specialist follow-up when needed.</p>
+        <div class="hero-actions">
+          <a href="#scan" class="btn btn-primary btn-lg" data-i18n="landing_cta_primary">Start AI Analysis</a>
+          <a href="#auth" id="heroLoginBtn" class="btn btn-secondary btn-lg" data-i18n="landing_cta_secondary">Sign Up</a>
+        </div>
+        <div class="hero-chips">
+          <span class="info-chip" data-i18n="landing_chip_1">Skin analysis</span>
+          <span class="info-chip" data-i18n="landing_chip_2">Hair &amp; scalp review</span>
+          <span class="info-chip" data-i18n="landing_chip_3">SIDAR Beauty Score</span>
+          <span class="info-chip" data-i18n="landing_chip_4">Personalized report</span>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal-up delay-1">
+        <article class="report-card-preview glass">
+          <div class="report-header">
+            <h3 data-i18n="landing_preview_title">SIDAR AI — Skin Report</h3>
+            <span data-i18n="landing_preview_subtitle">AI Report · 2026</span>
+          </div>
+          <div class="report-score-preview">
+            <div class="logo-ring-container">
+              <div class="rings-animated"></div>
+              <div class="logo-static-center">
+                <img src="./assets/logo.jpeg" alt="SIDAR AI" />
+              </div>
+            </div>
+            <div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold);line-height:1;">82</div>
+              <p data-i18n="landing_preview_summary" style="margin-top:.2rem;">Above average skin health profile</p>
+            </div>
+          </div>
+          <div class="metric-lines">
+            <div class="metric-line">
+              <div><span data-i18n="score_metric_hydration">Hydration</span><strong>75%</strong></div>
+              <div class="bar"><i style="width:75%"></i></div>
+            </div>
+            <div class="metric-line">
+              <div><span data-i18n="score_metric_pore_clarity">Pore Clarity</span><strong>70%</strong></div>
+              <div class="bar"><i style="width:70%"></i></div>
+            </div>
+            <div class="metric-line">
+              <div><span data-i18n="score_metric_fine_lines">Fine Lines</span><strong>78%</strong></div>
+              <div class="bar"><i style="width:78%"></i></div>
+            </div>
+            <div class="metric-line">
+              <div><span data-i18n="score_metric_overall_tone">Overall Tone</span><strong>84%</strong></div>
+              <div class="bar"><i style="width:84%"></i></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-alt">
+    <div class="wrap">
+      <h2 class="h2" data-i18n="discover_heading">What You Can <em>Discover</em></h2>
+      <ul class="discover-list">
+        <li data-i18n="discover_item_1">Analyze skin condition using live AI</li>
+        <li data-i18n="discover_item_2">Evaluate hair quality and scalp health</li>
+        <li data-i18n="discover_item_3">Receive your personalized SIDAR Beauty Score</li>
+        <li data-i18n="discover_item_4">Get tailored beauty insights and recommendations</li>
+        <li data-i18n="discover_item_5">Track your saved analysis history over time</li>
+      </ul>
+    </div>
+  </section>
+</section>
+
+<section class="route" id="how" data-route>
+  <section class="sec" style="text-align:center;background:linear-gradient(180deg,var(--bg),var(--bg2))">
+    <div class="wrap-sm">
+      <h1 class="display rv" style="transition-delay:.1s;margin-bottom:1.2rem" data-i18n="how_title">Simple. Intelligent.<br><em>Personalized.</em></h1>
+      <p class="lead rv" style="transition-delay:.18s;margin:0 auto 1.5rem" data-i18n="how_desc">SIDAR AI uses advanced artificial intelligence and computer vision technology to analyze your skin and hair features and generate personalized beauty insights.</p>
+      <p class="body-text rv" style="transition-delay:.22s;text-align:center;max-width:560px;margin:0 auto" data-i18n="how_desc_2">Our platform is designed to deliver accurate analysis and meaningful recommendations through a simple and user-friendly process.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="sec sec-alt">
+    <div class="wrap">
+      <div class="steps-layout">
+        <div class="step-card rv">
+          <div class="step-n">1</div>
+          <div class="step-icon">📸</div>
+          <div class="step-title" data-i18n="how_step_1_title">Upload Your Photo</div>
+          <p class="step-text" data-i18n="how_step_1_text">Start by securely uploading a clear photo. Our system uses advanced image processing to prepare the image for analysis while maintaining user privacy and security.</p>
+        </div>
+        <div class="step-card rv" style="transition-delay:.12s">
+          <div class="step-n">2</div>
+          <div class="step-icon">🧠</div>
+          <div class="step-title" data-i18n="how_step_2_title">AI Beauty Analysis</div>
+          <p class="step-text" data-i18n="how_step_2_text">SIDAR AI evaluates multiple beauty indicators including skin texture, pores, hydration level, wrinkles, and hair condition using advanced AI algorithms.</p>
+        </div>
+        <div class="step-card rv" style="transition-delay:.24s">
+          <div class="step-n">3</div>
+          <div class="step-icon">✨</div>
+          <div class="step-title" data-i18n="how_step_3_title">Receive Your Beauty Report</div>
+          <p class="step-text" data-i18n="how_step_3_text">After analysis is completed, you will receive a personalized AI beauty report containing insights, scores, and recommendations designed to help you better understand your skin and hair condition.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="route" id="scan" data-route>
+  <section class="sec" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
+    <div class="wrap">
+      <div class="scan-page-intro"><span data-i18n="scan_journey_label">YOUR ANALYSIS JOURNEY</span><h1 class="display" data-i18n="analysis_intro_title">Skin and Hair Analysis</h1><p class="lead" data-i18n="scan_desc">AI analyzes your skin and hair and provides personalized recommendations built on your unique needs.</p></div>
+
+      <div class="scan-shell">
+        <div class="glass reveal-up">
+          <form id="scanForm" class="scan-form">
+            <div class="uploader-box upload-source-box">
+              <div class="upload-content">
+                <span class="upload-icon">◉</span>
+                <strong data-i18n="upload_title">Add photos for your analysis</strong>
+                <p class="body-text" data-i18n="upload_subtitle">Choose your source — up to 5 clear photos</p>
+              </div>
+              <div class="upload-source-actions">
+                <button id="galleryPickerBtn" class="upload-source-action" type="button"><span>▣</span><b data-i18n="upload_gallery">Choose from gallery</b><small data-i18n="upload_gallery_note">Select saved photos</small></button>
+                <button id="cameraPickerBtn" class="upload-source-action upload-camera-action" type="button"><span>◉</span><b data-i18n="upload_camera">Use camera</b><small data-i18n="upload_camera_note">Frame your Skin &amp; Hair scan</small></button>
+              </div>
+              <input id="imageInput" name="images" type="file" accept="image/*" multiple hidden />
+              <input id="cameraImageInput" type="file" accept="image/*" capture="environment" hidden />
+            </div>
+            <div id="imagePreviewGrid" class="preview-grid"></div>
+            <section id="focusWorkflow" class="focus-workflow" hidden>
+              <div class="focus-workflow-head"><span class="focus-workflow-step">02</span><div><small data-i18n="focus_workflow_label">SMART FOCUS</small><h3 data-i18n="focus_workflow_title">Focus the analysis on the concern</h3><p data-i18n="focus_workflow_intro">Choose an uploaded photo, then mark the exact area you want the AI to inspect first.</p></div></div>
+              <div id="focusFileChoices" class="focus-file-choices"></div>
+              <div class="focus-workflow-action"><div id="focusWorkflowResult" class="focus-workflow-result"></div><button id="focusWorkflowStartBtn" class="btn btn-primary" type="button" data-i18n="focus_workflow_action">Select area in this photo</button></div>
+            </section>
+
+            <div id="focusSelectorModal" class="focus-selector-modal" hidden aria-hidden="true">
+              <div class="focus-selector-sheet" role="dialog" aria-modal="true" aria-label="Select analysis area">
+                <div class="focus-selector-head"><div><small data-i18n="focus_label">SMART AREA SELECT</small><h3 data-i18n="focus_title">Select the area that needs attention</h3></div><button id="focusSelectorClose" class="camera-close-btn" type="button" aria-label="Close">×</button></div>
+                <p data-i18n="focus_intro">Drag over the concern. Only this cropped area will be prioritized for the AI analysis.</p>
+                <div id="focusImageStage" class="focus-image-stage">
+                  <img id="focusSelectorImage" alt="" />
+                  <div id="focusSelectionBox" class="focus-selection-box" hidden><i></i><i></i><i></i><i></i></div>
+                  <div id="focusSelectionHint" class="focus-selection-hint" data-i18n="focus_hint">Tap and drag to select</div>
+                </div>
+                <div class="focus-selector-actions"><button id="focusSelectionReset" class="btn btn-secondary" type="button" data-i18n="focus_reset">Reset</button><button id="focusSelectionSave" class="btn btn-primary" type="button" disabled data-i18n="focus_save">Use selected area</button></div>
+              </div>
+            </div>
+
+            <div id="cameraCaptureModal" class="camera-capture-modal" hidden aria-hidden="true">
+              <div class="camera-capture-sheet" role="dialog" aria-modal="true" aria-label="Camera capture">
+                <div class="camera-sheet-head"><div><small data-i18n="camera_label">CAMERA CAPTURE</small><h3 data-i18n="camera_title">Frame your photo</h3></div><button id="cameraCloseBtn" type="button" class="camera-close-btn" aria-label="Close">×</button></div>
+                <p class="camera-sheet-copy" data-i18n="camera_intro">Choose the area first. We will show a guide frame for a clearer photo.</p>
+                <div id="cameraTargetOptions" class="camera-target-options">
+                  <button type="button" class="camera-target active" data-camera-target="face"><span>◯</span><b data-i18n="camera_face">Face</b></button>
+                  <button type="button" class="camera-target" data-camera-target="hand"><span>⌁</span><b data-i18n="camera_hand">Hand</b></button>
+                  <button type="button" class="camera-target" data-camera-target="hair"><span>⌒</span><b data-i18n="camera_hair">Hair / scalp</b></button>
+                </div>
+                <div id="cameraStage" class="camera-stage camera-target-face">
+                  <video id="cameraVideo" autoplay muted playsinline></video>
+                  <div id="cameraFrame" class="camera-frame" aria-hidden="true"><span data-i18n="camera_frame_face">Keep your face inside the frame</span></div>
+                  <div id="cameraEmptyState" class="camera-empty-state"><span>◉</span><b data-i18n="camera_ready">Ready when you are</b><small data-i18n="camera_ready_note">Your camera stays private on this device</small></div>
+                </div>
+                <p id="cameraStatus" class="camera-status" aria-live="polite"></p>
+                <div class="camera-actions"><button id="cameraStartBtn" class="btn btn-secondary" type="button" data-i18n="camera_start">Open camera</button><button id="cameraCaptureBtn" class="btn btn-primary" type="button" disabled data-i18n="camera_capture">Capture photo</button></div>
+              </div>
+            </div>
+
+            <div class="scan-subsection-head"><div><small data-i18n="scan_scope_label">ANALYSIS SCOPE</small><b data-i18n="scan_scope_title">What should SIDAR review?</b></div></div>
+            <div class="params-tabs">
+              <button class="ptab on" type="button" onclick="switchParam(this,'skin')" data-i18n="param_tab_skin">Skin Analysis</button>
+              <button class="ptab" type="button" onclick="switchParam(this,'hair')" data-i18n="param_tab_hair">Hair Analysis</button>
+              <button class="ptab" type="button" onclick="switchParam(this,'report')" data-i18n="param_tab_report">Beauty Report</button>
+            </div>
+
+            <div class="param-panel on" id="pp-skin">
+              <ul class="param-list">
+                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_skin_1">Skin texture and smoothness</span></li>
+                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_skin_2">Pore visibility and size</span></li>
+                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_skin_3">Hydration levels</span></li>
+                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_skin_4">Wrinkle indicators</span></li>
+              </ul>
+            </div>
+
+            <div class="param-panel" id="pp-hair">
+              <ul class="param-list">
+                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_hair_1">Hair density and volume</span></li>
+                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_hair_2">Hair texture and quality</span></li>
+                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_hair_3">Hair strength indicators</span></li>
+                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_hair_4">Scalp condition</span></li>
+              </ul>
+            </div>
+
+            <div class="param-panel" id="pp-report">
+              <ul class="param-list">
+                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_report_1">Summary and priority</span></li>
+                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_report_2">Metrics and confidence</span></li>
+                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_report_3">Routines and products</span></li>
+                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_report_4">Nearby doctors and sharing</span></li>
+              </ul>
+            </div>
+
+            <div class="scan-subsection-head scan-details-head"><div><small data-i18n="scan_details_label">CONTEXT</small><b data-i18n="scan_details_title">Tell us about the concern</b><em data-i18n="scan_details_note">Takes less than a minute</em></div></div>
+            <div class="form-grid two-col scan-details-grid">
+              <label>
+                <span data-i18n="scan_type">Scan type</span>
+                <select name="scan_type">
+                  <option value="skin_check" data-i18n="scan_type_skin_check">Skin check</option>
+                  <option value="hair_check" data-i18n="scan_type_hair_check">Hair check</option>
+                  <option value="scalp_check" data-i18n="scan_type_scalp_check">Scalp check</option>
+                  <option value="texture_review" data-i18n="scan_type_body_skin">Body skin</option>
+                </select>
+              </label>
+
+              <label>
+                <span data-i18n="area">Area</span>
+                <select name="body_location">
+                  <option value="face" data-i18n="area_face">Face</option>
+                  <option value="forehead" data-i18n="area_forehead">Forehead</option>
+                  <option value="cheek" data-i18n="area_cheek">Cheek</option>
+                  <option value="chin" data-i18n="area_chin">Chin</option>
+                  <option value="nose" data-i18n="area_nose">Nose</option>
+                  <option value="jawline" data-i18n="area_jawline">Jawline</option>
+                  <option value="under_eye" data-i18n="area_under_eye">Under eye</option>
+                  <option value="scalp" data-i18n="area_scalp">Scalp</option>
+                  <option value="neck" data-i18n="area_neck">Neck</option>
+                </select>
+              </label>
+
+              <label>
+                <span data-i18n="duration">Duration</span>
+                <select name="duration">
+                  <option value="one_day" data-i18n="duration_one_day">Since one day</option>
+                  <option value="few_days" data-i18n="duration_few_days">Since a few days</option>
+                  <option value="one_week" data-i18n="duration_one_week">Since one week</option>
+                  <option value="one_month" data-i18n="duration_one_month">Since one month</option>
+                  <option value="several_months" data-i18n="duration_several_months">For several months</option>
+                </select>
+              </label>
+
+              <label>
+                <span data-i18n="severity">Severity</span>
+                <select name="severity">
+                  <option value="low" data-i18n="severity_low">Mild</option>
+                  <option value="moderate" data-i18n="severity_moderate">Moderate</option>
+                  <option value="noticeable" data-i18n="severity_noticeable">Noticeable</option>
+                  <option value="high" data-i18n="severity_high">High</option>
+                </select>
+              </label>
+
+              <label>
+                <span data-i18n="skin_type_label">Skin type</span>
+                <select name="skin_type_context">
+                  <option value="normal" data-i18n="skin_type_normal">Normal</option>
+                  <option value="dry" data-i18n="skin_type_dry">Dry</option>
+                  <option value="oily" data-i18n="skin_type_oily">Oily</option>
+                  <option value="combination" data-i18n="skin_type_combination">Combination</option>
+                  <option value="sensitive" data-i18n="skin_type_sensitive">Sensitive</option>
+                </select>
+              </label>
+
+              <label>
+                <span data-i18n="problem_type">Problem type</span>
+                <select name="issue_type">
+                  <option value="redness" data-i18n="problem_redness">Redness / sensitivity</option>
+                  <option value="dryness" data-i18n="problem_dryness">Dryness / dehydration</option>
+                  <option value="acne" data-i18n="problem_acne">Acne / bumps</option>
+                  <option value="pigmentation" data-i18n="problem_pigmentation">Pigmentation / dark spots</option>
+                  <option value="texture" data-i18n="problem_texture">Texture / pores</option>
+                  <option value="hair_loss" data-i18n="problem_hair_loss">Hair loss / density</option>
+                  <option value="scalp" data-i18n="problem_scalp">Scalp issue</option>
+                </select>
+              </label>
+
+              <label>
+                <span data-i18n="dashboard_location_label">Location</span>
+                <select name="location_text" class="country-select">
+                  <option value="" data-i18n="select_country">Select country</option>
+                </select>
+              </label>
+
+              <fieldset class="check-grid symptoms-grid full-span-field">
+                <legend data-i18n="symptoms">Symptoms</legend>
+                <label class="check-chip"><input type="checkbox" name="symptoms" value="redness"/><span data-i18n="symptom_redness">Redness</span></label>
+                <label class="check-chip"><input type="checkbox" name="symptoms" value="dryness"/><span data-i18n="symptom_dryness">Dryness</span></label>
+                <label class="check-chip"><input type="checkbox" name="symptoms" value="oiliness"/><span data-i18n="symptom_oiliness">Oiliness</span></label>
+                <label class="check-chip"><input type="checkbox" name="symptoms" value="dark_spots"/><span data-i18n="symptom_dark_spots">Dark spots</span></label>
+                <label class="check-chip"><input type="checkbox" name="symptoms" value="bumps"/><span data-i18n="symptom_bumps">Bumps</span></label>
+                <label class="check-chip"><input type="checkbox" name="symptoms" value="pigmentation"/><span data-i18n="symptom_pigmentation">Pigmentation</span></label>
+                <label class="check-chip"><input type="checkbox" name="symptoms" value="hair_loss"/><span data-i18n="symptom_hair_loss">Hair loss</span></label>
+                <label class="check-chip"><input type="checkbox" name="symptoms" value="itching"/><span data-i18n="symptom_itching">Itching</span></label>
+              </fieldset>
+
+              <label class="full-span-field">
+                <span data-i18n="notes">Notes</span>
+                <textarea name="notes" data-i18n-placeholder="notes_placeholder"></textarea>
+              </label>
+            </div>
+
+            <div class="footer-actions-row scan-submit-bar">
+              <button class="btn btn-primary" type="submit" data-i18n="analyze_now">Analyze Now</button>
+              <button id="clearScanBtn" class="btn btn-ghost" type="button" data-i18n="clear">Re-analyze</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="analysis-panel reveal-up">
+          <div class="title-row">
+            <h3 data-i18n="live_result_preview">Live Result Preview</h3>
+            <span class="pct-circle" id="resultPriorityBadge">--</span>
+          </div>
+
+          <div class="score-shell">
+            <div class="logo-ring-container" id="scoreRingContainer">
+              <div class="rings-animated"></div>
+              <div class="logo-static-center">
+                <img src="./assets/logo.jpeg" alt="SIDAR AI" />
+              </div>
+            </div>
+            <div>
+              <div class="h3" id="resultTitle" data-i18n="result_waiting_title">Your result will appear here after analysis.</div>
+              <p class="body-text" id="resultScoreSummary" data-i18n="result_waiting_desc">Start a scan to populate the live preview.</p>
+              <div class="history-meta result-meta-lines">
+                <span><span data-i18n="confidence_label">Confidence:</span> <strong id="resultConfidence">--</strong></span>
+                <span><span data-i18n="priority_label">Priority:</span> <strong id="resultPriority">--</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="score-lines" style="margin-top:1rem">
+            <div class="metric-line big"><span data-i18n="score_metric_hydration">Hydration</span><strong id="hydrationValue">--</strong><div class="line-track"><div class="line-fill" id="hydrationBar"></div></div></div>
+            <div class="metric-line big"><span data-i18n="score_metric_pore_clarity">Pore Clarity</span><strong id="poreValue">--</strong><div class="line-track"><div class="line-fill" id="poreBar"></div></div></div>
+            <div class="metric-line big"><span data-i18n="score_metric_fine_lines">Fine Lines</span><strong id="fineLinesValue">--</strong><div class="line-track"><div class="line-fill" id="fineLinesBar"></div></div></div>
+            <div class="metric-line big"><span data-i18n="score_metric_overall_tone">Overall Tone</span><strong id="toneValue">--</strong><div class="line-track"><div class="line-fill" id="toneBar"></div></div></div>
+          </div>
+
+          <div class="glass" style="margin-top:1rem">
+            <div class="title-row"><h3 data-i18n="guidance">Guidance</h3><span class="pct-circle" id="resultPriorityIcon">--</span></div>
+            <p id="resultGuidance" class="body-text" data-i18n="results_empty_guidance">No report yet.</p>
+          </div>
+
+          <div class="glass" style="margin-top:1rem">
+            <div class="title-row"><h3 data-i18n="visible_findings_title">SIDAR Indicators</h3><span>◌</span></div>
+            <div id="resultPatterns" class="result-findings-list"></div>
+          </div>
+
+          <div class="footer-actions-row" style="margin-top:1rem">
+            <button id="downloadReportBtn" class="btn btn-secondary" type="button" data-i18n="download_report">Download report</button>
+            <a class="btn btn-ghost" href="#results" data-i18n="open_full_result">Open full result</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="route" id="results" data-route>
+  <section class="sec sec-alt">
+    <div class="wrap">
+      <div class="title-row results-page-header">
+        <div>
+          <span class="results-eyebrow">SIDAR AI · Skin &amp; Hair</span>
+          <h2 class="h2" data-i18n="full_ai_report">SIDAR Report</h2>
+          <p id="resultReportMeta" class="results-meta-copy">Your personalized visual review</p>
+        </div>
+        <div class="footer-actions-row">
+          <button id="resultsBackBtn" class="btn btn-ghost" type="button" data-i18n="back_to_analysis">Back to analysis</button>
+        </div>
+      </div>
+
+      <div class="results-layout">
+        <div class="result-grid">
+          <article id="resultOverview" class="glass full-span result-hero" data-priority="medium">
+            <div class="result-hero-main">
+              <div><span id="resultStatusLabel" class="result-status-label">Personalized review</span><h3 id="resultTitleClone" data-i18n="result_overview">Result overview</h3><p id="resultPrioritySupport">Your report summary will appear here.</p></div>
+              <span class="pct-circle result-main-score" id="resultPriorityBadgeResults">--</span>
+            </div>
+            <div class="result-facts">
+              <span><small data-i18n="confidence_label">Confidence</small><strong id="resultConfidenceClone">--</strong></span>
+              <span><small data-i18n="priority_label">Priority</small><strong id="resultPriorityClone">--</strong></span>
+              <span><small data-i18n="image_quality_label">Image quality</small><strong id="resultImageQualityClone">--</strong></span>
+            </div>
+          </article>
+          <article class="glass full-span result-metrics-card">
+            <div class="title-row"><div><h3 data-i18n="ai_summary_title">Health score</h3><p id="resultScoreSummaryClone" class="result-section-note">Your score details will appear after analysis.</p></div></div>
+            <div class="result-metrics-layout">
+              <div class="score-ring" id="scoreRingClone"><div><div class="score-value" id="resultOverallScoreClone">--</div><div class="score-caption" id="resultScoreLabelClone">SCORE</div></div></div>
+              <div class="score-lines">
+                <div class="metric-line big"><span data-i18n="score_metric_hydration">Hydration</span><strong id="hydrationValueClone">--</strong><div class="line-track"><div class="line-fill" id="hydrationBarClone"></div></div></div>
+                <div class="metric-line big"><span data-i18n="score_metric_pore_clarity">Pore Clarity</span><strong id="poreValueClone">--</strong><div class="line-track"><div class="line-fill" id="poreBarClone"></div></div></div>
+                <div class="metric-line big"><span data-i18n="score_metric_fine_lines">Fine Lines</span><strong id="fineLinesValueClone">--</strong><div class="line-track"><div class="line-fill" id="fineLinesBarClone"></div></div></div>
+                <div class="metric-line big"><span data-i18n="score_metric_overall_tone">Overall Tone</span><strong id="toneValueClone">--</strong><div class="line-track"><div class="line-fill" id="toneBarClone"></div></div></div>
+              </div>
+            </div>
+          </article>
+          <article class="glass full-span result-indicators-card"><div class="title-row"><h3 data-i18n="visible_findings_title">Key indicators</h3><span class="notes-icon">◌</span></div><div id="resultPatternsClone" class="result-findings-list"></div></article>
+          <article class="glass full-span result-notes-card"><div class="title-row"><div><h3 data-i18n="followup_reasons_title">Key observations</h3><p class="result-section-note" data-i18n="report_notes_subtitle">Notes that may help you decide what to do next.</p></div><span class="notes-icon">i</span></div><div id="resultReasons" class="reasons-list"></div></article>
+          <article id="resultPlan" class="glass full-span result-plan-card">
+            <div class="title-row"><h3 data-i18n="care_steps_title">SIDAR Plan</h3><span>📅</span></div>
+            <div class="result-routine-grid">
+              <div class="routine-column morning-routine">
+                <h4 style="color:var(--gold);margin-bottom:.6rem;" data-i18n="morning_routine">Morning routine</h4>
+                <ul id="morningRoutineList" class="steps-list"><li class="empty-copy" data-i18n="analyze_case_first">Analyze a case first.</li></ul>
+              </div>
+              <div class="routine-column night-routine">
+                <h4 style="color:var(--gold);margin-bottom:.6rem;" data-i18n="evening_routine">Evening routine</h4>
+                <ul id="eveningRoutineList" class="steps-list"><li class="empty-copy" data-i18n="analyze_case_first">Analyze a case first.</li></ul>
+              </div>
+            </div>
+          </article>
+          <article class="glass"><div class="title-row"><h3 data-i18n="natural_products_title">Natural product suggestions</h3><span>🌿</span></div><div id="naturalProductsList" class="suggestion-list empty-copy" data-i18n="no_suggestions_yet">No suggestions yet.</div></article>
+          <article id="resultProducts" class="glass full-span result-products-card"><div class="title-row"><h3 data-i18n="commercial_products_title">Suggested products</h3><span>🛍</span></div><p class="result-section-note" data-i18n="catalog_products_note">Selected from SIDAR’s verified medical catalog.</p><div id="commercialProductsList" class="suggestion-list empty-copy" data-i18n="no_suggestions_yet">No suggestions yet.</div></article>
+          <article id="resultDoctors" class="glass full-span result-doctors-card"><div class="title-row"><h3 data-i18n="doctors_title">Doctors in your area</h3><span>📍</span></div><p class="result-section-note" data-i18n="local_doctors_note">Matched to your selected location and available SIDAR records.</p><div id="nearbyDoctorsList" class="doctor-list empty-copy" data-i18n="no_nearby_doctors_yet">No nearby suggestions yet.</div></article>
+          <article class="glass full-span report-actions-card">
+            <div class="report-actions-copy"><span class="results-eyebrow" data-i18n="report_actions_label">REPORT ACTIONS</span><h3 data-i18n="share_report_title">Share your report</h3><p data-i18n="report_actions_note">Share, copy, or save this report to your account.</p></div>
+            <div class="report-action-dock" aria-label="Report actions">
+              <div class="report-share-group" role="group" aria-label="Share report">
+                <button id="shareNativeBtn" class="report-icon-button is-primary" type="button" aria-label="Share report" data-tooltip="Share">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V3m0 0 4 4m-4-4-4 4M5 13v6h14v-6"/></svg>
+                </button>
+                <button id="shareWhatsappBtn" class="report-icon-button" type="button" aria-label="Share PDF report" data-tooltip="Share PDF">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z"/><path d="M9 8.5c.3-.7.6-.7.9-.7h.4c.2 0 .4.1.5.4l.7 1.6c.1.3.1.5-.1.7l-.5.6c.6 1.2 1.5 2.1 2.7 2.7l.6-.5c.2-.2.5-.2.7-.1l1.6.7c.3.1.4.3.4.5v.4c0 .3 0 .6-.7.9-.5.2-1.2.3-2.2-.1-1-.4-2.3-1.2-3.4-2.4-1.1-1.1-1.9-2.4-2.3-3.4-.4-1-.3-1.7-.1-2.2Z"/></svg>
+                </button>
+                <button id="shareInstagramBtn" class="report-icon-button" type="button" aria-label="Share PDF report" data-tooltip="Share PDF">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg>
+                </button>
+                <button id="shareTiktokBtn" class="report-icon-button" type="button" aria-label="Share PDF report" data-tooltip="Share PDF">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4v9.1a4.1 4.1 0 1 1-3-3.95"/><path d="M14 4c.7 2.4 2.2 3.8 4.8 4"/></svg>
+                </button>
+                <button id="shareFullReportBtn" class="report-icon-button" type="button" aria-label="Share PDF report" data-tooltip="Share PDF">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"/></svg>
+                </button>
+              </div>
+              <button id="saveScanBtn" class="report-save-button" type="button" aria-label="Save report" data-tooltip="Save report">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.5A2.5 2.5 0 0 1 8.5 2h7A2.5 2.5 0 0 1 18 4.5V22l-6-3.5L6 22V4.5Z"/></svg>
+              </button>
+            </div>
+          </article>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="route" id="auth" data-route>
+  <section class="sec" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
+    <div class="auth-shell">
+      <div class="glass">
+        <div class="eyebrow" data-i18n="auth_access">// Account Access</div>
+        <h2 class="h2" data-i18n="auth_title">Sign in to save reports, plans, and settings</h2>
+        <p class="body-text" data-i18n="auth_desc">Create your account to run AI analysis, save full reports, sync your dashboard, and manage your beauty profile securely.</p>
+      </div>
+      <div class="glass">
+        <div class="auth-tabs">
+          <button class="btn btn-secondary auth-tab active" data-auth-tab="login" type="button" data-i18n="nav_login">Login</button>
+          <button class="btn btn-secondary auth-tab" data-auth-tab="signup" type="button" data-i18n="sign_up">Sign up</button>
+        </div>
+
+        <form id="loginForm" class="auth-form active-auth-form">
+          <label><span data-i18n="email">Email</span><input type="email" name="email" required data-i18n-placeholder="email_placeholder" placeholder="you@example.com"/></label>
+          <label><span data-i18n="password">Password</span><input type="password" name="password" required data-i18n-placeholder="password_placeholder" placeholder="Password"/></label>
+          <button class="btn btn-primary full-width" type="submit" data-i18n="nav_login">Login</button>
+        </form>
+
+        <form id="signupForm" class="auth-form">
+          <label><span data-i18n="full_name">Full name</span><input type="text" name="full_name" required data-i18n-placeholder="profile_default_name" placeholder="SIDAR User"/></label>
+          <label><span data-i18n="dashboard_age">Age</span><input type="number" name="age" min="1" max="120" placeholder="28" /></label>
+          <label><span data-i18n="dashboard_gender">Gender</span><select name="gender"><option value="" data-i18n="select">Select</option><option value="female" data-i18n="gender_female">Female</option><option value="male" data-i18n="gender_male">Male</option><option value="other" data-i18n="gender_other">Other</option></select></label>
+          <label><span data-i18n="skin_type_label">Skin type</span><select name="skin_type"><option value="normal" data-i18n="skin_type_normal">Normal</option><option value="dry" data-i18n="skin_type_dry">Dry</option><option value="oily" data-i18n="skin_type_oily">Oily</option><option value="combination" data-i18n="skin_type_combination">Combination</option><option value="sensitive" data-i18n="skin_type_sensitive">Sensitive</option></select></label>
+          <label><span data-i18n="dashboard_location_label">Location</span><select name="location_text" class="country-select"><option value="" data-i18n="select_country">Select country</option></select></label>
+          <label><span data-i18n="email">Email</span><input type="email" name="email" required placeholder="you@example.com"/></label>
+          <label><span data-i18n="password">Password</span><input type="password" name="password" required data-i18n-placeholder="password_min_placeholder" placeholder="At least 8 characters"/></label>
+          <button class="btn btn-primary full-width" type="submit" data-i18n="sign_up">Sign up</button>
+        </form>
+
+        <div class="auth-divider"><span data-i18n="or_use">Or continue with</span></div>
+        <div class="social-auth-actions" aria-label="Social sign in">
+          <button class="btn btn-secondary social-auth-btn" type="button" data-oauth-provider="google">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path fill="#4285F4" d="M21.35 12.23c0-.71-.06-1.39-.18-2.05H12v3.88h5.24a4.48 4.48 0 0 1-1.94 2.94v2.52h3.15c1.85-1.7 2.9-4.21 2.9-7.29Z"/><path fill="#34A853" d="M12 21.75c2.62 0 4.82-.87 6.43-2.35L15.28 17c-.88.59-2 .94-3.28.94-2.52 0-4.65-1.7-5.41-3.99H3.33v2.6A9.72 9.72 0 0 0 12 21.75Z"/><path fill="#FBBC05" d="M6.59 13.95A5.85 5.85 0 0 1 6.29 12c0-.68.12-1.35.3-1.95v-2.6H3.33A9.73 9.73 0 0 0 2.25 12c0 1.57.38 3.06 1.08 4.55l3.26-2.6Z"/><path fill="#EA4335" d="M12 6.06c1.39 0 2.63.48 3.61 1.41l2.71-2.71C16.82 3.35 14.62 2.25 12 2.25a9.72 9.72 0 0 0-8.67 5.2l3.26 2.6C7.35 7.76 9.48 6.06 12 6.06Z"/></svg>
+            <span data-i18n="continue_google">Continue with Google</span>
+          </button>
+          <button class="btn btn-secondary social-auth-btn" type="button" data-oauth-provider="apple">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M16.37 12.13c-.03-2.3 1.88-3.41 1.97-3.47-1.08-1.58-2.76-1.8-3.35-1.82-1.41-.15-2.78.85-3.5.85-.74 0-1.85-.83-3.04-.8-1.53.02-2.96.91-3.75 2.3-1.63 2.82-.41 6.96 1.15 9.24.78 1.12 1.69 2.37 2.88 2.33 1.16-.05 1.6-.74 3-.74 1.38 0 1.78.74 3.01.71 1.25-.02 2.04-1.12 2.79-2.25.9-1.29 1.26-2.57 1.28-2.64-.03-.01-2.42-.92-2.44-3.71ZM14.08 5.39c.63-.79 1.06-1.86.94-2.94-.91.04-2.05.63-2.71 1.4-.59.68-1.12 1.78-.98 2.82 1.02.08 2.08-.51 2.75-1.28Z"/></svg>
+            <span data-i18n="continue_apple">Continue with Apple</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="route" id="dashboard" data-route>
+  <section class="settings-route">
+    <div class="settings-shell">
+      <aside class="settings-sidebar">
+        <div class="settings-user"><div class="settings-avatar" id="profileInitials">SI</div><div><strong id="profileName">حساب SIDAR</strong><span id="profileEmail">--</span></div></div>
+        <nav class="settings-nav" aria-label="إعدادات الحساب">
+          <button type="button" class="settings-nav-btn active" data-settings-tab="profile"><span>01</span><b>الملف الشخصي</b><small>بياناتك الأساسية</small></button>
+          <button type="button" class="settings-nav-btn" data-settings-tab="preferences"><span>02</span><b>اللغة والتفضيلات</b><small>تجربة المنصة</small></button>
+          <button type="button" class="settings-nav-btn" data-settings-tab="reports"><span>03</span><b>تقاريري</b><small>سجل التحليلات</small></button>
+          <button type="button" class="settings-nav-btn" data-settings-tab="security"><span>04</span><b>الأمان والحساب</b><small>الدخول والحذف</small></button>
+        </nav>
+        <button type="button" class="settings-logout" id="accountLogoutBtn">تسجيل الخروج</button>
+      </aside>
+
+      <main class="settings-content">
+        <header class="settings-header"><div><span>SIDAR ACCOUNT</span><h1>إعدادات الحساب</h1><p>إدارة ملفك وتفضيلاتك وتقاريرك من مكان واحد.</p></div><a href="#scan" class="btn btn-primary">✦ تحليل جديد</a></header>
+
+        <form id="settingsForm" class="settings-form account-preferences">
+          <section class="settings-panel active" data-settings-panel="profile">
+            <div class="settings-panel-head"><div><span>الملف الشخصي</span><h2>بياناتك الأساسية</h2><p>هذه البيانات تساعد SIDAR على تخصيص تجربة التحليل.</p></div><div class="panel-avatar" id="profileInitialsMirror">SI</div></div>
+            <div class="settings-fields">
+              <label class="field-wide"><span>الاسم الظاهر</span><input type="text" name="full_name" maxlength="100" placeholder="اكتب اسمك" /></label>
+              <label><span>العمر</span><input type="number" name="age" min="1" max="120" /></label>
+              <label><span>الجنس</span><select name="gender"><option value="">غير محدد</option><option value="female">أنثى</option><option value="male">ذكر</option><option value="other">آخر</option></select></label>
+              <label><span>نوع البشرة</span><select name="skin_type"><option value="">غير محدد</option><option value="normal">عادية</option><option value="dry">جافة</option><option value="oily">دهنية</option><option value="combination">مختلطة</option><option value="sensitive">حساسة</option></select></label>
+              <label><span>الدولة</span><select name="location_text" class="country-select"><option value="">اختر الدولة</option></select></label>
+            </div>
+            <div class="settings-actions"><span id="profileSaveHint">يمكنك تعديل البيانات في أي وقت.</span><button class="btn btn-primary" type="submit">حفظ التعديلات</button></div>
+          </section>
+
+          <section class="settings-panel" data-settings-panel="preferences">
+            <div class="settings-panel-head"><div><span>التفضيلات</span><h2>تجربة تناسبك</h2><p>اختر لغة الواجهة وطريقة استلام تحديثات SIDAR.</p></div></div>
+            <div class="preference-list">
+              <label class="preference-row"><div><b>لغة المنصة</b><small>تُطبّق على جميع صفحات المنصة.</small></div><select name="preferred_language"><option value="ar">العربية</option><option value="en">English</option></select></label>
+              <label class="preference-row"><div><b>الإشعارات</b><small>تنبيهات التقارير والتحديثات المهمة فقط.</small></div><select name="notifications_enabled"><option value="true">مفعّلة</option><option value="false">متوقفة</option></select></label>
+            </div>
+            <div class="settings-actions"><span>لن نرسل رسائل تسويقية بدون موافقتك.</span><button class="btn btn-primary" type="submit">حفظ التفضيلات</button></div>
+            <div class="settings-notifications"><h3>آخر الإشعارات</h3><div id="notificationsList" class="history-list"><p class="empty-copy">لا توجد إشعارات حاليًا.</p></div></div>
+          </section>
+        </form>
+
+        <section class="settings-panel" data-settings-panel="reports">
+          <div class="settings-panel-head"><div><span>التقارير</span><h2>سجل تحليلاتك</h2><p>اضغط على أي تقرير لفتحه وعرض التفاصيل كاملة.</p></div><div class="report-summary"><strong id="totalScansKpi">0</strong><small>تقرير محفوظ</small></div></div>
+          <div class="reports-toolbar"><span>الأولوية الأخيرة: <b id="latestPriorityKpi">--</b></span><a href="#scan" class="btn btn-primary btn-sm">تحليل جديد</a></div>
+          <div id="historyList" class="history-list settings-history"></div>
+        </section>
+
+        <section class="settings-panel" data-settings-panel="security">
+          <div class="settings-panel-head"><div><span>الأمان</span><h2>أمان الحساب</h2><p>تحكم في جلسة الدخول والبيانات المرتبطة بحسابك.</p></div><div class="security-badge">✓</div></div>
+          <div class="security-list"><div><span>البريد المرتبط</span><strong id="accountSecurityEmail">--</strong></div><div><span>حالة الحساب</span><strong class="status-ok">نشط ومحمي</strong></div></div>
+          <form id="changePasswordForm" class="password-change-card" autocomplete="off">
+            <div class="password-change-copy"><b>تغيير كلمة المرور</b><p>استخدم 8 أحرف على الأقل، ويُفضّل الجمع بين الحروف والأرقام.</p></div>
+            <div class="password-fields">
+              <label><span>كلمة المرور الجديدة</span><input type="password" name="new_password" minlength="8" autocomplete="new-password" required /></label>
+              <label><span>تأكيد كلمة المرور</span><input type="password" name="confirm_password" minlength="8" autocomplete="new-password" required /></label>
+            </div>
+            <div class="password-form-actions"><span id="passwordChangeStatus" role="status" aria-live="polite"></span><button type="submit" class="btn btn-primary">تحديث كلمة المرور</button></div>
+          </form>
+          <button type="button" class="btn btn-ghost" id="accountLogoutBtnSecondary">تسجيل الخروج من هذا الجهاز</button>
+          <div class="danger-zone"><div><b>حذف الحساب نهائيًا</b><p>سيتم حذف الحساب والملف الشخصي وكل التقارير المحفوظة. لا يمكن التراجع عن هذا الإجراء.</p></div><button type="button" class="danger-button" id="openDeleteAccountModal">حذف الحساب</button></div>
+        </section>
+      </main>
+    </div>
+  </section>
+
+  <div class="delete-account-modal" id="deleteAccountModal" hidden>
+    <div class="delete-modal-card" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle"><button type="button" class="delete-modal-close" id="closeDeleteAccountModal" aria-label="إغلاق">×</button><span>إجراء نهائي</span><h2 id="deleteModalTitle">حذف حساب SIDAR؟</h2><p>اكتب <strong>حذف حسابي</strong> للتأكيد. سيتم حذف التقارير والبيانات نهائيًا.</p><input type="text" id="deleteAccountPhrase" autocomplete="off" placeholder="حذف حسابي" /><div class="delete-modal-actions"><button type="button" class="btn btn-ghost" id="cancelDeleteAccount">إلغاء</button><button type="button" class="danger-button" id="confirmDeleteAccount" disabled>حذف نهائي</button></div></div>
+  </div>
+</section>
+
+<section class="route" id="partners" data-route>
+  <section class="sec" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
+    <div class="wrap">
+      <div class="partners-intro">
+        <div class="eyebrow rv" style="display:block" data-i18n="partners_eyebrow">// Ecosystem</div>
+        <h1 class="display rv" style="transition-delay:.1s;margin-bottom:1.2rem" data-i18n="partners_title">Building the <em>Beauty</em><br>Intelligence Ecosystem</h1>
+        <p class="lead rv" style="transition-delay:.18s;margin:0 auto" data-i18n="partners_desc">SIDAR AI aims to collaborate with dermatology clinics, aesthetic centers, skincare professionals, and beauty brands to create a connected beauty intelligence ecosystem.</p>
+      </div>
+
+      <div class="partners-grid">
+        <div class="partner-card rv">
+          <div class="pc-icon">🏥</div>
+          <div class="pc-title" data-i18n="partners_card_1_title">Dermatology Clinics</div>
+          <p class="pc-text" data-i18n="partners_card_1_text">We collaborate with dermatology clinics and aesthetic centers to help users access professional treatments when needed. When our AI identifies concerns that require professional care, we connect users with trusted specialists.</p>
+        </div>
+        <div class="partner-card rv" style="transition-delay:.12s">
+          <div class="pc-icon">🧴</div>
+          <div class="pc-title" data-i18n="partners_card_2_title">Beauty Brands</div>
+          <p class="pc-text" data-i18n="partners_card_2_text">SIDAR AI partners with skincare brands to recommend products that match individual skin and hair needs. Our AI-driven recommendations ensure users discover products specifically suited to their unique beauty profile.</p>
+        </div>
+        <div class="partner-card rv" style="transition-delay:.24s">
+          <div class="pc-icon">👩‍⚕️</div>
+          <div class="pc-title" data-i18n="partners_card_3_title">Beauty Professionals</div>
+          <p class="pc-text" data-i18n="partners_card_3_text">Our platform aims to collaborate with beauty experts who can provide professional guidance and support to users. From dermatologists to hair specialists, we connect users with the right professional expertise.</p>
+        </div>
+      </div>
+
+      <div class="partner-cta rv" style="transition-delay:.2s">
+        <div class="eyebrow" style="display:block;margin-bottom:.8rem" data-i18n="join_network">// Join the Network</div>
+        <h2 class="h2" style="margin-bottom:1rem" data-i18n="partners_cta_title">Through these partnerships, SIDAR AI aims to build a <em>trusted network</em> that connects technology, beauty expertise, and personalized recommendations.</h2>
+        <p class="lead" style="margin:1rem auto 2rem;text-align:center;max-width:520px" data-i18n="partners_cta_desc">If you are a clinic, brand, or beauty professional interested in joining the SIDAR AI ecosystem, we would love to hear from you.</p>
+        <button class="btn-p"><a href="#contact" data-i18n="become_partner">📧 Become a Partner</a></button>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="sec sec-alt">
+    <div class="wrap">
+      <div class="eyebrow rv" data-i18n="why_partner">// Why Partner with SIDAR</div>
+      <h2 class="h2 rv" style="transition-delay:.1s;margin-bottom:2.5rem" data-i18n="partnership_benefits">Benefits of <em>Partnership</em></h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.3rem">
+        <div class="card card-glow rv"><div class="h4" style="color:var(--gold);margin-bottom:.5rem" data-i18n="partner_benefit_1_title">🎯 AI-Matched Referrals</div><p class="body-text" data-i18n="partner_benefit_1_text">Receive patients and customers who are specifically matched to your services based on their AI analysis results — higher conversion, better outcomes.</p></div>
+        <div class="card card-glow rv" style="transition-delay:.1s"><div class="h4" style="color:var(--gold);margin-bottom:.5rem" data-i18n="partner_benefit_2_title">📊 Data-Driven Insights</div><p class="body-text" data-i18n="partner_benefit_2_text">Access aggregated beauty intelligence data to better understand your customer base and tailor your offerings to real market needs.</p></div>
+        <div class="card card-glow rv" style="transition-delay:.05s"><div class="h4" style="color:var(--gold);margin-bottom:.5rem" data-i18n="partner_benefit_3_title">🌍 Regional Reach</div><p class="body-text" data-i18n="partner_benefit_3_text">Connect with users across the Gulf Cooperation Council through the SIDAR AI platform as we expand across the region.</p></div>
+        <div class="card card-glow rv" style="transition-delay:.15s"><div class="h4" style="color:var(--gold);margin-bottom:.5rem" data-i18n="partner_benefit_4_title">🤝 Trusted Network</div><p class="body-text" data-i18n="partner_benefit_4_text">Be part of a curated, verified network of beauty professionals that users can trust for quality care and products.</p></div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="route" id="pricing" data-route>
+  <section class="sec sec-alt">
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="pricing">// Pricing</div>
+      <h1 class="display" style="margin:0 0 1rem" data-i18n="pricing_title">Simple plans for <em>every stage</em></h1>
+      <div class="partners-grid pricing-grid" id="pricingPlansContainer">
+        <article class="partner-card">
+          <div class="tag-badge" data-i18n="pricing_free">Free</div>
+          <div class="h3" style="margin-top:.8rem" data-i18n="pricing_guest">Guest</div>
+          <p class="body-text" data-i18n="pricing_guest_desc">Run limited local analyses on one device.</p>
+          <div class="display compact-price">0</div>
+          <ul class="discover-list compact-list">
+            <li data-i18n="pricing_guest_feature_1">Local history</li>
+            <li data-i18n="pricing_guest_feature_2">Basic report view</li>
+            <li data-i18n="pricing_guest_feature_3">No cloud sync</li>
+          </ul>
+        </article>
+        <article class="partner-card">
+          <div class="tag-badge" data-i18n="pricing_popular">Most Popular</div>
+          <div class="h3" style="margin-top:.8rem" data-i18n="pricing_plus">SIDAR Plus</div>
+          <p class="body-text" data-i18n="pricing_plus_desc">Save reports, sync dashboard, and manage routines.</p>
+          <div class="display compact-price">$9</div>
+          <ul class="discover-list compact-list">
+            <li data-i18n="pricing_plus_feature_1">Cloud history</li>
+            <li data-i18n="pricing_plus_feature_2">Saved plans</li>
+            <li data-i18n="pricing_plus_feature_3">Priority support</li>
+          </ul>
+        </article>
+        <article class="partner-card">
+          <div class="tag-badge" data-i18n="pricing_business">Business</div>
+          <div class="h3" style="margin-top:.8rem" data-i18n="pricing_clinic">Clinic / Brand</div>
+          <p class="body-text" data-i18n="pricing_clinic_desc">For partner workflows and referral integrations.</p>
+          <div class="display compact-price" data-i18n="pricing_clinic_price">Custom</div>
+          <ul class="discover-list compact-list">
+            <li data-i18n="pricing_clinic_feature_1">Partner dashboard</li>
+            <li data-i18n="pricing_clinic_feature_2">Referrals</li>
+            <li data-i18n="pricing_clinic_feature_3">Custom integrations</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="route" id="investors" data-route>
+  <section class="sec" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
+    <div class="wrap">
+      <div class="eyebrow rv" data-i18n="investors_eyebrow">// Investment Opportunity</div>
+      <div class="inv-hero-grid">
+        <div>
+          <h1 class="display rv" style="transition-delay:.1s;margin-bottom:1.2rem" data-i18n="investors_title">The Future of<br><em>BeautyTech</em><br>is Now</h1>
+          <p class="lead rv" style="transition-delay:.18s;margin-bottom:1.5rem" data-i18n="investors_desc">SIDAR AI is building an AI-powered beauty intelligence platform designed for the rapidly growing global beauty and wellness market.</p>
+          <p class="body-text rv" style="transition-delay:.22s;margin-bottom:2rem;max-width:480px" data-i18n="investors_desc_2">By combining artificial intelligence with beauty analytics, SIDAR AI aims to transform how individuals understand and manage their skin and hair health.</p>
+        </div>
+        <div class="market-cards">
+          <div class="m-card rv"><div class="m-val">$500B+</div><div class="m-lbl" data-i18n="investor_stat_1">Global Beauty Market</div></div>
+          <div class="m-card rv" style="transition-delay:.1s"><div class="m-val">$8B</div><div class="m-lbl" data-i18n="investor_stat_2">GCC Beauty Market</div></div>
+          <div class="m-card rv" style="transition-delay:.05s"><div class="m-val">23%</div><div class="m-lbl" data-i18n="investor_stat_3">Annual Tech Growth</div></div>
+          <div class="m-card rv" style="transition-delay:.15s"><div class="m-val">38M</div><div class="m-lbl" data-i18n="investor_stat_4">Internet Users — KSA</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="sec sec-alt">
+    <div class="wrap">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start">
+        <div>
+          <div class="eyebrow rv" data-i18n="market_opportunity">// Market Opportunity</div>
+          <h2 class="h2 rv" style="transition-delay:.1s;margin-bottom:1rem" data-i18n="market_opportunity_title">A Rapidly <em>Growing</em> Market</h2>
+          <p class="body-text rv" style="transition-delay:.15s;margin-bottom:1rem" data-i18n="market_opportunity_text_1">The global beauty and skincare industry continues to grow rapidly, with increasing demand for personalized beauty solutions powered by technology.</p>
+          <p class="body-text rv" style="transition-delay:.18s" data-i18n="market_opportunity_text_2">Artificial intelligence is becoming a key driver of innovation in the beauty industry, enabling more accurate analysis, personalized recommendations, and smarter beauty experiences.</p>
+        </div>
+        <div>
+          <div class="eyebrow rv" style="transition-delay:.05s" data-i18n="our_vision">// Our Vision</div>
+          <h2 class="h2 rv" style="transition-delay:.15s;margin-bottom:1rem" data-i18n="our_vision_title">Built to <em>Scale</em></h2>
+          <p class="body-text rv" style="transition-delay:.2s;margin-bottom:1.5rem" data-i18n="our_vision_text">SIDAR AI aims to become a leading beauty intelligence platform in the Middle East, starting with markets such as Dubai and expanding across the region.</p>
+
+          <div class="vision-items">
+            <div class="vi rv" style="transition-delay:.25s"><div class="vi-ico">🤖</div><div><div class="vi-title" data-i18n="vision_item_1_title">AI-Powered Beauty Analysis</div><div class="vi-text" data-i18n="vision_item_1_text">Continuous model improvement for unmatched regional accuracy.</div></div></div>
+            <div class="vi rv" style="transition-delay:.3s"><div class="vi-ico">💡</div><div><div class="vi-title" data-i18n="vision_item_2_title">Data-Driven Insights</div><div class="vi-text" data-i18n="vision_item_2_text">Intelligence engine learning from user data to improve recommendations.</div></div></div>
+            <div class="vi rv" style="transition-delay:.35s"><div class="vi-ico">🛒</div><div><div class="vi-title" data-i18n="vision_item_3_title">Beauty Marketplace</div><div class="vi-text" data-i18n="vision_item_3_text">Curated product marketplace connected to AI analysis results.</div></div></div>
+            <div class="vi rv" style="transition-delay:.4s"><div class="vi-ico">🏥</div><div><div class="vi-title" data-i18n="vision_item_4_title">Clinic Network</div><div class="vi-text" data-i18n="vision_item_4_text">Certified dermatologist and aesthetic clinic partner network.</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inv-cta rv" style="transition-delay:.2s;margin-top:3rem">
+        <div class="eyebrow" style="display:block;margin-bottom:.8rem" data-i18n="investor_relations">// Investor Relations</div>
+        <h2 class="h2" style="margin-bottom:1rem" data-i18n="investor_relations_title">We welcome <em>strategic investors</em><br>who share our vision</h2>
+        <p class="lead" style="margin:0 auto 2.5rem;text-align:center;max-width:520px" data-i18n="investor_relations_desc">We welcome strategic investors and partners who share our vision of building the future of beauty intelligence through advanced technology.</p>
+        <button class="btn-p"><a href="#contact" data-i18n="get_in_touch">Get in touch</a></button>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="route" id="about" data-route>
+  <div class="about-intro">
+    <div class="wrap-sm">
+      <div class="eyebrow rv" style="display:block" data-i18n="about_eyebrow">// About SIDAR AI</div>
+      <h1 class="display rv" style="transition-delay:.1s;margin-bottom:1.2rem" data-i18n="about_title">We are <em>SIDAR AI</em></h1>
+      <p class="lead rv" style="transition-delay:.18s;margin:0 auto 2rem" data-i18n="about_desc">SIDAR AI is an innovative beauty technology platform that combines artificial intelligence with beauty science to deliver intelligent insights about skin and hair health.</p>
+
+      <div class="mission-split">
+        <div class="ms-card rv">
+          <div style="font-size:1.8rem;margin-bottom:.8rem">🎯</div>
+          <div class="h3" style="margin-bottom:.7rem" data-i18n="our_mission_title">Our Mission</div>
+          <p class="body-text" data-i18n="our_mission_text">Our mission is to empower users with intelligent beauty insights that help them make better decisions about skincare, haircare, and overall beauty wellness.</p>
+        </div>
+        <div class="ms-card rv" style="transition-delay:.12s">
+          <div style="font-size:1.8rem;margin-bottom:.8rem">🌍</div>
+          <div class="h3" style="margin-bottom:.7rem" data-i18n="our_vision_main_title">Our Vision</div>
+          <p class="body-text" data-i18n="our_vision_main_text">We aim to build one of the leading AI-powered beauty intelligence platforms in the region, providing users with data-driven beauty analysis and personalized beauty guidance.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <section class="sec sec-alt">
+    <div class="wrap">
+      <div class="eyebrow rv" data-i18n="what_sets_us_apart">// What Sets Us Apart</div>
+      <h2 class="h2 rv" style="transition-delay:.1s;margin-bottom:.8rem" data-i18n="tech_meets_beauty">Technology meets <em>Beauty Science</em></h2>
+      <p class="lead rv" style="transition-delay:.15s;margin-bottom:3rem" data-i18n="tech_meets_beauty_desc">By combining technology, data, and beauty expertise, SIDAR AI aims to transform the way people understand and improve their appearance.</p>
+
+      <div class="values-grid">
+        <div class="val-card rv"><div class="val-ico">🔬</div><div class="val-t" data-i18n="value_1_title">Scientific Precision</div><div class="val-txt" data-i18n="value_1_text">Every analysis grounded in dermatology science and validated AI models.</div></div>
+        <div class="val-card rv" style="transition-delay:.1s"><div class="val-ico">🔒</div><div class="val-t" data-i18n="value_2_title">Privacy First</div><div class="val-txt" data-i18n="value_2_text">Your skin data encrypted and never shared without explicit consent.</div></div>
+        <div class="val-card rv" style="transition-delay:.2s"><div class="val-ico">🌟</div><div class="val-t" data-i18n="value_3_title">Regional Expertise</div><div class="val-txt" data-i18n="value_3_text">Built specifically for Middle Eastern skin tones, types, and beauty standards.</div></div>
+        <div class="val-card rv" style="transition-delay:.05s"><div class="val-ico">⚡</div><div class="val-t" data-i18n="value_4_title">Continuous Innovation</div><div class="val-txt" data-i18n="value_4_text">Constantly improving models with the latest AI research breakthroughs.</div></div>
+        <div class="val-card rv" style="transition-delay:.15s"><div class="val-ico">🤝</div><div class="val-t" data-i18n="value_5_title">Trusted Partnerships</div><div class="val-txt" data-i18n="value_5_text">Certified dermatologists validate all recommendations for accuracy.</div></div>
+        <div class="val-card rv" style="transition-delay:.25s"><div class="val-ico">💚</div><div class="val-t" data-i18n="value_6_title">Accessible Beauty</div><div class="val-txt" data-i18n="value_6_text">Making expert skincare intelligence accessible to everyone across the region.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="sec">
+    <div class="wrap" style="text-align:center">
+      <div class="eyebrow rv" style="display:block" data-i18n="journey">// Journey</div>
+      <h2 class="h2 rv" style="transition-delay:.1s;margin-bottom:3rem" data-i18n="our_story">Our <em>Story</em></h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem">
+        <div class="card rv">
+          <div style="font-family:'DM Mono',monospace;font-size:.62rem;color:var(--gold);margin-bottom:.5rem;letter-spacing:.1em" data-i18n="story_founded_label">FOUNDED</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;margin-bottom:.3rem">2024</div>
+          <p class="body-text" data-i18n="story_founded_text">Launched in Dubai with a vision to transform beauty through AI technology.</p>
+        </div>
+        <div class="card rv" style="transition-delay:.12s">
+          <div style="font-family:'DM Mono',monospace;font-size:.62rem;color:var(--gold);margin-bottom:.5rem;letter-spacing:.1em" data-i18n="story_market_label">MARKET</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;margin-bottom:.3rem">GCC</div>
+          <p class="body-text" data-i18n="story_market_text">Focused on the Gulf Cooperation Council with plans for regional expansion.</p>
+        </div>
+        <div class="card rv" style="transition-delay:.24s">
+          <div style="font-family:'DM Mono',monospace;font-size:.62rem;color:var(--gold);margin-bottom:.5rem;letter-spacing:.1em" data-i18n="story_mission_label">MISSION</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;margin-bottom:.3rem">AI + Beauty</div>
+          <p class="body-text" data-i18n="story_mission_text">Combining artificial intelligence and beauty science for smarter beauty decisions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="route" id="faq" data-route>
+  <section class="sec">
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="faq_eyebrow">// Questions</div>
+      <h1 class="display" style="margin:0 0 3rem" data-i18n="faq_title">Frequently Asked <em>Questions</em></h1>
+      
+      <div id="faqAccordion" class="faq-layout">
+        <!-- Populated by JS -->
+        <p class="body-text" data-i18n="loading_faqs">Loading frequently asked questions...</p>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="route" id="contact" data-route>
+  <section class="sec sec-alt">
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="contact_eyebrow">// Contact Us</div>
+      <h1 class="display" style="margin:0 0 1rem" data-i18n="contact_heading">Get in <em>Touch</em></h1>
+
+      <div class="contact-layout">
+        <div class="cform">
+          <div class="h3" style="margin-bottom:1rem" data-i18n="contact_send">Send a Message</div>
+
+          <div id="cFormWrap" class="form-grid">
+            <label>
+              <span data-i18n="contact_first">First Name</span>
+              <input id="contactFirst" class="fi" type="text" data-i18n-placeholder="first_name_placeholder" placeholder="Osama">
+            </label>
+
+            <label>
+              <span data-i18n="contact_last">Last Name</span>
+              <input id="contactLast" class="fi" type="text" data-i18n-placeholder="last_name_placeholder" placeholder="Ahmed">
+            </label>
+
+            <label class="full-span">
+              <span data-i18n="contact_email">Email Address</span>
+              <input id="contactEmail" class="fi" type="email" data-i18n-placeholder="contact_email_placeholder" placeholder="Osama@company.com">
+            </label>
+
+            <label class="full-span">
+              <span data-i18n="contact_inquiry">Inquiry Type</span>
+              <select id="contactType" class="fi">
+                <option data-i18n="inquiry_partnership">Partnership Opportunity</option>
+                <option data-i18n="inquiry_investment">Investment Inquiry</option>
+                <option data-i18n="inquiry_clinic_brand">Clinic / Brand Collaboration</option>
+                <option data-i18n="inquiry_press">Press / Media</option>
+                <option data-i18n="inquiry_general">General Inquiry</option>
+              </select>
+            </label>
+
+            <label class="full-span">
+              <span data-i18n="contact_message">Message</span>
+              <textarea id="contactMessage" class="fi" data-i18n-placeholder="contact_message_placeholder" placeholder="Tell us about your interest in SIDAR AI..."></textarea>
+            </label>
+
+            <button class="btn btn-primary" onclick="submitForm()" type="button" data-i18n="contact_submit">
+              Send Message →
+            </button>
+          </div>
+
+          <div class="form-ok" id="formOk" style="display:none">
+            <div class="h3" data-i18n="contact_success">Message Sent!</div>
+            <p class="body-text" data-i18n="contact_success_copy">Thank you for reaching out. We'll respond within 24 hours.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="route" id="privacy" data-route>
+  <section class="sec" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
+    <div class="wrap">
+      <div class="privacy-shell">
+        <article class="glass privacy-hero">
+          <div class="eyebrow" data-i18n="privacy_eyebrow">// Legal</div>
+          <h1 class="display" style="margin:0 0 1rem" data-i18n="privacy_title">Privacy <em>Policy</em></h1>
+          <p class="lead" style="margin:0" data-i18n="privacy_subtitle">Privacy Policy</p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_intro_title">Introduction</h3>
+          <p data-i18n="privacy_intro_p1">
+            SIDAR AI respects your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your information when you use the SIDAR AI website and services.
+          </p>
+          <p data-i18n="privacy_intro_p2">
+            By accessing or using SIDAR AI, you agree to the terms outlined in this Privacy Policy.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_collect_title">Information We Collect</h3>
+          <p data-i18n="privacy_collect_p1">
+            SIDAR AI may collect certain types of information in order to provide and improve our services.
+          </p>
+
+          <h4 data-i18n="privacy_personal_title">Personal Information</h4>
+          <p data-i18n="privacy_personal_p1">
+            When you create an account or contact us, we may collect:
+          </p>
+          <ul>
+            <li data-i18n="privacy_personal_li_1">Name</li>
+            <li data-i18n="privacy_personal_li_2">Email address</li>
+            <li data-i18n="privacy_personal_li_3">Account information</li>
+          </ul>
+
+          <h4 data-i18n="privacy_image_title">Image Data</h4>
+          <p data-i18n="privacy_image_p1">
+            When you use the AI analysis feature, you may upload photos for analysis. These images are processed by our artificial intelligence systems to generate beauty insights.
+          </p>
+          <p data-i18n="privacy_image_p2">
+            SIDAR AI does not use uploaded images for identification or facial recognition purposes.
+          </p>
+
+          <h4 data-i18n="privacy_usage_title">Usage Information</h4>
+          <p data-i18n="privacy_usage_p1">
+            We may automatically collect certain information when you use the platform, such as:
+          </p>
+          <ul>
+            <li data-i18n="privacy_usage_li_1">Device type</li>
+            <li data-i18n="privacy_usage_li_2">Browser type</li>
+            <li data-i18n="privacy_usage_li_3">Usage statistics</li>
+            <li data-i18n="privacy_usage_li_4">Interaction with the platform</li>
+          </ul>
+          <p data-i18n="privacy_usage_p2">
+            This information helps us improve the performance and user experience of our services.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_use_title">How We Use Your Information</h3>
+          <p data-i18n="privacy_use_p1">
+            The information we collect may be used to:
+          </p>
+          <ul>
+            <li data-i18n="privacy_use_li_1">Provide AI-powered skin and hair analysis</li>
+            <li data-i18n="privacy_use_li_2">Generate personalized beauty reports</li>
+            <li data-i18n="privacy_use_li_3">Improve platform performance and user experience</li>
+            <li data-i18n="privacy_use_li_4">Communicate with users regarding service updates</li>
+            <li data-i18n="privacy_use_li_5">Ensure security and prevent misuse of the platform</li>
+          </ul>
+          <p data-i18n="privacy_use_p2">
+            SIDAR AI does not sell personal information to third parties.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_ai_title">Image Processing and AI Analysis</h3>
+          <p data-i18n="privacy_ai_p1">
+            Images uploaded by users are processed by artificial intelligence systems to analyze skin and hair indicators.
+          </p>
+          <p data-i18n="privacy_ai_p2">
+            The purpose of this analysis is to provide personalized beauty insights and recommendations.
+          </p>
+          <p data-i18n="privacy_ai_p3">
+            Images may be temporarily processed to generate reports and improve system performance. SIDAR AI takes reasonable measures to protect this data.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_security_title">Data Security</h3>
+          <p data-i18n="privacy_security_p1">
+            SIDAR AI implements appropriate technical and organizational measures to protect user information from unauthorized access, misuse, or disclosure.
+          </p>
+          <p data-i18n="privacy_security_p2">
+            However, no system can guarantee absolute security, and users acknowledge that they share information at their own risk.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_thirdparty_title">Third-Party Services</h3>
+          <p data-i18n="privacy_thirdparty_p1">
+            SIDAR AI may use trusted third-party services to support certain features of the platform, including AI processing and analytics.
+          </p>
+          <p data-i18n="privacy_thirdparty_p2">
+            These services may have their own privacy policies and data handling practices.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_rights_title">User Rights</h3>
+          <p data-i18n="privacy_rights_p1">Users may request to:</p>
+          <ul>
+            <li data-i18n="privacy_rights_li_1">Access their personal information</li>
+            <li data-i18n="privacy_rights_li_2">Update account details</li>
+            <li data-i18n="privacy_rights_li_3">Request deletion of their account</li>
+          </ul>
+          <p data-i18n="privacy_rights_p2">
+            Requests may be submitted through our contact email.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_retention_title">Data Retention</h3>
+          <p data-i18n="privacy_retention_p1">
+            SIDAR AI retains user information only for as long as necessary to provide services, maintain platform functionality, and comply with applicable regulations.
+          </p>
+          <p data-i18n="privacy_retention_p2">
+            Users may request deletion of their account and associated data.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_children_title">Children’s Privacy</h3>
+          <p data-i18n="privacy_children_p1">
+            SIDAR AI services are not intended for individuals under the age of 18. We do not knowingly collect personal information from minors.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_changes_title">Changes to This Policy</h3>
+          <p data-i18n="privacy_changes_p1">
+            SIDAR AI may update this Privacy Policy periodically to reflect improvements to our services or legal requirements.
+          </p>
+          <p data-i18n="privacy_changes_p2">
+            Users are encouraged to review this page regularly for updates.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_contact_title">Contact Us</h3>
+          <p data-i18n="privacy_contact_p1">
+            If you have questions regarding this Privacy Policy or the handling of your information, please contact us.
+          </p>
+          <p>
+            <span data-i18n="privacy_contact_email_label">Email:</span>
+            <a href="mailto:info@sidarai.com">info@sidarai.com</a>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <div class="logo-type">SIDAR <sup>AI</sup></div>
+      <p class="body-text" data-i18n="footer_title">AI-powered beauty intelligence platform. This production package merges the old working logic with the new premium website design.</p>
+      <p class="body-text">© <span id="year"></span> SIDAR AI</p>
+    </div>
+    <div class="footer-links">
+      <a href="#landing" data-i18n="nav_home">Home</a>
+      <a href="#about" data-i18n="footer_about_us">About Us</a>
+      <a href="#investors" data-i18n="footer_investors">Investors</a>
+      <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
+      <a href="#faq" data-i18n="nav_faq">FAQ</a>
+      <a href="#account" id="footerMyAccountBtn" data-i18n="nav_my_account">My Account</a>
+      <a href="#contact" data-i18n="nav_contact">Contact</a>
+      <a href="#privacy" data-i18n="Privacy">Privacy Policy</a>
+      <!-- <a href="#contact" data-i18n="nav_contact">Contact</a> -->
+    </div>
+  </div>
+</footer>
+
+<div id="toastContainer" class="toast-container"></div>
+
+<script>
+function switchParam(btn, id) {
+  const page = document.getElementById('scan');
+  page.querySelectorAll('.ptab').forEach(t => t.classList.remove('on'));
+  btn.classList.add('on');
+  page.querySelectorAll('.param-panel').forEach(p => p.classList.remove('on'));
+  const panel = document.getElementById('pp-' + id);
+  if (panel) panel.classList.add('on');
+}
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./js/config.js"></script>
+<script src="./js/translations.js"></script>
+<script src="./js/supabase.js"></script>
+<script type="module" src="./js/firebase-ai.js"></script>
+<script src="./js/app.js"></script>
+</body>
+</html>

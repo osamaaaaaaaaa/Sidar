@@ -1,0 +1,24 @@
+@import url('/css/styles.css');
+
+#root { min-height: 100vh; }
+
+/* Acknowledge the first scan tap while the legacy application is warming up. */
+html.sidar-opening-scan a[href="#scan"][aria-busy="true"] {
+  pointer-events: none;
+  opacity: .76;
+}
+
+html.sidar-opening-scan a[href="#scan"][aria-busy="true"]::after {
+  content: '';
+  display: inline-block;
+  width: .78em;
+  height: .78em;
+  margin-inline-start: .55em;
+  border: 2px solid currentColor;
+  border-inline-end-color: transparent;
+  border-radius: 50%;
+  vertical-align: -.08em;
+  animation: sidar-cta-spin .7s linear infinite;
+}
+
+@keyframes sidar-cta-spin { to { transform: rotate(360deg); } }
