@@ -693,21 +693,23 @@
 </section>
 
 <section class="route" id="dashboard" data-route>
-  <section class="settings-route">
-    <div class="settings-shell">
-      <aside class="settings-sidebar">
-        <div class="settings-user"><div class="settings-avatar" id="profileInitials">SI</div><div><strong id="profileName">حساب SIDAR</strong><span id="profileEmail">--</span></div></div>
-        <nav class="settings-nav" aria-label="إعدادات الحساب">
+  <section class="settings-route account-workspace">
+    <div class="settings-shell account-workspace-shell">
+      <header class="account-workspace-hero">
+        <div class="account-workspace-identity">
+          <div class="settings-avatar account-workspace-avatar" id="profileInitials">SI</div>
+          <div><span>SIDAR / PERSONAL SPACE</span><h1 id="profileName">حساب SIDAR</h1><p id="profileEmail">--</p></div>
+        </div>
+        <div class="account-workspace-actions"><a href="#scan" class="btn btn-primary">تحليل جديد</a><button type="button" class="settings-logout" id="accountLogoutBtn">تسجيل الخروج</button></div>
+        <nav class="settings-nav account-workspace-nav" aria-label="إعدادات الحساب">
           <button type="button" class="settings-nav-btn active" data-settings-tab="profile"><span>01</span><b>الملف الشخصي</b><small>بياناتك الأساسية</small></button>
-          <button type="button" class="settings-nav-btn" data-settings-tab="preferences"><span>02</span><b>اللغة والتفضيلات</b><small>تجربة المنصة</small></button>
+          <button type="button" class="settings-nav-btn" data-settings-tab="preferences"><span>02</span><b>التفضيلات</b><small>اللغة والإشعارات</small></button>
           <button type="button" class="settings-nav-btn" data-settings-tab="reports"><span>03</span><b>تقاريري</b><small>سجل التحليلات</small></button>
-          <button type="button" class="settings-nav-btn" data-settings-tab="security"><span>04</span><b>الأمان والحساب</b><small>الدخول والحذف</small></button>
+          <button type="button" class="settings-nav-btn" data-settings-tab="security"><span>04</span><b>الأمان</b><small>الدخول والحذف</small></button>
         </nav>
-        <button type="button" class="settings-logout" id="accountLogoutBtn">تسجيل الخروج</button>
-      </aside>
+      </header>
 
-      <main class="settings-content">
-        <header class="settings-header"><div><span>SIDAR ACCOUNT</span><h1>إعدادات الحساب</h1><p>إدارة ملفك وتفضيلاتك وتقاريرك من مكان واحد.</p></div><a href="#scan" class="btn btn-primary">✦ تحليل جديد</a></header>
+      <main class="settings-content account-workspace-content">
 
         <form id="settingsForm" class="settings-form account-preferences">
           <section class="settings-panel active" data-settings-panel="profile">
