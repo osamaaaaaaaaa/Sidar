@@ -1492,6 +1492,7 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
     elements.cameraCaptureModal?.setAttribute('hidden', '');
     elements.cameraCaptureModal?.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('camera-capture-open');
+    document.body.classList.remove('camera-direct-open');
   }
 
   function openCameraCapture() {
@@ -1505,11 +1506,17 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
     document.body.classList.add('camera-capture-open');
   }
 
+  async function openDirectCamera() {
+    openCameraCapture();
+    document.body.classList.add('camera-direct-open');
+    await startCamera();
+  }
+
   async function startCamera() {
     stopCamera();
     if (!navigator.mediaDevices?.getUserMedia) {
       elements.cameraStatus.textContent = state.lang === 'ar' ? 'المتصفح لا يدعم المعاينة المباشرة. سيتم فتح كاميرا الجهاز.' : 'Live preview is unavailable. Your device camera will open instead.';
-      elements.cameraImageInput?.click();
+      elements.cameraStatus.textContent = state.lang === 'ar' ? 'الكاميرا المباشرة غير مدعومة في هذا المتصفح.' : 'Direct camera is unavailable in this browser.';
       return;
     }
 
@@ -1525,7 +1532,7 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
     } catch (error) {
       console.error('Camera access failed', error);
       elements.cameraStatus.textContent = state.lang === 'ar' ? 'تعذر فتح المعاينة. يمكنك استخدام كاميرا الجهاز بدلًا من ذلك.' : 'Could not open live preview. You can use your device camera instead.';
-      elements.cameraImageInput?.click();
+      elements.cameraStatus.textContent = state.lang === 'ar' ? 'تعذر تشغيل الكاميرا. تأكد من السماح بإذن الكاميرا ثم أعد المحاولة.' : 'Could not start the camera. Allow camera permission and try again.';
     }
   }
 
@@ -1548,9 +1555,9 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
     if (!elements.imageInput) return;
 
     elements.galleryPickerBtn?.addEventListener('click', () => elements.imageInput.click());
-    // Direct native capture is faster and clearer than placing a second
-    // camera dialog between the user and their device camera.
-    elements.cameraPickerBtn?.addEventListener('click', () => elements.cameraImageInput?.click());
+    // Start the real camera stream. File-input capture is inconsistent and
+    // often opens the gallery instead of the device camera.
+    elements.cameraPickerBtn?.addEventListener('click', openDirectCamera);
     elements.cameraCloseBtn?.addEventListener('click', closeCameraCapture);
     elements.cameraStartBtn?.addEventListener('click', startCamera);
     elements.cameraCaptureBtn?.addEventListener('click', captureCameraPhoto);
