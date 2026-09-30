@@ -4433,11 +4433,24 @@ function renderProducts(container, items, showPrice = true) {
     ].filter(Boolean).forEach((button) => button.addEventListener('click', shareReportPdf));
   }
 
+  function integrateAnalysisPreview() {
+    const preview = document.querySelector('#scan .analysis-panel');
+    const form = elements.scanForm;
+    const imageGrid = elements.imagePreviewGrid;
+    if (!preview || !form || !imageGrid || preview.parentElement === form) return;
+    // Keep the useful preview, but make it part of the upload journey rather
+    // than a disconnected dashboard column beside the form.
+    preview.hidden = false;
+    preview.classList.add('sidar-inline-review-card');
+    imageGrid.insertAdjacentElement('afterend', preview);
+  }
+
   async function init() {
     if (elements.year) elements.year.textContent = new Date().getFullYear();
     if (elements.reportYear) elements.reportYear.textContent = new Date().getFullYear();
 
     embedScanIntoHow();
+    integrateAnalysisPreview();
     // Navigation is intentionally bound before session/catalog requests.  On a
     // cold visit those requests can take a moment, but the primary CTA must
     // always react to the very first tap.
