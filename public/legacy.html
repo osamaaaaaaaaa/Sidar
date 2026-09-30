@@ -311,13 +311,13 @@
 </section>
 
 <section class="route" id="scan" data-route>
-  <section class="sec" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
-    <div class="wrap">
-      <div class="scan-page-intro"><span data-i18n="scan_journey_label">YOUR ANALYSIS JOURNEY</span><h1 class="display" data-i18n="analysis_intro_title">Skin and Hair Analysis</h1><p class="lead" data-i18n="scan_desc">AI analyzes your skin and hair and provides personalized recommendations built on your unique needs.</p></div>
+  <section class="sidar-scan-page">
+    <div class="sidar-scan-canvas">
+      <div class="sidar-scan-intro"><div><span>SIDAR / VISUAL REVIEW</span><h1 data-i18n="analysis_intro_title">Skin and Hair Analysis</h1><p data-i18n="scan_desc">AI analyzes your skin and hair and provides personalized recommendations built on your unique needs.</p></div><div class="sidar-scan-status"><i></i><span>PRIVATE SESSION</span><b>01 / 01</b></div></div>
 
-      <div class="scan-shell">
-        <div class="glass reveal-up">
-          <form id="scanForm" class="scan-form">
+      <div class="scan-shell sidar-scan-shell">
+        <div class="glass reveal-up sidar-scan-form-shell">
+          <form id="scanForm" class="scan-form sidar-scan-flow">
             <div class="uploader-box upload-source-box sidar-upload-deck">
               <div class="sidar-upload-deck-head">
                 <span class="sidar-form-step">01</span>
@@ -398,6 +398,24 @@
                 </select>
               </label>
 
+              <label>
+                <span data-i18n="problem_type">What concerns you?</span>
+                <select name="issue_type">
+                  <option value="redness" data-i18n="problem_redness">Redness / sensitivity</option>
+                  <option value="dryness" data-i18n="problem_dryness">Dryness / dehydration</option>
+                  <option value="acne" data-i18n="problem_acne">Acne / bumps</option>
+                  <option value="pigmentation" data-i18n="problem_pigmentation">Pigmentation / dark spots</option>
+                  <option value="texture" data-i18n="problem_texture">Texture / pores</option>
+                  <option value="hair_loss" data-i18n="problem_hair_loss">Hair loss / density</option>
+                  <option value="scalp" data-i18n="problem_scalp">Scalp issue</option>
+                </select>
+              </label>
+
+              <label>
+                <span data-i18n="dashboard_location_label">Location</span>
+                <select name="location_text" class="country-select"><option value="" data-i18n="select_country">Select country</option></select>
+              </label>
+
               <details class="scan-optional-details full-span-field">
                 <summary><span>＋</span> Add optional details for a more precise review</summary>
                 <div class="scan-optional-grid">
@@ -436,7 +454,7 @@
 
               <label>
                 <span data-i18n="problem_type">Problem type</span>
-                <select name="issue_type">
+                <select name="issue_type_detail">
                   <option value="redness" data-i18n="problem_redness">Redness / sensitivity</option>
                   <option value="dryness" data-i18n="problem_dryness">Dryness / dehydration</option>
                   <option value="acne" data-i18n="problem_acne">Acne / bumps</option>
@@ -449,7 +467,7 @@
 
               <label>
                 <span data-i18n="dashboard_location_label">Location</span>
-                <select name="location_text" class="country-select">
+                <select name="location_text_detail" class="country-select">
                   <option value="" data-i18n="select_country">Select country</option>
                 </select>
               </label>
@@ -481,7 +499,7 @@
           </form>
         </div>
 
-        <div class="analysis-panel reveal-up">
+        <div class="analysis-panel reveal-up" hidden>
           <div class="title-row">
             <h3 data-i18n="live_result_preview">Live Result Preview</h3>
             <span class="pct-circle" id="resultPriorityBadge">--</span>
