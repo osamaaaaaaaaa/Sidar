@@ -853,15 +853,12 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
 
     const mobileMenuLinks = document.querySelectorAll('#mobileMenu .mobile-drawer-links a');
     const mobileKeys = [
+      langMap.nav_my_account,
       langMap.nav_home,
       langMap.nav_how,
-      langMap.nav_partners,
-      langMap.nav_faq,
-      langMap.nav_investors,
       langMap.nav_pricing,
-      langMap.nav_about,
+      langMap.nav_faq,
       langMap.nav_contact,
-      langMap.nav_my_account,
     ];
     mobileMenuLinks.forEach((a, i) => {
       const label = a.querySelector('b');
