@@ -369,41 +369,7 @@
               </div>
             </div>
 
-            <div class="scan-subsection-head"><div><small data-i18n="scan_scope_label">ANALYSIS SCOPE</small><b data-i18n="scan_scope_title">What should SIDAR review?</b></div></div>
-            <div class="params-tabs">
-              <button class="ptab on" type="button" onclick="switchParam(this,'skin')" data-i18n="param_tab_skin">Skin Analysis</button>
-              <button class="ptab" type="button" onclick="switchParam(this,'hair')" data-i18n="param_tab_hair">Hair Analysis</button>
-              <button class="ptab" type="button" onclick="switchParam(this,'report')" data-i18n="param_tab_report">Beauty Report</button>
-            </div>
-
-            <div class="param-panel on" id="pp-skin">
-              <ul class="param-list">
-                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_skin_1">Skin texture and smoothness</span></li>
-                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_skin_2">Pore visibility and size</span></li>
-                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_skin_3">Hydration levels</span></li>
-                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_skin_4">Wrinkle indicators</span></li>
-              </ul>
-            </div>
-
-            <div class="param-panel" id="pp-hair">
-              <ul class="param-list">
-                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_hair_1">Hair density and volume</span></li>
-                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_hair_2">Hair texture and quality</span></li>
-                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_hair_3">Hair strength indicators</span></li>
-                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_hair_4">Scalp condition</span></li>
-              </ul>
-            </div>
-
-            <div class="param-panel" id="pp-report">
-              <ul class="param-list">
-                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_report_1">Summary and priority</span></li>
-                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_report_2">Metrics and confidence</span></li>
-                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_report_3">Routines and products</span></li>
-                <li class="param-item"><div class="param-dot"></div><span data-i18n="param_report_4">Nearby doctors and sharing</span></li>
-              </ul>
-            </div>
-
-            <div class="scan-subsection-head scan-details-head"><div><small data-i18n="scan_details_label">CONTEXT</small><b data-i18n="scan_details_title">Tell us about the concern</b><em data-i18n="scan_details_note">Takes less than a minute</em></div></div>
+            <div class="scan-subsection-head scan-details-head"><span class="sidar-form-step">02</span><div><small>JUST THE ESSENTIALS</small><b>Where should SIDAR focus?</b><em>Two quick choices — extra context is optional.</em></div></div>
             <div class="form-grid two-col scan-details-grid">
               <label>
                 <span data-i18n="scan_type">Scan type</span>
@@ -429,6 +395,10 @@
                   <option value="neck" data-i18n="area_neck">Neck</option>
                 </select>
               </label>
+
+              <details class="scan-optional-details full-span-field">
+                <summary><span>＋</span> Add optional details for a more precise review</summary>
+                <div class="scan-optional-grid">
 
               <label>
                 <span data-i18n="duration">Duration</span>
@@ -498,6 +468,8 @@
                 <span data-i18n="notes">Notes</span>
                 <textarea name="notes" data-i18n-placeholder="notes_placeholder"></textarea>
               </label>
+                </div>
+              </details>
             </div>
 
             <div class="footer-actions-row scan-submit-bar">
