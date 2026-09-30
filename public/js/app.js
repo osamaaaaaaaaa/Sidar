@@ -1548,7 +1548,9 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
     if (!elements.imageInput) return;
 
     elements.galleryPickerBtn?.addEventListener('click', () => elements.imageInput.click());
-    elements.cameraPickerBtn?.addEventListener('click', openCameraCapture);
+    // Direct native capture is faster and clearer than placing a second
+    // camera dialog between the user and their device camera.
+    elements.cameraPickerBtn?.addEventListener('click', () => elements.cameraImageInput?.click());
     elements.cameraCloseBtn?.addEventListener('click', closeCameraCapture);
     elements.cameraStartBtn?.addEventListener('click', startCamera);
     elements.cameraCaptureBtn?.addEventListener('click', captureCameraPhoto);
