@@ -553,16 +553,23 @@
 <section class="route" id="results" data-route>
   <section class="sec sec-alt">
     <div class="wrap">
-      <div class="title-row results-page-header">
-        <div>
+      <header class="results-page-header results-report-header">
+        <div class="results-report-title">
           <span class="results-eyebrow">SIDAR AI · Skin &amp; Hair</span>
           <h2 class="h2" data-i18n="full_ai_report">SIDAR Report</h2>
           <p id="resultReportMeta" class="results-meta-copy">Your personalized visual review</p>
         </div>
-        <div class="footer-actions-row">
+        <div class="results-header-actions">
           <button id="resultsBackBtn" class="btn btn-ghost" type="button" data-i18n="back_to_analysis">Back to analysis</button>
         </div>
-      </div>
+      </header>
+
+      <nav class="results-quick-nav" aria-label="Report sections">
+        <button type="button" data-result-jump="resultHealth"><span>01</span><b data-i18n="ai_summary_title">Health score</b></button>
+        <button type="button" data-result-jump="resultIndicators"><span>02</span><b data-i18n="visible_findings_title">Key indicators</b></button>
+        <button type="button" data-result-jump="resultPlan"><span>03</span><b data-i18n="care_steps_title">SIDAR Plan</b></button>
+        <button type="button" data-result-jump="resultProducts"><span>04</span><b data-i18n="commercial_products_title">Suggested products</b></button>
+      </nav>
 
       <div class="results-layout">
         <div class="result-grid">
@@ -577,8 +584,8 @@
               <span><small data-i18n="image_quality_label">Image quality</small><strong id="resultImageQualityClone">--</strong></span>
             </div>
           </article>
-          <article class="glass full-span result-metrics-card">
-            <div class="title-row"><div><h3 data-i18n="ai_summary_title">Health score</h3><p id="resultScoreSummaryClone" class="result-section-note">Your score details will appear after analysis.</p></div></div>
+          <article id="resultHealth" class="glass full-span result-metrics-card result-score-card">
+            <div class="title-row result-card-heading"><div><span class="result-card-kicker">01 · SIDAR SCORE</span><h3 data-i18n="ai_summary_title">Health score</h3><p id="resultScoreSummaryClone" class="result-section-note">Your score details will appear after analysis.</p></div></div>
             <div class="result-metrics-layout">
               <div class="score-ring" id="scoreRingClone"><div><div class="score-value" id="resultOverallScoreClone">--</div><div class="score-caption" id="resultScoreLabelClone">SCORE</div></div></div>
               <div class="score-lines">
@@ -589,10 +596,10 @@
               </div>
             </div>
           </article>
-          <article class="glass full-span result-indicators-card"><div class="title-row"><h3 data-i18n="visible_findings_title">Key indicators</h3><span class="notes-icon">◌</span></div><div id="resultPatternsClone" class="result-findings-list"></div></article>
-          <article class="glass full-span result-notes-card"><div class="title-row"><div><h3 data-i18n="followup_reasons_title">Key observations</h3><p class="result-section-note" data-i18n="report_notes_subtitle">Notes that may help you decide what to do next.</p></div><span class="notes-icon">i</span></div><div id="resultReasons" class="reasons-list"></div></article>
+          <article id="resultIndicators" class="glass full-span result-indicators-card"><div class="title-row result-card-heading"><div><span class="result-card-kicker">02 · FOCUS AREAS</span><h3 data-i18n="visible_findings_title">Key indicators</h3></div><span class="notes-icon">+</span></div><div id="resultPatternsClone" class="result-findings-list"></div></article>
+          <article class="glass full-span result-notes-card"><div class="title-row result-card-heading"><div><span class="result-card-kicker">CLINICAL NOTES</span><h3 data-i18n="followup_reasons_title">Key observations</h3><p class="result-section-note" data-i18n="report_notes_subtitle">Notes that may help you decide what to do next.</p></div><span class="notes-icon">i</span></div><div id="resultReasons" class="reasons-list"></div></article>
           <article id="resultPlan" class="glass full-span result-plan-card">
-            <div class="title-row"><h3 data-i18n="care_steps_title">SIDAR Plan</h3><span>📅</span></div>
+            <div class="title-row result-card-heading"><div><span class="result-card-kicker">03 · DAILY CARE</span><h3 data-i18n="care_steps_title">SIDAR Plan</h3></div><span class="notes-icon">✓</span></div>
             <div class="result-routine-grid">
               <div class="routine-column morning-routine">
                 <h4 style="color:var(--gold);margin-bottom:.6rem;" data-i18n="morning_routine">Morning routine</h4>
@@ -605,8 +612,8 @@
             </div>
           </article>
           <article class="glass"><div class="title-row"><h3 data-i18n="natural_products_title">Natural product suggestions</h3><span>🌿</span></div><div id="naturalProductsList" class="suggestion-list empty-copy" data-i18n="no_suggestions_yet">No suggestions yet.</div></article>
-          <article id="resultProducts" class="glass full-span result-products-card"><div class="title-row"><h3 data-i18n="commercial_products_title">Suggested products</h3><span>🛍</span></div><p class="result-section-note" data-i18n="catalog_products_note">Selected from SIDAR’s verified medical catalog.</p><div id="commercialProductsList" class="suggestion-list empty-copy" data-i18n="no_suggestions_yet">No suggestions yet.</div></article>
-          <article id="resultDoctors" class="glass full-span result-doctors-card"><div class="title-row"><h3 data-i18n="doctors_title">Doctors in your area</h3><span>📍</span></div><p class="result-section-note" data-i18n="local_doctors_note">Matched to your selected location and available SIDAR records.</p><div id="nearbyDoctorsList" class="doctor-list empty-copy" data-i18n="no_nearby_doctors_yet">No nearby suggestions yet.</div></article>
+          <article id="resultProducts" class="glass full-span result-products-card"><div class="title-row result-card-heading"><div><span class="result-card-kicker">04 · VERIFIED CATALOG</span><h3 data-i18n="commercial_products_title">Suggested products</h3></div><span class="notes-icon">+</span></div><p class="result-section-note" data-i18n="catalog_products_note">Selected from SIDAR’s verified medical catalog.</p><div id="commercialProductsList" class="suggestion-list empty-copy" data-i18n="no_suggestions_yet">No suggestions yet.</div></article>
+          <article id="resultDoctors" class="glass full-span result-doctors-card"><div class="title-row result-card-heading"><div><span class="result-card-kicker">LOCAL EXPERTS</span><h3 data-i18n="doctors_title">Doctors in your area</h3></div><span class="notes-icon">+</span></div><p class="result-section-note" data-i18n="local_doctors_note">Matched to your selected location and available SIDAR records.</p><div id="nearbyDoctorsList" class="doctor-list empty-copy" data-i18n="no_nearby_doctors_yet">No nearby suggestions yet.</div></article>
           <article class="glass full-span report-actions-card">
             <div class="report-actions-copy"><span class="results-eyebrow" data-i18n="report_actions_label">REPORT ACTIONS</span><h3 data-i18n="share_report_title">Share your report</h3><p data-i18n="report_actions_note">Share, copy, or save this report to your account.</p></div>
             <div class="report-action-dock" aria-label="Report actions">

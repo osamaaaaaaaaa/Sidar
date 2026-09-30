@@ -4440,6 +4440,16 @@ function renderProducts(container, items, showPrice = true) {
     ].filter(Boolean).forEach((button) => button.addEventListener('click', shareReportPdf));
   }
 
+  function bindResultNavigation() {
+    document.querySelectorAll('[data-result-jump]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const target = document.getElementById(button.dataset.resultJump);
+        if (!target) return;
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  }
+
   function integrateAnalysisPreview() {
     const preview = document.querySelector('#scan .analysis-panel');
     const form = elements.scanForm;
@@ -4469,6 +4479,7 @@ function renderProducts(container, items, showPrice = true) {
     bindEvents();
     bindSettingsCenter();
     bindShareAction();
+    bindResultNavigation();
     bindRevealAnimations();
     setLanguage(state.lang);
     initScanSelects();
