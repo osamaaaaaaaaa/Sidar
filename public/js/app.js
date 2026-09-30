@@ -35,6 +35,7 @@
     mobileTopLangToggleBtn: document.getElementById('mobileTopLangToggleBtn'),
     logoutBtn: document.getElementById('logoutBtn'),
     navLoginBtn: document.getElementById('navLoginBtn'),
+    mobileLoginBtn: document.getElementById('mobileLoginBtn'),
     mobileAccountBtn: document.getElementById('mobileAccountBtn'),
     mobileAccountAvatar: document.getElementById('mobileAccountAvatar'),
     mobileAccountTitle: document.getElementById('mobileAccountTitle'),
@@ -861,6 +862,7 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
       langMap.nav_pricing,
       langMap.nav_about,
       langMap.nav_contact,
+      langMap.nav_my_account,
     ];
     mobileMenuLinks.forEach((a, i) => {
       const label = a.querySelector('b');
@@ -2473,7 +2475,7 @@ function renderProducts(container, items, showPrice = true) {
     elements.logoutBtn?.classList.toggle('hidden', !isLoggedIn);
     elements.mobileLogoutBtn?.classList.toggle('hidden', !isLoggedIn);
 
-    [elements.navLoginBtn, elements.footerLoginBtn].forEach((el) => {
+    [elements.navLoginBtn, elements.footerLoginBtn, elements.mobileLoginBtn].forEach((el) => {
       if (!el) return;
       el.classList.toggle('hidden', isLoggedIn);
 
