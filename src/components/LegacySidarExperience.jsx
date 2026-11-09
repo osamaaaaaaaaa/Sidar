@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 
 const legacyScripts = [
-  { src: '/js/config.js?v=20260927' },
-  { src: '/js/translations.js?v=20260927' },
+  { src: '/js/config.js?v=20261105_v3' },
+  { src: '/js/translations.js?v=20261105_v3' },
   { src: 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2' },
-  { src: '/js/supabase.js?v=20260927' },
-  { src: '/js/firebase-ai.js?v=20260927', type: 'module' },
-  { src: '/js/app.js?v=20260927' },
+  { src: 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js' },
+  { src: 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js' },
+  { src: '/js/supabase.js?v=20261105_v3' },
+  { src: '/js/firebase-ai.js?v=20261105_v3', type: 'module' },
+  { src: '/js/app.js?v=20261105_v3' },
 ];
 
 function loadLegacyScript({ src, type }) {
@@ -67,7 +69,7 @@ export default function LegacySidarExperience() {
       }, 3500);
     };
     document.addEventListener('click', acknowledgeEarlyScanIntent, true);
-    fetch('/legacy.html?v=20260927', { cache: 'no-store' })
+    fetch('/legacy.html?v=' + Date.now(), { cache: 'no-store' })
       .then((response) => {
         if (!response.ok) throw new Error('Unable to load the SIDAR interface.');
         return response.text();

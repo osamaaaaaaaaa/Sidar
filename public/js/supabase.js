@@ -88,10 +88,13 @@ const require = createRequire(import.meta.url);
   async function signInWithOAuth(provider) {
     const sb = getClient();
     if (!sb) throw new Error('Supabase config missing.');
+    try {
+      sessionStorage.setItem('sidar_oauth_pending', 'true');
+    } catch (_) {}
     return sb.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: window.location.origin + window.location.pathname + '#auth',
+        redirectTo: window.location.origin + window.location.pathname,
       },
     });
   }
@@ -104,7 +107,7 @@ const require = createRequire(import.meta.url);
     const profileDefaults = {
       id: user.id,
       email: user.email,
-      full_name: metadata.full_name || user.email?.split('@')[0] || 'Sidar User',
+      full_name: metadata.full_name || metadata.name || user.email?.split('@')[0] || 'Sidar User',
     };
 
     const { data: existing, error: fetchError } = await sb

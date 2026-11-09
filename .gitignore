@@ -10,5 +10,29 @@ npm-debug.log*
 dashboard-*.png
 supabase/.temp/
 
+# Local QA screenshots
+public/assets/check-*.png
+public/assets/snap-*.png
+public/assets/test-*.png
+public/assets/route-*.png
+public/assets/current-*.png
+public/assets/mobile-*.png
+public/assets/scan-*.png
+public/assets/final-scan-*.png
+public/assets/results-test.png
+public/assets/centered-scan-*.png
+public/assets/ar-card-scrolled-check.png
+public/assets/en-card-scrolled*.png
+public/assets/hero-ai-face.png
+public/assets/hero-silk-waves.png
+public/assets/hero-reference.png
+public/assets/sidar-target-design.jpg
+public/assets/sidar-logo-full.jpg
+public/assets/sidar-logo-transparent.png
+public/assets/sidar-emblem.png
+
+# One-off capture and asset-generation scripts
+scripts/*.cjs
+
 # Release archives are generated locally, not source-controlled
 *.zip

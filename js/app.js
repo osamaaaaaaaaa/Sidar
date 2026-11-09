@@ -174,7 +174,7 @@
       faq_title: 'Common <em>questions</em>',
 
       contact_heading: 'Get in <em>Touch</em>',
-      contact_eyebrow: '// Contact Us',
+      contact_eyebrow: 'Contact Us',
       contact_send: 'Send a Message',
       contact_first: 'First Name',
       contact_last: 'Last Name',
@@ -195,7 +195,7 @@
       guest_mode_start: 'Start as Guest',
       guest_mode_login: 'Login / Sign up',
 
-      auth_access: '// Account Access',
+      auth_access: 'Account Access',
       auth_title: 'Sign in to save reports, plans, and settings',
   auth_desc: 'Create your account or sign in to save reports, manage your routines, and access your personalized SIDAR account.',
       email: 'Email',
@@ -384,7 +384,7 @@
       faq_title: 'الأسئلة <em>الشائعة</em>',
 
       contact_heading: 'تواصل <em>معنا</em>',
-      contact_eyebrow: '// تواصل معنا',
+      contact_eyebrow: 'تواصل معنا',
       contact_send: 'أرسل رسالة',
       contact_first: 'الاسم الأول',
       contact_last: 'اسم العائلة',
@@ -525,7 +525,7 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
 
   const extraTranslations = {
     en: {
-      auth_access: '// Account Access',
+      auth_access: 'Account Access',
       dashboard_gender: 'Gender',
       dashboard_height: 'Height (cm)',
       dashboard_weight: 'Weight (kg)',
@@ -541,7 +541,7 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
       skin_goals_label: 'Skin goals',
     },
     ar: {
-      auth_access: '// الوصول للحساب',
+      auth_access: 'الوصول للحساب',
       dashboard_gender: 'الجنس',
       dashboard_height: 'الطول (سم)',
       dashboard_weight: 'الوزن (كجم)',

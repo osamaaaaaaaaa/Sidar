@@ -22,98 +22,14 @@
 </script>
 
 <style>
-.inv-hero-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:4rem;align-items:center;margin-bottom:4rem;}
-.market-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem;}
-.m-card{padding:1.6rem 1.4rem;text-align:center;background:var(--gold4);border:1px solid var(--border);border-radius:var(--rL);transition:all .3s;}
-.m-card:hover{background:var(--gold3);transform:translateY(-3px);}
-.m-val{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;color:var(--gold);line-height:1;}
-.m-lbl{font-size:.75rem;color:var(--muted);margin-top:.35rem;}
-.vision-items{display:flex;flex-direction:column;gap:.85rem;margin-top:2rem;}
-.vi{display:flex;gap:.9rem;align-items:flex-start;padding:1.1rem;background:rgba(255,255,255,.03);border:1px solid var(--bord2);border-radius:var(--r);transition:all .3s;}
-.vi:hover{border-color:var(--border);background:rgba(108,63,168,.1);}
-.vi-ico{width:38px;height:38px;border-radius:9px;background:var(--gold3);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;}
-.vi-title{font-weight:700;font-size:.9rem;margin-bottom:.2rem;}
-.vi-text{font-size:.8rem;color:var(--muted);line-height:1.65;}
-.inv-cta{padding:3rem 3.5rem;background:linear-gradient(135deg,rgba(108,63,168,.28),rgba(199,199,206,.07));border:1px solid var(--border);border-radius:var(--rXL);text-align:center;position:relative;overflow:hidden;margin-top:3rem;}
-.inv-cta::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-.mission-split{grid-template-columns:1fr;}
-.about-intro{text-align:center;padding:6rem 4rem 4rem;background:linear-gradient(180deg,var(--bg),var(--bg2));}
-.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:3rem;}
-.val-card{padding:1.8rem;text-align:center;background:rgba(255,255,255,.03);border:1px solid var(--bord2);border-radius:var(--rL);transition:all .3s;}
-.val-card:hover{border-color:var(--border);background:rgba(108,63,168,.1);transform:translateY(-3px);}
-.val-ico{font-size:1.8rem;margin-bottom:.8rem;}
-.val-t{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;margin-bottom:.45rem;color:var(--gold);}
-.val-txt{font-size:.81rem;color:var(--muted);line-height:1.7;}
-.mission-split{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:2.5rem;}
-.ms-card{padding:2rem;background:var(--gold3);border:1px solid var(--border);border-radius:var(--rL);}
-.steps-layout{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.4rem;}
-.step-card{border:1px solid var(--bord2);border-radius:var(--rL);padding:2.2rem 1.8rem;text-align:center;position:relative;overflow:hidden;transition:all .35s;background:rgba(255,255,255,.03);}
-.step-card:hover{border-color:var(--border);background:rgba(108,63,168,.1);transform:translateY(-4px);}
-.step-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .3s;}
-.step-card:hover::before{opacity:1;}
-.step-n{width:52px;height:52px;border-radius:50%;background:var(--bg2);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--gold);}
-.step-icon{font-size:1.8rem;margin-bottom:.8rem;}
-.step-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;margin-bottom:.7rem;}
-.step-text{font-size:.83rem;color:var(--muted);line-height:1.75;}
-.partners-intro{text-align:center;margin-bottom:4rem;}
-.partners-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;}
-.partner-card{border:1px solid var(--bord2);border-radius:var(--rL);padding:2rem 1.8rem;text-align:center;transition:all .3s;background:rgba(255,255,255,.03);position:relative;overflow:hidden;}
-.partner-card:hover{border-color:var(--border);background:rgba(108,63,168,.1);transform:translateY(-4px);}
-.partner-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .3s;}
-.partner-card:hover::after{opacity:1;}
-.pc-icon{font-size:2.2rem;margin-bottom:1rem;}
-.pc-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;margin-bottom:.6rem;color:var(--gold);}
-.pc-text{font-size:.83rem;color:var(--muted);line-height:1.75;}
-.partner-cta{margin-top:3.5rem;padding:2.5rem;background:var(--gold3);border:1px solid var(--border);border-radius:var(--rXL);text-align:center;}
-.hero-area{padding-top:2.2rem;padding-bottom:1rem;position:relative;overflow:hidden}
-.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:2rem}
-.hero-copy h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,3.5vw,4.4rem);line-height:1.05;font-weight:700;margin:0 0 1rem}.hero-copy h1 span{color:var(--gold)}
-.hero-copy p{font-size:1rem;color:var(--muted);max-width:720px;margin:0 0 1.15rem}
-.hero-actions{display:flex;gap:.75rem;flex-wrap:wrap;margin:1.15rem 0 1rem}
-.btn-lg{min-height:44px;padding:.82rem 1.35rem}
-.hero-chips{display:flex;flex-wrap:wrap;gap:.6rem}.info-chip{display:inline-flex;align-items:center;justify-content:center;padding:.48rem .78rem;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid var(--bord2);color:var(--text);font-size:.78rem}
-.hero-visual{display:flex;justify-content:flex-end}.report-card-preview{max-width:440px;width:100%;padding:1.2rem 1.2rem 1rem}.report-header{display:flex;justify-content:space-between;gap:1rem;align-items:center;margin-bottom:1rem}.report-header h3{margin:0;font-family:'Cormorant Garamond',serif;font-size:1.15rem}.report-header span{font-size:.76rem;color:var(--muted)}
-.report-score-preview{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}.ring-shell{width:130px;height:130px;border-radius:50%;background:conic-gradient(var(--gold) 82%, rgba(255,255,255,.06) 0);display:flex;align-items:center;justify-content:center;flex:0 0 130px;position:relative}.ring-shell::before{content:'';position:absolute;inset:10px;border-radius:50%;background:var(--bg2)}.ring-core{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.ring-core strong{font-family:'Cormorant Garamond',serif;font-size:2.3rem;line-height:1;color:var(--gold)}.ring-core span{font-size:.62rem;letter-spacing:.08em;color:var(--muted)}.report-score-preview p{margin:0;color:var(--text);font-size:.92rem}
-.metric-lines{display:flex;flex-direction:column;gap:.72rem}.metric-lines .metric-line{display:block}.metric-lines .metric-line>div:first-child{display:flex;justify-content:space-between;align-items:center;gap:.8rem;margin-bottom:.32rem}.metric-lines .metric-line span{font-size:.83rem;color:var(--muted)}.metric-lines .metric-line strong{font-size:.8rem;color:var(--gold)}.metric-lines .bar{height:8px;border-radius:999px;background:rgba(255,255,255,.06);overflow:hidden}.metric-lines .bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--teal),var(--gold))}
-@media(max-width:980px){.hero-grid{grid-template-columns:1fr}.hero-visual{justify-content:flex-start}.report-card-preview{max-width:100%}}
-@media(max-width:640px){.hero-area{padding-top:1.4rem}.hero-copy h1{font-size:clamp(2rem,8vw,3rem)}.hero-copy p{font-size:.88rem}.hero-actions{gap:.55rem}.btn-lg{min-height:38px;padding:.62rem 1rem}.hero-chips{gap:.45rem}.info-chip{font-size:.68rem;padding:.4rem .6rem}.report-card-preview{padding:1rem}.report-score-preview{align-items:flex-start;gap:.8rem}.ring-shell{width:110px;height:110px;flex-basis:110px}.ring-core strong{font-size:2rem}}
-@media(max-width:960px){
-  nav{padding:.8rem 1.5rem;}
-  .nav-links,.nav-r{display:none;}
-  .ham{display:flex;}
-  .hero{grid-template-columns:1fr;padding:4rem 1.5rem 3rem;}
-  .hero-v{display:none;}
-  .sec{padding:4rem 1.5rem;}
-  .strip{padding:1.5rem;}
-  .steps-layout{grid-template-columns:1fr;}
-  .analysis-grid{grid-template-columns:1fr;}
-  .inv-hero-grid{grid-template-columns:1fr;}
-  .market-cards{grid-template-columns:1fr 1fr;}
-  .partners-grid{grid-template-columns:1fr;}
-  .values-grid{grid-template-columns:1fr 1fr;}
-  .contact-layout{grid-template-columns:1fr;}
-  .mission-split{grid-template-columns:1fr;}
-  .ft{grid-template-columns:1fr 1fr;gap:2rem;}
-  .fb{flex-direction:column;text-align:center;}
-  .about-intro{padding:4rem 1.5rem;}
-}
-@media(max-width:540px){
-  .market-cards{grid-template-columns:1fr;}
-  .values-grid{grid-template-columns:1fr;}
-  .ft{grid-template-columns:1fr;}
-  .frow{grid-template-columns:1fr;}
-  .display{font-size:2.5rem;}
-}
-
 .privacy-shell{display:grid;gap:1.2rem;max-width:980px;margin:0 auto;}
 .privacy-hero{padding:2.2rem;}
 .privacy-copy{padding:2rem 2.2rem;line-height:1.9;}
-.privacy-copy h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--gold);margin:0 0 .85rem;}
-.privacy-copy p,.privacy-copy li{font-size:.92rem;color:var(--muted);}
+.privacy-copy h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--primary-dark, #0F5F4D);margin:0 0 .85rem;}
+.privacy-copy p,.privacy-copy li{font-size:.95rem;color:var(--muted);}
 .privacy-copy ul{margin:.45rem 0 0;padding-inline-start:1.25rem;}
 .privacy-copy .privacy-divider{height:1px;background:var(--bord2);margin:1.2rem 0;}
 @media(max-width:640px){.privacy-hero,.privacy-copy{padding:1.35rem;}}
-
 </style>
 </head>
 <body>
@@ -144,7 +60,7 @@
 
 <div id="analysisLoading" class="analysis-loading" hidden role="status" aria-live="polite" aria-busy="true">
   <div class="analysis-loading-card">
-    <div class="analysis-visual" aria-hidden="true"><img id="analysisLoadingPreview" alt="" /><div class="analysis-scan-core"><i></i><b>AI</b><em></em></div><span></span><span></span><span></span></div>
+    <div class="analysis-visual" aria-hidden="true"><div class="analysis-scan-core"><i></i><img src="./assets/sidar-emblem-clean.png" alt="SIDAR AI" class="analysis-core-logo" /><em></em></div><span></span><span></span><span></span></div>
     <span class="analysis-loading-kicker">SIDAR AI</span>
     <h3 id="analysisLoadingTitle">Analyzing Skin &amp; Hair</h3>
     <p id="analysisLoadingCopy">Preparing your private visual review…</p>
@@ -156,25 +72,40 @@
 </div>
 
 <nav id="topNav">
-  <a class="logo" href="#landing">
-    <img src="./assets/logo.jpeg" alt="SIDAR" width="56" height="56" />
-    <span class="logo-type">SIDAR <sup>AI</sup></span>
-  </a>
+  <div class="nav-brand-container">
+    <a class="logo sidar-brand-lockup" href="#landing">
+      <img src="./assets/sidar-emblem-clean.png" alt="SIDAR AI" class="nav-brand-emblem" />
+      <div class="logo-text-block">
+        <span class="logo-brand-name"><span class="logo-green">SIDAR</span> <span class="logo-gold">AI</span></span>
+        <span class="logo-tagline">BEAUTY INTELLIGENCE PLATFORM</span>
+      </div>
+    </a>
+  </div>
   <ul class="nav-links">
-    <li><a href="#landing" data-p="landing" data-i18n="nav_home">Home</a></li>
-    <li><a href="#how" data-p="how" data-i18n="nav_how">How It Works</a></li>
-    <li><a href="#partners" data-p="partners" data-i18n="nav_partners">Partners</a></li>
-    <li><a href="#faq" data-p="faq" data-i18n="nav_faq">FAQ</a></li>
-    <li><a href="#investors" data-p="investors" data-i18n="nav_investors">Investors</a></li>
-    <li><a href="#pricing" data-p="pricing" data-i18n="nav_pricing">Pricing</a></li>
-    <li><a href="#about" data-p="about" data-i18n="nav_about">About</a></li>
-    <li><a href="#contact" data-p="contact" data-i18n="nav_contact">Contact</a></li>
-    <li><a href="#auth" data-p="auth" data-i18n="nav_my_account">My Account</a></li>
+    <li><a href="#landing" data-p="landing" class="on" data-i18n="nav_home">الرئيسية</a></li>
+    <li><a href="#how" data-p="how" data-i18n="nav_how">كيف يعمل</a></li>
+    <li><a href="#pricing" data-p="pricing" data-i18n="nav_pricing">الأسعار</a></li>
+    <li><a href="#faq" data-p="faq" data-i18n="nav_faq">الأسئلة الشائعة</a></li>
+    <li><a href="#investors" data-p="investors" data-i18n="nav_investors">المستثمرون</a></li>
+    <li><a href="#about" data-p="about" data-i18n="nav_about">من نحن</a></li>
+    <li><a href="#contact" data-p="contact" data-i18n="nav_contact">تواصل معنا</a></li>
   </ul>
   <div class="nav-r">
-    <button id="langToggleBtn" class="lang-mini" type="button">AR</button>
-    <a class="btn-out" id="navLoginBtn" href="#auth" data-i18n="nav_login">Login</a>
-    <button id="logoutBtn" class="btn-out hidden" type="button" data-i18n="nav_logout">Logout</button>
+    <div class="nav-lang-switcher" id="langSwitchGroup">
+      <span class="globe-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+      </span>
+      <button id="langBtnEn" class="lang-text-btn" type="button">EN</button>
+      <span class="lang-divider">|</span>
+      <button id="langBtnAr" class="lang-text-btn active" type="button">العربية</button>
+    </div>
+    <a href="#auth" id="navAuthBtn" class="nav-auth-btn" aria-label="Account">
+      <span class="nav-auth-icon" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      </span>
+      <span id="navAuthText">دخول</span>
+    </a>
+    <button id="langToggleBtn" class="lang-mini hidden" type="button">AR</button>
   </div>
   <div class="nav-mobile-actions">
     <button id="mobileTopLangToggleBtn" class="lang-mini mobile-top-lang" type="button">AR</button>
@@ -192,13 +123,12 @@
     <nav class="mobile-drawer-links" aria-label="Main navigation">
       <a href="#landing"><span class="mobile-nav-icon"><svg><use href="./assets/sidar-icons.svg#vision"></use></svg></span><b data-i18n="nav_home">Home</b><i aria-hidden="true">→</i></a>
       <a href="#how"><span class="mobile-nav-icon"><svg><use href="./assets/sidar-icons.svg#report"></use></svg></span><b data-i18n="nav_how">How It Works</b><i aria-hidden="true">→</i></a>
-      <a href="#partners"><span class="mobile-nav-icon"><svg><use href="./assets/sidar-icons.svg#clinic"></use></svg></span><b data-i18n="nav_partners">Partners</b><i aria-hidden="true">→</i></a>
       <a href="#faq"><span class="mobile-nav-icon"><svg><use href="./assets/sidar-icons.svg#report"></use></svg></span><b data-i18n="nav_faq">FAQ</b><i aria-hidden="true">→</i></a>
       <a href="#investors"><span class="mobile-nav-icon"><svg><use href="./assets/sidar-icons.svg#vision"></use></svg></span><b data-i18n="nav_investors">Investors</b><i aria-hidden="true">→</i></a>
       <a href="#pricing"><span class="mobile-nav-icon"><svg><use href="./assets/sidar-icons.svg#product"></use></svg></span><b data-i18n="nav_pricing">Pricing</b><i aria-hidden="true">→</i></a>
       <a href="#about"><span class="mobile-nav-icon"><svg><use href="./assets/sidar-icons.svg#doctor"></use></svg></span><b data-i18n="nav_about">About</b><i aria-hidden="true">→</i></a>
       <a href="#contact"><span class="mobile-nav-icon"><svg><use href="./assets/sidar-icons.svg#clinic"></use></svg></span><b data-i18n="nav_contact">Contact</b><i aria-hidden="true">→</i></a>
-      <a href="#auth" data-p="auth"><span class="mobile-nav-icon"><svg><use href="./assets/sidar-icons.svg#doctor"></use></svg></span><b data-i18n="nav_my_account">My Account</b><i aria-hidden="true">→</i></a>
+      <a href="#auth"><span class="mobile-nav-icon"><svg><use href="./assets/sidar-icons.svg#doctor"></use></svg></span><b data-i18n="nav_my_account">My Account</b><i aria-hidden="true">→</i></a>
     </nav>
     <div class="mobile-drawer-footer">
       <button id="mobileDrawerLanguage" class="mobile-drawer-language" type="button"><span>◎</span><b data-i18n="mobile_language">Language</b><em id="mobileDrawerLanguageValue">AR</em></button>
@@ -210,89 +140,221 @@
 
 <main>
 <section class="route active-route" id="landing" data-route>
-  <section class="sidar-next-hero" id="home-intro">
-    <div class="sidar-next-noise" aria-hidden="true"></div>
-    <div class="sidar-next-orbit sidar-next-orbit-a" aria-hidden="true"></div>
-    <div class="sidar-next-orbit sidar-next-orbit-b" aria-hidden="true"></div>
-    <div class="sidar-next-wrap">
-      <div class="sidar-next-intro reveal-up">
-        <div class="sidar-next-kicker"><i></i><span>SIDAR / PRIVATE BEAUTY INTELLIGENCE</span><b>01</b></div>
-        <div class="sidar-next-headline">
-          <p class="sidar-next-overline" data-i18n="landing_eyebrow">AI Beauty Intelligence Platform</p>
-          <h1 data-i18n="landing_title">Discover the future of beauty analysis with <span>SIDAR AI</span></h1>
-          <p class="sidar-next-description" data-i18n="landing_desc">SIDAR AI combines artificial intelligence, computer vision, and beauty intelligence to help users understand their skin and hair health more effectively.</p>
+  <section class="sidar-luxury-hero" id="home-intro">
+    <!-- Glowing AI wireframe face on the right -->
+    <div class="hero-bg-ai-face" aria-hidden="true">
+      <img src="./assets/hero-ai-face-clean.png" alt="" />
+    </div>
+
+    <!-- Silk ribbon waves on the bottom left -->
+    <div class="hero-bg-silk" aria-hidden="true">
+      <img src="./assets/hero-silk-clean.png" alt="" />
+    </div>
+
+    <div class="hero-main-container">
+      <div class="hero-grid-2col">
+        <!-- Right Column: Text & Features (in RTL) -->
+        <div class="hero-content-col">
+          <div class="hero-kicker-badge">
+            <span class="kicker-line"></span>
+            <span class="kicker-text" data-i18n="landing_eyebrow">منصة سدر مساعدك الذكي للجمال والعناية الشخصية</span>
+            <span class="kicker-line"></span>
+          </div>
+
+          <h1 class="hero-main-headline" data-i18n="landing_title">افهم بشرتك وشعرك كما لم تعرفها من قبل</h1>
+
+          <p class="hero-main-description" data-i18n="landing_desc">
+            ذكاء اصطناعي يفهم بشرتك وشعرك، ويمنحك رؤى شخصية وتوصيات مصممة خصيصاً لك.
+          </p>
+
+          <div class="hero-cta-wrap">
+            <a href="#scan" class="hero-cta-pill-btn">
+              <span data-i18n="landing_cta_primary">ابدأ التحليل المجاني</span>
+              <span class="btn-arrow-icon" aria-hidden="true">→</span>
+            </a>
+            <a href="#auth" id="heroLoginBtn" class="hero-secondary-pill-btn">
+              <span class="hero-btn-icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </span>
+              <span id="heroLoginText" data-i18n="nav_my_account">حسابي</span>
+            </a>
+          </div>
+
+          <div class="hero-mini-features-row">
+            <div class="mini-feature-item">
+              <div class="mini-feat-icon-ring" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"></circle><path d="M9 10h.01M15 10h.01M9.5 15a3.5 3.5 0 0 0 5 0"></path><path d="M12 11v2"></path></svg>
+              </div>
+              <strong class="mini-feat-title" data-i18n="feature_skin_title">تحليل البشرة</strong>
+              <span class="mini-feat-sub" data-i18n="feature_skin_sub">تفاصيل دقيقة ورؤى أعمق</span>
+            </div>
+
+            <div class="mini-feature-item">
+              <div class="mini-feat-icon-ring" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"></circle><path d="M12 6c-2 3-3 7-2 11M12 6c2 3 3 7 2 11M12 6v11"></path></svg>
+              </div>
+              <strong class="mini-feat-title" data-i18n="feature_hair_title">تحليل الشعر</strong>
+              <span class="mini-feat-sub" data-i18n="feature_hair_sub">صحة وكثافة ولمعان</span>
+            </div>
+
+            <div class="mini-feature-item">
+              <div class="mini-feat-icon-ring" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="4" width="14" height="16" rx="2"></rect><path d="M9 8h6M9 12h6M9 16h4"></path></svg>
+              </div>
+              <strong class="mini-feat-title" data-i18n="feature_report_title">التقرير الشخصي</strong>
+              <span class="mini-feat-sub" data-i18n="feature_report_sub">خطة جمال مخصصة لك</span>
+            </div>
+          </div>
         </div>
-        <div class="sidar-next-actions">
-          <a href="#scan" class="sidar-next-primary" data-i18n="landing_cta_primary"><span>✦</span> Start AI Analysis <i>↗</i></a>
-          <a href="#how" class="sidar-next-text-link">Explore the system <i>↓</i></a>
-        </div>
-        <div class="sidar-next-assurances">
-          <span><i>✓</i> Private by design</span>
-          <span><i>✓</i> Personal AI report</span>
-          <span><i>✓</i> Skin &amp; hair</span>
+
+        <!-- Left Column: The Floating Analysis Preview Card (in RTL) -->
+        <div class="hero-card-col">
+          <div class="hero-floating-card">
+            <!-- Card Header: Title on left, Badge on right (in LTR visual order: Badge, Title) -->
+            <div class="floating-card-header">
+              <span class="card-header-badge" data-i18n="card_badge">تحليل شامل</span>
+              <div class="card-header-right">
+                <span class="card-gold-dash" aria-hidden="true"></span>
+                <span data-i18n="card_title">تقرير الجمال بالذكاء الاصطناعي</span>
+              </div>
+            </div>
+
+            <!-- Card Middle: Animated Spinning Logo on left, Brand on right -->
+            <div class="floating-card-middle">
+              <div class="card-logo-spin-box">
+                <div class="logo-spin-halo">
+                  <div class="logo-spin-ring-outer" aria-hidden="true"></div>
+                  <div class="logo-spin-ring-inner" aria-hidden="true"></div>
+                  <img src="./assets/sidar-emblem-clean.png" alt="SIDAR AI" class="logo-spin-emblem" />
+                </div>
+              </div>
+
+              <div class="card-brand-box">
+                <div class="card-brand-title"><span class="logo-cream">SIDAR</span> <span class="logo-gold">AI</span></div>
+                <div class="card-brand-sub" data-i18n="card_brand_sub">ذكاء العناية بالبشرة والشعر</div>
+                <div class="card-brand-live-pill">
+                  <span class="live-dot-pulse" aria-hidden="true"></span>
+                  <span data-i18n="card_live_status">تحليل ذكي نشط</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Metrics (4 bars: icon and pct on left, bar in center, label on right) -->
+            <div class="floating-card-metrics">
+              <div class="metric-progress-row">
+                <span class="metric-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3c-4.5 6-7 9.5-7 13a7 7 0 0 0 14 0c0-3.5-2.5-7-7-13z"></path></svg>
+                </span>
+                <span class="metric-pct">75%</span>
+                <div class="metric-bar-track"><div class="metric-bar-fill" style="width: 75%;"></div></div>
+                <span class="metric-name" data-i18n="score_metric_hydration">الترطيب</span>
+              </div>
+
+              <div class="metric-progress-row">
+                <span class="metric-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L9.5 8.5 3 9.5l5 4.5-1.5 6.5L12 17l5.5 3.5-1.5-6.5 5-4.5-6.5-1z"></path></svg>
+                </span>
+                <span class="metric-pct">70%</span>
+                <div class="metric-bar-track"><div class="metric-bar-fill" style="width: 70%;"></div></div>
+                <span class="metric-name" data-i18n="score_metric_texture">وضوح الملمس</span>
+              </div>
+
+              <div class="metric-progress-row">
+                <span class="metric-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12c3-4 6-4 9 0s6 4 9 0"></path></svg>
+                </span>
+                <span class="metric-pct">78%</span>
+                <div class="metric-bar-track"><div class="metric-bar-fill" style="width: 78%;"></div></div>
+                <span class="metric-name" data-i18n="score_metric_fine_lines">الخطوط الدقيقة</span>
+              </div>
+
+              <div class="metric-progress-row">
+                <span class="metric-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5z"></path></svg>
+                </span>
+                <span class="metric-pct">84%</span>
+                <div class="metric-bar-track"><div class="metric-bar-fill" style="width: 84%;"></div></div>
+                <span class="metric-name" data-i18n="score_metric_tone">تناسق اللون</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="sidar-next-console reveal-up delay-1" aria-label="SIDAR analysis preview">
-        <div class="sidar-next-console-top">
-          <div class="sidar-next-live"><span></span> LIVE INTELLIGENCE</div>
-          <div class="sidar-next-console-id">REPORT // 0842</div>
-          <button type="button" aria-label="More report options">•••</button>
-        </div>
-        <div class="sidar-next-console-main">
-          <div class="sidar-next-score">
-            <svg viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="80" r="66"></circle><circle class="sidar-next-score-line" cx="80" cy="80" r="66"></circle></svg>
-            <div><strong>82</strong><span>SIDAR SCORE</span><small>+ 8 this month</small></div>
+      <!-- Bottom Features Strip -->
+      <div class="hero-bottom-strip">
+        <div class="strip-item">
+          <div class="strip-icon-circle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
           </div>
-          <div class="sidar-next-summary">
-            <span>YOUR PROFILE</span>
-            <h2>Balanced,<br><em>with clear next steps.</em></h2>
-            <p data-i18n="landing_preview_summary">Above average skin health profile</p>
+          <div class="strip-content">
+            <strong data-i18n="strip_experts_title">مسترشدون بتوصيات الخبراء</strong>
+            <span data-i18n="strip_experts_sub">ندمج بين الذكاء الاصطناعي والخبرة الطبية</span>
           </div>
         </div>
-        <div class="sidar-next-metrics">
-          <div><span data-i18n="score_metric_hydration">Hydration</span><b>80%</b><i><em style="width:80%"></em></i></div>
-          <div><span data-i18n="score_metric_pore_clarity">Pore Clarity</span><b>85%</b><i><em style="width:85%"></em></i></div>
-          <div><span data-i18n="score_metric_fine_lines">Fine Lines</span><b>90%</b><i><em style="width:90%"></em></i></div>
+
+        <div class="strip-item">
+          <div class="strip-icon-circle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 3.5 1 6-1 9a7 7 0 0 1-7 9z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+          </div>
+          <div class="strip-content">
+            <strong data-i18n="strip_natural_title">جمال طبيعي، بأسلوب علمي</strong>
+            <span data-i18n="strip_natural_sub">لنتائج تدوم</span>
+          </div>
         </div>
-        <div class="sidar-next-signal"><span>SIDAR SIGNAL</span><p>One focused routine can improve your next scan.</p><i>→</i></div>
+
+        <div class="strip-item">
+          <div class="strip-icon-circle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg>
+          </div>
+          <div class="strip-content">
+            <strong data-i18n="strip_privacy_title">خصوصيتك تهمنا</strong>
+            <span data-i18n="strip_privacy_sub">بياناتك آمنة وسرية</span>
+          </div>
+        </div>
+
+        <div class="strip-item">
+          <div class="strip-icon-circle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"></path></svg>
+          </div>
+          <div class="strip-content">
+            <strong data-i18n="strip_ai_title">تقنية الذكاء الاصطناعي المتقدمة</strong>
+            <span data-i18n="strip_ai_sub">تحليلات دقيقة ومخصصة</span>
+          </div>
+        </div>
       </div>
+
+      <!-- Scroll Indicator -->
+      <a href="#how" class="hero-scroll-cue">
+        <div class="mouse-icon" aria-hidden="true">
+          <span class="mouse-wheel"></span>
+        </div>
+        <span data-i18n="explore_more">اكتشف المزيد</span>
+        <div class="scroll-tick-line" aria-hidden="true"></div>
+      </a>
     </div>
-    <div class="sidar-next-bottomline"><span>INTELLIGENT CARE, WITHOUT THE NOISE</span><div></div><span>EST. 2026</span></div>
   </section>
 
-  <section class="sidar-next-discover">
-    <div class="sidar-next-discover-head">
-      <span>THE SIDAR METHOD</span>
-      <h2 data-i18n="discover_heading">What You Can <em>Discover</em></h2>
-      <p>Everything you need to see the signal, understand it, and act with confidence.</p>
-    </div>
-    <div class="sidar-next-discover-grid">
-      <article><span>01</span><i class="sidar-vector-icon"><svg><use href="./assets/sidar-icons.svg#scan"></use></svg></i><h3 data-i18n="discover_item_1">Analyze skin condition using live AI</h3><p>Visual insight, organized around what deserves your attention.</p></article>
-      <article><span>02</span><i class="sidar-vector-icon"><svg><use href="./assets/sidar-icons.svg#vision"></use></svg></i><h3 data-i18n="discover_item_2">Evaluate hair quality and scalp health</h3><p>A connected view of your skin, hair, and scalp profile.</p></article>
-      <article><span>03</span><i class="sidar-vector-icon"><svg><use href="./assets/sidar-icons.svg#report"></use></svg></i><h3 data-i18n="discover_item_4">Get tailored beauty insights and recommendations</h3><p>Real next steps, products, and specialists when they matter.</p></article>
-    </div>
-  </section>
 </section>
 
 <section class="route" id="how" data-route>
   <section class="sidar-how-hero">
     <div class="sidar-page-shell">
-      <div class="sidar-page-index">SYSTEM / 01 — HOW IT WORKS</div>
+      <div class="sidar-page-index" data-i18n="how_page_index">SYSTEM / 01 — HOW IT WORKS</div>
       <div class="sidar-how-layout">
         <div>
-          <span class="sidar-page-kicker">THE SIDAR METHOD</span>
+          <span class="sidar-page-kicker" data-i18n="how_kicker">THE SIDAR METHOD</span>
           <h1 data-i18n="how_title">Simple. Intelligent.<br><em>Personalized.</em></h1>
           <p data-i18n="how_desc">SIDAR AI uses advanced artificial intelligence and computer vision technology to analyze your skin and hair features and generate personalized beauty insights.</p>
-          <div class="sidar-how-meta"><span>PRIVATE IMAGE REVIEW</span><span>PERSONALIZED OUTPUT</span></div>
+          <div class="sidar-how-meta"><span data-i18n="how_meta_1">PRIVATE IMAGE REVIEW</span><span data-i18n="how_meta_2">PERSONALIZED OUTPUT</span></div>
         </div>
         <div class="sidar-how-schematic" aria-hidden="true">
           <div class="sidar-how-scanline"></div>
-          <div class="sidar-how-node sidar-how-node-a">PHOTO<br>INPUT</div>
-          <div class="sidar-how-node sidar-how-node-b">AI<br>VISION</div>
-          <div class="sidar-how-node sidar-how-node-c">YOUR<br>PLAN</div>
+          <div class="sidar-how-node sidar-how-node-a" data-i18n="how_node_a">PHOTO<br>INPUT</div>
+          <div class="sidar-how-node sidar-how-node-b" data-i18n="how_node_b">AI<br>VISION</div>
+          <div class="sidar-how-node sidar-how-node-c" data-i18n="how_node_c">YOUR<br>PLAN</div>
           <svg viewBox="0 0 640 370"><path d="M93 94 C230 94 190 183 320 183 S412 270 552 270"/><path d="M93 275 C210 275 246 183 320 183"/></svg>
-          <b>SIDAR<br>INTELLIGENCE<br>FLOW</b>
+          <b data-i18n="how_schematic_title">SIDAR<br>INTELLIGENCE<br>FLOW</b>
         </div>
       </div>
     </div>
@@ -301,9 +363,9 @@
     <div class="sidar-page-shell">
       <div class="sidar-section-bar"><span>01 — 03</span><p data-i18n="how_desc_2">Our platform is designed to deliver accurate analysis and meaningful recommendations through a simple and user-friendly process.</p></div>
       <div class="sidar-how-steps">
-        <article><div class="sidar-step-count">01 <i>↘</i></div><div class="sidar-step-symbol"><svg><use href="./assets/sidar-icons.svg#scan"></use></svg></div><h2 data-i18n="how_step_1_title">Upload Your Photo</h2><p data-i18n="how_step_1_text">Start by securely uploading a clear photo. Our system uses advanced image processing to prepare the image for analysis while maintaining user privacy and security.</p></article>
-        <article><div class="sidar-step-count">02 <i>↘</i></div><div class="sidar-step-symbol"><svg><use href="./assets/sidar-icons.svg#vision"></use></svg></div><h2 data-i18n="how_step_2_title">AI Beauty Analysis</h2><p data-i18n="how_step_2_text">SIDAR AI evaluates multiple beauty indicators including skin texture, pores, hydration level, wrinkles, and hair condition using advanced AI algorithms.</p></article>
-        <article><div class="sidar-step-count">03 <i>↘</i></div><div class="sidar-step-symbol"><svg><use href="./assets/sidar-icons.svg#report"></use></svg></div><h2 data-i18n="how_step_3_title">Receive Your Beauty Report</h2><p data-i18n="how_step_3_text">After analysis is completed, you will receive a personalized AI report containing insights, scores, and recommendations designed to help you better understand your skin and hair condition.</p><a href="#scan">Begin your analysis <i>↗</i></a></article>
+        <article><div class="sidar-step-count">01 <i>✦</i></div><div class="sidar-step-symbol"><svg><use href="./assets/sidar-icons.svg#scan"></use></svg></div><h2 data-i18n="how_step_1_title">Upload Your Photo</h2><p data-i18n="how_step_1_text">Start by securely uploading a clear photo. Our system uses advanced image processing to prepare the image for analysis while maintaining user privacy and security.</p></article>
+        <article><div class="sidar-step-count">02 <i>✦</i></div><div class="sidar-step-symbol"><svg><use href="./assets/sidar-icons.svg#vision"></use></svg></div><h2 data-i18n="how_step_2_title">AI Beauty Analysis</h2><p data-i18n="how_step_2_text">SIDAR AI evaluates multiple beauty indicators including skin texture, pores, hydration level, wrinkles, and hair condition using advanced AI algorithms.</p></article>
+        <article><div class="sidar-step-count">03 <i>✦</i></div><div class="sidar-step-symbol"><svg><use href="./assets/sidar-icons.svg#report"></use></svg></div><h2 data-i18n="how_step_3_title">Receive Your Beauty Report</h2><p data-i18n="how_step_3_text">After analysis is completed, you will receive a personalized AI report containing insights, scores, and recommendations designed to help you better understand your skin and hair condition.</p><a href="#scan" data-i18n="how_begin_cta">Begin your analysis <i>↗</i></a></article>
       </div>
     </div>
   </section>
@@ -312,7 +374,18 @@
 <section class="route" id="scan" data-route>
   <section class="sidar-scan-page">
     <div class="sidar-scan-canvas">
-      <div class="sidar-scan-intro"><div><span>SIDAR / VISUAL REVIEW</span><h1 data-i18n="analysis_intro_title">Skin and Hair Analysis</h1><p data-i18n="scan_desc">AI analyzes your skin and hair and provides personalized recommendations built on your unique needs.</p></div><div class="sidar-scan-status"><i></i><span>PRIVATE SESSION</span><b>01 / 01</b></div></div>
+      <div class="sidar-scan-intro">
+        <div>
+          <span class="scan-kicker-line"></span>
+          <span class="scan-kicker-text" data-i18n="scan_kicker">منصة الفحص الذكي · SIDAR AI</span>
+          <h1 data-i18n="analysis_intro_title">تحليل ذكي . رؤى شخصية . عناية أكثر وعيًا</h1>
+          <p data-i18n="scan_desc">اكتشف خصائص بشرتك وشعرك من خلال تقنيات الذكاء الاصطناعي المتقدمة. أرفق صورك، وأكمل بيانات التحليل، واحصل على تقرير مخصص يساعدك على فهم احتياجاتك واختيار البرنامج المناسب للوصول للبشرة والشعر المثالي وأساليب العناية المناسبة.</p>
+        </div>
+        <div class="sidar-scan-status">
+          <i></i>
+          <span data-i18n="scan_secure_session">خصوصيتك وأمان بياناتك في مقدمة أولوياتنا</span>
+        </div>
+      </div>
 
       <div class="scan-shell sidar-scan-shell">
         <div class="glass reveal-up sidar-scan-form-shell">
@@ -320,14 +393,18 @@
             <div class="uploader-box upload-source-box sidar-upload-deck">
               <div class="sidar-upload-deck-head">
                 <span class="sidar-form-step">01</span>
-                <div><small>START WITH A CLEAR PHOTO</small><strong data-i18n="upload_title">Add photos for your analysis</strong><p data-i18n="upload_subtitle">Choose your source — up to 5 clear photos</p></div>
-                <span class="sidar-upload-secure">PRIVATE <i>•</i> SECURE</span>
+                <div>
+                  <small data-i18n="scan_step_1_label">الخطوة الأولى · رفع الصور</small>
+                  <strong data-i18n="upload_title">أضف صورك للتحليل</strong>
+                  <p data-i18n="upload_subtitle">اختر المصدر — حتى 5 صور واضحة للحصول على أفضل دقة</p>
+                </div>
+                <span class="sidar-upload-secure" data-i18n="scan_upload_secure">خصوصية تامة <i>•</i> تشفير آمن</span>
               </div>
               <div class="upload-source-actions sidar-source-cards">
-                <button id="galleryPickerBtn" class="upload-source-action sidar-source-card" type="button"><span class="sidar-source-icon"><svg><use href="./assets/sidar-icons.svg#gallery"></use></svg></span><span class="sidar-source-copy"><b data-i18n="upload_gallery">Choose from gallery</b><small data-i18n="upload_gallery_note">Select saved photos</small></span><i>↗</i></button>
-                <button id="cameraPickerBtn" class="upload-source-action upload-camera-action sidar-source-card" type="button"><span class="sidar-source-icon"><svg><use href="./assets/sidar-icons.svg#camera"></use></svg></span><span class="sidar-source-copy"><b data-i18n="upload_camera">Use camera</b><small data-i18n="upload_camera_note">Frame your Skin &amp; Hair scan</small></span><i>↗</i></button>
+                <button id="galleryPickerBtn" class="upload-source-action sidar-source-card" type="button"><span class="sidar-source-icon"><svg><use href="./assets/sidar-icons.svg#gallery"></use></svg></span><span class="sidar-source-copy"><b data-i18n="upload_gallery">اختر من المعرض</b><small data-i18n="upload_gallery_note">تحديد صور محفوظة من جهازك</small></span><i>↗</i></button>
+                <button id="cameraPickerBtn" class="upload-source-action upload-camera-action sidar-source-card" type="button"><span class="sidar-source-icon"><svg><use href="./assets/sidar-icons.svg#camera"></use></svg></span><span class="sidar-source-copy"><b data-i18n="upload_camera">التقاط بالكاميرا</b><small data-i18n="upload_camera_note">التقاط فوري للبشرة أو الشعر</small></span><i>↗</i></button>
               </div>
-              <div class="sidar-upload-note"><span>✦</span><p>For the clearest review, use soft natural light and avoid filters.</p></div>
+              <div class="sidar-upload-note"><span>✦</span><p data-i18n="scan_upload_tip">للحصول على أدق نتيجة، يُفضل استخدام إضاءة طبيعية واضحة وتجنب الفلاتر.</p></div>
               <input id="imageInput" name="images" type="file" accept="image/*" multiple hidden />
               <input id="cameraImageInput" type="file" accept="image/*" capture="environment" hidden />
             </div>
@@ -353,7 +430,7 @@
 
             <div id="cameraCaptureModal" class="camera-capture-modal" hidden aria-hidden="true">
               <div class="camera-capture-sheet" role="dialog" aria-modal="true" aria-label="Camera capture">
-                <div class="camera-sheet-head"><div><small data-i18n="camera_label">CAMERA CAPTURE</small><h3 data-i18n="camera_title">Frame your photo</h3></div><button id="cameraCloseBtn" type="button" class="camera-close-btn" aria-label="Close"><span>×</span><b>إغلاق</b></button></div>
+                <div class="camera-sheet-head"><div><small data-i18n="camera_label">CAMERA CAPTURE</small><h3 data-i18n="camera_title">Frame your photo</h3></div><button id="cameraCloseBtn" type="button" class="camera-close-btn" aria-label="Close"><span>×</span><b data-i18n="close">إغلاق</b></button></div>
                 <p class="camera-sheet-copy" data-i18n="camera_intro">Choose the area first. We will show a guide frame for a clearer photo.</p>
                 <div id="cameraTargetOptions" class="camera-target-options">
                   <button type="button" class="camera-target active" data-camera-target="face"><span>◯</span><b data-i18n="camera_face">Face</b></button>
@@ -362,7 +439,7 @@
                 </div>
                 <div id="cameraStage" class="camera-stage camera-target-face">
                   <video id="cameraVideo" autoplay muted playsinline></video>
-                  <div id="cameraFrame" class="camera-frame" aria-hidden="true"><span data-i18n="camera_frame_face">Keep your face inside the frame</span></div>
+                  <div id="cameraFrame" class="camera-frame" hidden style="display:none!important;" aria-hidden="true"></div>
                   <div id="cameraEmptyState" class="camera-empty-state"><span>◉</span><b data-i18n="camera_ready">Ready when you are</b><small data-i18n="camera_ready_note">Your camera stays private on this device</small></div>
                 </div>
                 <p id="cameraStatus" class="camera-status" aria-live="polite"></p>
@@ -370,7 +447,14 @@
               </div>
             </div>
 
-            <div class="scan-subsection-head scan-details-head"><span class="sidar-form-step">02</span><div><small>JUST THE ESSENTIALS</small><b>Where should SIDAR focus?</b><em>Two quick choices — extra context is optional.</em></div></div>
+            <div class="scan-subsection-head scan-details-head">
+              <span class="sidar-form-step">02</span>
+              <div>
+                <small data-i18n="scan_step_2_label">الخطوة الثانية · تحديد الهدف</small>
+                <b data-i18n="scan_step_2_title">أين تريد تركيز التحليل؟</b>
+                <em data-i18n="scan_step_2_desc">حدّد نوع الفحص والمنطقة للحصول على نتائج تشخيصية دقيقة.</em>
+              </div>
+            </div>
             <div class="form-grid two-col scan-details-grid">
               <label>
                 <span data-i18n="scan_type">Scan type</span>
@@ -410,13 +494,19 @@
                 </select>
               </label>
 
-              <label>
-                <span data-i18n="dashboard_location_label">Location</span>
+              <label class="scan-location-field">
+                <div class="field-title-row">
+                  <span data-i18n="dashboard_location_label">الموقع</span>
+                  <button type="button" class="field-quick-detect-btn" id="scanAutoDetectBtn" title="تحديد موقعي تلقائياً" data-i18n-title="detect_my_location">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
+                    <span data-i18n="detect_my_location">تحديد موقعي</span>
+                  </button>
+                </div>
                 <select name="location_text" class="country-select"><option value="" data-i18n="select_country">Select country</option></select>
               </label>
 
               <details class="scan-optional-details full-span-field">
-                <summary><span>＋</span> Add optional details for a more precise review</summary>
+                <summary data-i18n="scan_optional_details_summary"><span>＋</span> إضافة تفاصيل اختيارية لدقة فحص أعلى</summary>
                 <div class="scan-optional-grid">
 
               <label>
@@ -451,26 +541,6 @@
                 </select>
               </label>
 
-              <label>
-                <span data-i18n="problem_type">Problem type</span>
-                <select name="issue_type_detail">
-                  <option value="redness" data-i18n="problem_redness">Redness / sensitivity</option>
-                  <option value="dryness" data-i18n="problem_dryness">Dryness / dehydration</option>
-                  <option value="acne" data-i18n="problem_acne">Acne / bumps</option>
-                  <option value="pigmentation" data-i18n="problem_pigmentation">Pigmentation / dark spots</option>
-                  <option value="texture" data-i18n="problem_texture">Texture / pores</option>
-                  <option value="hair_loss" data-i18n="problem_hair_loss">Hair loss / density</option>
-                  <option value="scalp" data-i18n="problem_scalp">Scalp issue</option>
-                </select>
-              </label>
-
-              <label>
-                <span data-i18n="dashboard_location_label">Location</span>
-                <select name="location_text_detail" class="country-select">
-                  <option value="" data-i18n="select_country">Select country</option>
-                </select>
-              </label>
-
               <fieldset class="check-grid symptoms-grid full-span-field">
                 <legend data-i18n="symptoms">Symptoms</legend>
                 <label class="check-chip"><input type="checkbox" name="symptoms" value="redness"/><span data-i18n="symptom_redness">Redness</span></label>
@@ -491,15 +561,18 @@
               </details>
             </div>
 
+            <div class="sidar-analyze-launch">
+              <button class="btn btn-primary" type="submit" data-i18n="analyze_now">ابدأ التحليل الآن <i>←</i></button>
+              <div class="sidar-launch-security">
+                <span class="security-dot"></span>
+                <span data-i18n="scan_security_ready">نظام الذكاء الاصطناعي جاهز للفحص الفوري · جلسة مشفرة وخاصة</span>
+              </div>
+            </div>
+
           </form>
         </div>
 
-        <div class="sidar-analyze-launch">
-          <span>READY WHEN YOU ARE</span>
-          <button class="btn btn-primary" type="submit" form="scanForm" data-i18n="analyze_now">Analyze Now <i>↗</i></button>
-        </div>
-
-        <div class="analysis-panel reveal-up" hidden>
+        <div class="analysis-panel reveal-up" id="analysisPreviewPanel" hidden>
           <div class="title-row">
             <h3 data-i18n="live_result_preview">Live Result Preview</h3>
             <span class="pct-circle" id="resultPriorityBadge">--</span>
@@ -554,9 +627,9 @@
     <div class="wrap">
       <header class="results-page-header results-report-header">
         <div class="results-report-title">
-          <span class="results-eyebrow">SIDAR AI · Skin &amp; Hair</span>
+          <span class="results-eyebrow" data-i18n="results_eyebrow">SIDAR AI · Skin &amp; Hair</span>
           <h2 class="h2" data-i18n="full_ai_report">SIDAR Report</h2>
-          <p id="resultReportMeta" class="results-meta-copy">Your personalized visual review</p>
+          <p id="resultReportMeta" class="results-meta-copy" data-i18n="results_meta_default">Your personalized visual review</p>
         </div>
         <div class="results-header-actions">
           <button id="resultsBackBtn" class="btn btn-ghost" type="button" data-i18n="back_to_analysis">Back to analysis</button>
@@ -574,19 +647,43 @@
         <div class="result-grid">
           <article id="resultOverview" class="glass full-span result-hero" data-priority="medium">
             <div class="result-hero-main">
-              <div><span id="resultStatusLabel" class="result-status-label">Personalized review</span><h3 id="resultTitleClone" data-i18n="result_overview">Result overview</h3><p id="resultPrioritySupport">Your report summary will appear here.</p></div>
+              <div><span id="resultStatusLabel" class="result-status-label" data-i18n="results_status_default">Personalized review</span><h3 id="resultTitleClone" data-i18n="result_overview">Result overview</h3><p id="resultPrioritySupport" data-i18n="results_summary_default">Your report summary will appear here.</p></div>
               <span class="pct-circle result-main-score" id="resultPriorityBadgeResults">--</span>
             </div>
             <div class="result-facts">
-              <span><small data-i18n="confidence_label">Confidence</small><strong id="resultConfidenceClone">--</strong></span>
-              <span><small data-i18n="priority_label">Priority</small><strong id="resultPriorityClone">--</strong></span>
-              <span><small data-i18n="image_quality_label">Image quality</small><strong id="resultImageQualityClone">--</strong></span>
+              <div class="result-fact-card">
+                <div class="fact-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                </div>
+                <div class="fact-content">
+                  <small data-i18n="confidence_label">Skin Health</small>
+                  <strong id="resultConfidenceClone">--</strong>
+                </div>
+              </div>
+              <div class="result-fact-card">
+                <div class="fact-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div class="fact-content">
+                  <small data-i18n="priority_label">Priority</small>
+                  <strong id="resultPriorityClone">--</strong>
+                </div>
+              </div>
+              <div class="result-fact-card">
+                <div class="fact-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/></svg>
+                </div>
+                <div class="fact-content">
+                  <small data-i18n="image_quality_label">Image quality</small>
+                  <strong id="resultImageQualityClone">--</strong>
+                </div>
+              </div>
             </div>
           </article>
           <article id="resultHealth" class="glass full-span result-metrics-card result-score-card">
-            <div class="title-row result-card-heading"><div><span class="result-card-kicker">01 · SIDAR SCORE</span><h3 data-i18n="ai_summary_title">Health score</h3><p id="resultScoreSummaryClone" class="result-section-note">Your score details will appear after analysis.</p></div></div>
+            <div class="title-row result-card-heading"><div><span class="result-card-kicker" data-i18n="results_kicker_01">01 · SIDAR SCORE</span><h3 data-i18n="ai_summary_title">Health score</h3><p id="resultScoreSummaryClone" class="result-section-note" data-i18n="results_score_note_default">Your score details will appear after analysis.</p></div></div>
             <div class="result-metrics-layout">
-              <div class="score-ring" id="scoreRingClone"><div><div class="score-value" id="resultOverallScoreClone">--</div><div class="score-caption" id="resultScoreLabelClone">SCORE</div></div></div>
+              <div class="score-ring" id="scoreRingClone"><div><div class="score-value" id="resultOverallScoreClone">--</div><div class="score-caption" id="resultScoreLabelClone" data-i18n="results_score_caption">SCORE</div></div></div>
               <div class="score-lines">
                 <div class="metric-line big"><span data-i18n="score_metric_hydration">Hydration</span><strong id="hydrationValueClone">--</strong><div class="line-track"><div class="line-fill" id="hydrationBarClone"></div></div></div>
                 <div class="metric-line big"><span data-i18n="score_metric_pore_clarity">Pore Clarity</span><strong id="poreValueClone">--</strong><div class="line-track"><div class="line-fill" id="poreBarClone"></div></div></div>
@@ -595,10 +692,10 @@
               </div>
             </div>
           </article>
-          <article id="resultIndicators" class="glass full-span result-indicators-card"><div class="title-row result-card-heading"><div><span class="result-card-kicker">02 · FOCUS AREAS</span><h3 data-i18n="visible_findings_title">Key indicators</h3></div><span class="notes-icon">+</span></div><div id="resultPatternsClone" class="result-findings-list"></div></article>
-          <article class="glass full-span result-notes-card"><div class="title-row result-card-heading"><div><span class="result-card-kicker">CLINICAL NOTES</span><h3 data-i18n="followup_reasons_title">Key observations</h3><p class="result-section-note" data-i18n="report_notes_subtitle">Notes that may help you decide what to do next.</p></div><span class="notes-icon">i</span></div><div id="resultReasons" class="reasons-list"></div></article>
+          <article id="resultIndicators" class="glass full-span result-indicators-card"><div class="title-row result-card-heading"><div><span class="result-card-kicker" data-i18n="results_kicker_02">02 · FOCUS AREAS</span><h3 data-i18n="visible_findings_title">Key indicators</h3></div><span class="notes-icon">+</span></div><div id="resultPatternsClone" class="result-findings-list"></div></article>
+          <article class="glass full-span result-notes-card"><div class="title-row result-card-heading"><div><span class="result-card-kicker" data-i18n="results_kicker_notes">CLINICAL NOTES</span><h3 data-i18n="followup_reasons_title">Key observations</h3><p class="result-section-note" data-i18n="report_notes_subtitle">Notes that may help you decide what to do next.</p></div><span class="notes-icon">i</span></div><div id="resultReasons" class="reasons-list"></div></article>
           <article id="resultPlan" class="glass full-span result-plan-card">
-            <div class="title-row result-card-heading"><div><span class="result-card-kicker">03 · DAILY CARE</span><h3 data-i18n="care_steps_title">SIDAR Plan</h3></div><span class="notes-icon">✓</span></div>
+            <div class="title-row result-card-heading"><div><span class="result-card-kicker" data-i18n="results_kicker_03">03 · DAILY CARE</span><h3 data-i18n="care_steps_title">SIDAR Plan</h3></div><span class="notes-icon">✓</span></div>
             <div class="result-routine-grid">
               <div class="routine-column morning-routine">
                 <h4 style="color:var(--gold);margin-bottom:.6rem;" data-i18n="morning_routine">Morning routine</h4>
@@ -611,29 +708,26 @@
             </div>
           </article>
           <article class="glass"><div class="title-row"><h3 data-i18n="natural_products_title">Natural product suggestions</h3><span>🌿</span></div><div id="naturalProductsList" class="suggestion-list empty-copy" data-i18n="no_suggestions_yet">No suggestions yet.</div></article>
-          <article id="resultProducts" class="glass full-span result-products-card"><div class="title-row result-card-heading"><div><span class="result-card-kicker">04 · VERIFIED CATALOG</span><h3 data-i18n="commercial_products_title">Suggested products</h3></div><span class="notes-icon">+</span></div><p class="result-section-note" data-i18n="catalog_products_note">Selected from SIDAR’s verified medical catalog.</p><div id="commercialProductsList" class="suggestion-list empty-copy" data-i18n="no_suggestions_yet">No suggestions yet.</div></article>
-          <article id="resultDoctors" class="glass full-span result-doctors-card"><div class="title-row result-card-heading"><div><span class="result-card-kicker">LOCAL EXPERTS</span><h3 data-i18n="doctors_title">Doctors in your area</h3></div><span class="notes-icon">+</span></div><p class="result-section-note" data-i18n="local_doctors_note">Matched to your selected location and available SIDAR records.</p><div id="nearbyDoctorsList" class="doctor-list empty-copy" data-i18n="no_nearby_doctors_yet">No nearby suggestions yet.</div></article>
+          <article id="resultProducts" class="glass full-span result-products-card"><div class="title-row result-card-heading"><div><span class="result-card-kicker" data-i18n="results_kicker_04">04 · VERIFIED CATALOG</span><h3 data-i18n="commercial_products_title">Suggested products</h3></div><span class="notes-icon">+</span></div><p class="result-section-note" data-i18n="catalog_products_note">Selected from SIDAR’s verified medical catalog.</p><div id="commercialProductsList" class="suggestion-list empty-copy" data-i18n="no_suggestions_yet">No suggestions yet.</div></article>
+          <article id="resultDoctors" class="glass full-span result-doctors-card"><div class="title-row result-card-heading"><div><span class="result-card-kicker" data-i18n="results_kicker_doctors">LOCAL EXPERTS</span><h3 data-i18n="doctors_title">Doctors in your area</h3></div><span class="notes-icon">+</span></div><p class="result-section-note" data-i18n="local_doctors_note">Matched to your selected location and available SIDAR records.</p><div id="nearbyDoctorsList" class="doctor-list empty-copy" data-i18n="no_nearby_doctors_yet">No nearby suggestions yet.</div></article>
           <article class="glass full-span report-actions-card">
-            <div class="report-actions-copy"><span class="results-eyebrow" data-i18n="report_actions_label">REPORT ACTIONS</span><h3 data-i18n="share_report_title">Share your report</h3><p data-i18n="report_actions_note">Share, copy, or save this report to your account.</p></div>
+            <div class="report-actions-copy"><span class="results-eyebrow" data-i18n="report_actions_label">REPORT ACTIONS</span><h3 data-i18n="share_report_title">Share your report</h3><p data-i18n="report_actions_note">Share, download, or save your clinical PDF report.</p></div>
             <div class="report-action-dock" aria-label="Report actions">
               <div class="report-share-group" role="group" aria-label="Share report">
-                <button id="shareNativeBtn" class="report-icon-button is-primary" type="button" aria-label="Share report" data-tooltip="Share">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V3m0 0 4 4m-4-4-4 4M5 13v6h14v-6"/></svg>
+                <button id="shareNativeBtn" class="report-icon-button is-primary" type="button" aria-label="مشاركة تقرير PDF" data-tooltip="مشاركة PDF" data-i18n-tooltip="share_report">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
                 </button>
-                <button id="shareWhatsappBtn" class="report-icon-button" type="button" aria-label="Share PDF report" data-tooltip="Share PDF">
+                <button id="shareWhatsappBtn" class="report-icon-button" type="button" aria-label="مشاركة عبر واتساب كـ PDF" data-tooltip="واتساب PDF" data-i18n-tooltip="share_whatsapp">
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z"/><path d="M9 8.5c.3-.7.6-.7.9-.7h.4c.2 0 .4.1.5.4l.7 1.6c.1.3.1.5-.1.7l-.5.6c.6 1.2 1.5 2.1 2.7 2.7l.6-.5c.2-.2.5-.2.7-.1l1.6.7c.3.1.4.3.4.5v.4c0 .3 0 .6-.7.9-.5.2-1.2.3-2.2-.1-1-.4-2.3-1.2-3.4-2.4-1.1-1.1-1.9-2.4-2.3-3.4-.4-1-.3-1.7-.1-2.2Z"/></svg>
                 </button>
-                <button id="shareInstagramBtn" class="report-icon-button" type="button" aria-label="Share PDF report" data-tooltip="Share PDF">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg>
+                <button id="shareDownloadBtn" class="report-icon-button" type="button" aria-label="تحميل تقرير PDF" data-tooltip="تحميل PDF" data-i18n-tooltip="download_report">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 </button>
-                <button id="shareTiktokBtn" class="report-icon-button" type="button" aria-label="Share PDF report" data-tooltip="Share PDF">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4v9.1a4.1 4.1 0 1 1-3-3.95"/><path d="M14 4c.7 2.4 2.2 3.8 4.8 4"/></svg>
-                </button>
-                <button id="shareFullReportBtn" class="report-icon-button" type="button" aria-label="Share PDF report" data-tooltip="Share PDF">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"/></svg>
+                <button id="shareFullReportBtn" class="report-icon-button" type="button" aria-label="معاينة وطباعة تقرير PDF" data-tooltip="معاينة PDF" data-i18n-tooltip="view_pdf">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
                 </button>
               </div>
-              <button id="saveScanBtn" class="report-save-button" type="button" aria-label="Save report" data-tooltip="Save report">
+              <button id="saveScanBtn" class="report-save-button" type="button" aria-label="حفظ التقرير في حسابك" data-tooltip="حفظ التقرير" data-i18n-tooltip="save_scan">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.5A2.5 2.5 0 0 1 8.5 2h7A2.5 2.5 0 0 1 18 4.5V22l-6-3.5L6 22V4.5Z"/></svg>
               </button>
             </div>
@@ -649,7 +743,7 @@
   <section class="sec" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
     <div class="auth-shell">
       <div class="glass">
-        <div class="eyebrow" data-i18n="auth_access">// Account Access</div>
+        <div class="eyebrow" data-i18n="auth_access">Account Access</div>
         <h2 class="h2" data-i18n="auth_title">Sign in to save reports, plans, and settings</h2>
         <p class="body-text" data-i18n="auth_desc">Create your account to run AI analysis, save full reports, sync your dashboard, and manage your beauty profile securely.</p>
       </div>
@@ -698,14 +792,14 @@
       <header class="account-workspace-hero">
         <div class="account-workspace-identity">
           <div class="settings-avatar account-workspace-avatar" id="profileInitials">SI</div>
-          <div><span>SIDAR / PERSONAL SPACE</span><h1 id="profileName">حساب SIDAR</h1><p id="profileEmail">--</p></div>
+          <div><span data-i18n="account_space_label">SIDAR / PERSONAL SPACE</span><h1 id="profileName" data-i18n="account_title">حساب SIDAR</h1><p id="profileEmail">--</p></div>
         </div>
-        <div class="account-workspace-actions"><a href="#scan" class="btn btn-primary">تحليل جديد</a><button type="button" class="settings-logout" id="accountLogoutBtn">تسجيل الخروج</button></div>
+        <div class="account-workspace-actions"><a href="#scan" class="btn btn-primary" data-i18n="account_new_scan">تحليل جديد</a><button type="button" class="settings-logout" id="accountLogoutBtn" data-i18n="account_logout">تسجيل الخروج</button></div>
         <nav class="settings-nav account-workspace-nav" aria-label="إعدادات الحساب">
-          <button type="button" class="settings-nav-btn active" data-settings-tab="profile"><span>01</span><b>الملف الشخصي</b><small>بياناتك الأساسية</small></button>
-          <button type="button" class="settings-nav-btn" data-settings-tab="preferences"><span>02</span><b>التفضيلات</b><small>اللغة والإشعارات</small></button>
-          <button type="button" class="settings-nav-btn" data-settings-tab="reports"><span>03</span><b>تقاريري</b><small>سجل التحليلات</small></button>
-          <button type="button" class="settings-nav-btn" data-settings-tab="security"><span>04</span><b>الأمان</b><small>الدخول والحذف</small></button>
+          <button type="button" class="settings-nav-btn active" data-settings-tab="profile"><span>01</span><b data-i18n="account_tab_profile">الملف الشخصي</b><small data-i18n="account_tab_profile_desc">بياناتك الأساسية</small></button>
+          <button type="button" class="settings-nav-btn" data-settings-tab="preferences"><span>02</span><b data-i18n="account_tab_preferences">التفضيلات</b><small data-i18n="account_tab_preferences_desc">اللغة والإشعارات</small></button>
+          <button type="button" class="settings-nav-btn" data-settings-tab="reports"><span>03</span><b data-i18n="account_tab_reports">تقاريري</b><small data-i18n="account_tab_reports_desc">سجل التحليلات</small></button>
+          <button type="button" class="settings-nav-btn" data-settings-tab="security"><span>04</span><b data-i18n="account_tab_security">الأمان</b><small data-i18n="account_tab_security_desc">الدخول والحذف</small></button>
         </nav>
       </header>
 
@@ -713,81 +807,61 @@
 
         <form id="settingsForm" class="settings-form account-preferences">
           <section class="settings-panel active" data-settings-panel="profile">
-            <div class="settings-panel-head"><div><span>الملف الشخصي</span><h2>بياناتك الأساسية</h2><p>هذه البيانات تساعد SIDAR على تخصيص تجربة التحليل.</p></div><div class="panel-avatar" id="profileInitialsMirror">SI</div></div>
+            <div class="settings-panel-head"><div><span data-i18n="account_tab_profile">الملف الشخصي</span><h2 data-i18n="profile_panel_title">بياناتك الأساسية</h2><p data-i18n="profile_panel_desc">هذه البيانات تساعد SIDAR على تخصيص تجربة التحليل.</p></div><div class="panel-avatar" id="profileInitialsMirror">SI</div></div>
             <div class="settings-fields">
-              <label class="field-wide"><span>الاسم الظاهر</span><input type="text" name="full_name" maxlength="100" placeholder="اكتب اسمك" /></label>
-              <label><span>العمر</span><input type="number" name="age" min="1" max="120" /></label>
-              <label><span>الجنس</span><select name="gender"><option value="">غير محدد</option><option value="female">أنثى</option><option value="male">ذكر</option><option value="other">آخر</option></select></label>
-              <label><span>نوع البشرة</span><select name="skin_type"><option value="">غير محدد</option><option value="normal">عادية</option><option value="dry">جافة</option><option value="oily">دهنية</option><option value="combination">مختلطة</option><option value="sensitive">حساسة</option></select></label>
-              <label><span>الدولة</span><select name="location_text" class="country-select"><option value="">اختر الدولة</option></select></label>
+              <label class="field-wide"><span data-i18n="profile_name_label">الاسم الظاهر</span><input type="text" name="full_name" maxlength="100" placeholder="اكتب اسمك" data-i18n-placeholder="profile_name_placeholder" /></label>
+              <label><span data-i18n="profile_age_label">العمر</span><input type="number" name="age" min="1" max="120" /></label>
+              <label><span data-i18n="profile_gender_label">الجنس</span><select name="gender"><option value="" data-i18n="profile_gender_unspecified">غير محدد</option><option value="female" data-i18n="gender_female">أنثى</option><option value="male" data-i18n="gender_male">ذكر</option><option value="other" data-i18n="gender_other">آخر</option></select></label>
+              <label><span data-i18n="profile_skin_type_label">نوع البشرة</span><select name="skin_type"><option value="" data-i18n="profile_skin_type_unspecified">غير محدد</option><option value="normal" data-i18n="skin_type_normal">عادية</option><option value="dry" data-i18n="skin_type_dry">جافة</option><option value="oily" data-i18n="skin_type_oily">دهنية</option><option value="combination" data-i18n="skin_type_combination">مختلطة</option><option value="sensitive" data-i18n="skin_type_sensitive">حساسة</option></select></label>
+              <label><span data-i18n="profile_country_label">الدولة</span><select name="location_text" class="country-select"><option value="" data-i18n="profile_select_country">اختر الدولة</option></select></label>
             </div>
-            <div class="settings-actions"><span id="profileSaveHint">يمكنك تعديل البيانات في أي وقت.</span><button class="btn btn-primary" type="submit">حفظ التعديلات</button></div>
+            <div class="settings-actions"><span id="profileSaveHint" data-i18n="profile_save_hint">يمكنك تعديل البيانات في أي وقت.</span><button class="btn btn-primary" type="submit" data-i18n="profile_save_btn">حفظ التعديلات</button></div>
           </section>
 
           <section class="settings-panel" data-settings-panel="preferences">
-            <div class="settings-panel-head"><div><span>التفضيلات</span><h2>تجربة تناسبك</h2><p>اختر لغة الواجهة وطريقة استلام تحديثات SIDAR.</p></div></div>
+            <div class="settings-panel-head"><div><span data-i18n="account_tab_preferences">التفضيلات</span><h2 data-i18n="preferences_panel_title">تجربة تناسبك</h2><p data-i18n="preferences_panel_desc">اختر لغة الواجهة وطريقة استلام تحديثات SIDAR.</p></div></div>
             <div class="preference-list">
-              <label class="preference-row"><div><b>لغة المنصة</b><small>تُطبّق على جميع صفحات المنصة.</small></div><select name="preferred_language"><option value="ar">العربية</option><option value="en">English</option></select></label>
-              <label class="preference-row"><div><b>الإشعارات</b><small>تنبيهات التقارير والتحديثات المهمة فقط.</small></div><select name="notifications_enabled"><option value="true">مفعّلة</option><option value="false">متوقفة</option></select></label>
+              <label class="preference-row"><div><b data-i18n="pref_lang_label">لغة المنصة</b><small data-i18n="pref_lang_desc">تُطبّق على جميع صفحات المنصة.</small></div><select name="preferred_language"><option value="ar">العربية</option><option value="en">English</option></select></label>
+              <label class="preference-row"><div><b data-i18n="pref_notif_label">الإشعارات</b><small data-i18n="pref_notif_desc">تنبيهات التقارير والتحديثات المهمة فقط.</small></div><select name="notifications_enabled"><option value="true" data-i18n="pref_notif_enabled">مفعّلة</option><option value="false" data-i18n="pref_notif_disabled">متوقفة</option></select></label>
             </div>
-            <div class="settings-actions"><span>لن نرسل رسائل تسويقية بدون موافقتك.</span><button class="btn btn-primary" type="submit">حفظ التفضيلات</button></div>
-            <div class="settings-notifications"><h3>آخر الإشعارات</h3><div id="notificationsList" class="history-list"><p class="empty-copy">لا توجد إشعارات حاليًا.</p></div></div>
+            <div class="settings-actions"><span data-i18n="pref_save_hint">لن نرسل رسائل تسويقية بدون موافقتك.</span><button class="btn btn-primary" type="submit" data-i18n="pref_save_btn">حفظ التفضيلات</button></div>
+            <div class="settings-notifications"><h3 data-i18n="pref_recent_notifs">آخر الإشعارات</h3><div id="notificationsList" class="history-list"><p class="empty-copy" data-i18n="pref_no_notifs">لا توجد إشعارات حاليًا.</p></div></div>
           </section>
         </form>
 
         <section class="settings-panel" data-settings-panel="reports">
-          <div class="settings-panel-head"><div><span>التقارير</span><h2>سجل تحليلاتك</h2><p>اضغط على أي تقرير لفتحه وعرض التفاصيل كاملة.</p></div><div class="report-summary"><strong id="totalScansKpi">0</strong><small>تقرير محفوظ</small></div></div>
-          <div class="reports-toolbar"><span>الأولوية الأخيرة: <b id="latestPriorityKpi">--</b></span><a href="#scan" class="btn btn-primary btn-sm">تحليل جديد</a></div>
+          <div class="settings-panel-head"><div><span data-i18n="account_tab_reports">التقارير</span><h2 data-i18n="reports_panel_title">سجل تحليلاتك</h2><p data-i18n="reports_panel_desc">اضغط على أي تقرير لفتحه وعرض التفاصيل كاملة.</p></div><div class="report-summary"><strong id="totalScansKpi">0</strong><small data-i18n="reports_saved_count">تقرير محفوظ</small></div></div>
+          <div class="reports-toolbar"><span><span data-i18n="reports_latest_priority">الأولوية الأخيرة:</span> <b id="latestPriorityKpi">--</b></span><a href="#scan" class="btn btn-primary btn-sm" data-i18n="account_new_scan">تحليل جديد</a></div>
           <div id="historyList" class="history-list settings-history"></div>
         </section>
 
         <section class="settings-panel" data-settings-panel="security">
-          <div class="settings-panel-head"><div><span>الأمان</span><h2>أمان الحساب</h2><p>تحكم في جلسة الدخول والبيانات المرتبطة بحسابك.</p></div><div class="security-badge">✓</div></div>
-          <div class="security-list"><div><span>البريد المرتبط</span><strong id="accountSecurityEmail">--</strong></div><div><span>حالة الحساب</span><strong class="status-ok">نشط ومحمي</strong></div></div>
+          <div class="settings-panel-head"><div><span data-i18n="account_tab_security">الأمان</span><h2 data-i18n="security_panel_title">أمان الحساب</h2><p data-i18n="security_panel_desc">تحكم في جلسة الدخول والبيانات المرتبطة بحسابك.</p></div><div class="security-badge">✓</div></div>
+          <div class="security-list"><div><span data-i18n="security_email_label">البريد المرتبط</span><strong id="accountSecurityEmail">--</strong></div><div><span data-i18n="security_status_label">حالة الحساب</span><strong class="status-ok" data-i18n="security_status_value">نشط ومحمي</strong></div></div>
           <form id="changePasswordForm" class="password-change-card" autocomplete="off">
-            <div class="password-change-copy"><b>تغيير كلمة المرور</b><p>استخدم 8 أحرف على الأقل، ويُفضّل الجمع بين الحروف والأرقام.</p></div>
+            <div class="password-change-copy"><b data-i18n="security_change_pwd">تغيير كلمة المرور</b><p data-i18n="security_pwd_hint">استخدم 8 أحرف على الأقل، ويُفضّل الجمع بين الحروف والأرقام.</p></div>
             <div class="password-fields">
-              <label><span>كلمة المرور الجديدة</span><input type="password" name="new_password" minlength="8" autocomplete="new-password" required /></label>
-              <label><span>تأكيد كلمة المرور</span><input type="password" name="confirm_password" minlength="8" autocomplete="new-password" required /></label>
+              <label><span data-i18n="security_new_pwd">كلمة المرور الجديدة</span><input type="password" name="new_password" minlength="8" autocomplete="new-password" required /></label>
+              <label><span data-i18n="security_confirm_pwd">تأكيد كلمة المرور</span><input type="password" name="confirm_password" minlength="8" autocomplete="new-password" required /></label>
             </div>
-            <div class="password-form-actions"><span id="passwordChangeStatus" role="status" aria-live="polite"></span><button type="submit" class="btn btn-primary">تحديث كلمة المرور</button></div>
+            <div class="password-form-actions"><span id="passwordChangeStatus" role="status" aria-live="polite"></span><button type="submit" class="btn btn-primary" data-i18n="security_update_pwd_btn">تحديث كلمة المرور</button></div>
           </form>
-          <button type="button" class="btn btn-ghost" id="accountLogoutBtnSecondary">تسجيل الخروج من هذا الجهاز</button>
-          <div class="danger-zone"><div><b>حذف الحساب نهائيًا</b><p>سيتم حذف الحساب والملف الشخصي وكل التقارير المحفوظة. لا يمكن التراجع عن هذا الإجراء.</p></div><button type="button" class="danger-button" id="openDeleteAccountModal">حذف الحساب</button></div>
+          <button type="button" class="btn btn-ghost" id="accountLogoutBtnSecondary" data-i18n="security_logout_device">تسجيل الخروج من هذا الجهاز</button>
+          <div class="danger-zone"><div><b data-i18n="security_delete_title">حذف الحساب نهائيًا</b><p data-i18n="security_delete_desc">سيتم حذف الحساب والملف الشخصي وكل التقارير المحفوظة. لا يمكن التراجع عن هذا الإجراء.</p></div><button type="button" class="danger-button" id="openDeleteAccountModal" data-i18n="security_delete_btn">حذف الحساب</button></div>
         </section>
       </main>
     </div>
   </section>
 
   <div class="delete-account-modal" id="deleteAccountModal" hidden>
-    <div class="delete-modal-card" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle"><button type="button" class="delete-modal-close" id="closeDeleteAccountModal" aria-label="إغلاق">×</button><span>إجراء نهائي</span><h2 id="deleteModalTitle">حذف حساب SIDAR؟</h2><p>اكتب <strong>حذف حسابي</strong> للتأكيد. سيتم حذف التقارير والبيانات نهائيًا.</p><input type="text" id="deleteAccountPhrase" autocomplete="off" placeholder="حذف حسابي" /><div class="delete-modal-actions"><button type="button" class="btn btn-ghost" id="cancelDeleteAccount">إلغاء</button><button type="button" class="danger-button" id="confirmDeleteAccount" disabled>حذف نهائي</button></div></div>
+    <div class="delete-modal-card" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle"><button type="button" class="delete-modal-close" id="closeDeleteAccountModal" aria-label="إغلاق">×</button><span data-i18n="delete_modal_badge">إجراء نهائي</span><h2 id="deleteModalTitle" data-i18n="delete_modal_title">حذف حساب SIDAR؟</h2><p data-i18n="delete_modal_desc">اكتب <strong>حذف حسابي</strong> للتأكيد. سيتم حذف التقارير والبيانات نهائيًا.</p><input type="text" id="deleteAccountPhrase" autocomplete="off" placeholder="حذف حسابي" data-i18n-placeholder="delete_modal_placeholder" /><div class="delete-modal-actions"><button type="button" class="btn btn-ghost" id="cancelDeleteAccount" data-i18n="delete_modal_cancel">إلغاء</button><button type="button" class="danger-button" id="confirmDeleteAccount" disabled data-i18n="delete_modal_confirm">حذف نهائي</button></div></div>
   </div>
-</section>
-
-<section class="route" id="partners" data-route>
-  <section class="sidar-partners-hero">
-    <div class="sidar-page-shell">
-      <div class="sidar-page-index">NETWORK / 02 — PARTNERS</div>
-      <div class="sidar-partners-intro"><span data-i18n="partners_eyebrow">// Ecosystem</span><h1 data-i18n="partners_title">Building the <em>Beauty</em><br>Intelligence Ecosystem</h1><p data-i18n="partners_desc">SIDAR AI aims to collaborate with dermatology clinics, aesthetic centers, skincare professionals, and beauty brands to create a connected beauty intelligence ecosystem.</p></div>
-      <div class="sidar-network-grid">
-        <article><div><span>01</span><i>+</i></div><b class="sidar-network-icon"><svg><use href="./assets/sidar-icons.svg#clinic"></use></svg></b><h2 data-i18n="partners_card_1_title">Dermatology Clinics</h2><p data-i18n="partners_card_1_text">We collaborate with dermatology clinics and aesthetic centers to help users access professional treatments when needed.</p></article>
-        <article><div><span>02</span><i>+</i></div><b class="sidar-network-icon"><svg><use href="./assets/sidar-icons.svg#product"></use></svg></b><h2 data-i18n="partners_card_2_title">Beauty Brands</h2><p data-i18n="partners_card_2_text">SIDAR AI partners with skincare brands to recommend products that match individual skin and hair needs.</p></article>
-        <article><div><span>03</span><i>+</i></div><b class="sidar-network-icon"><svg><use href="./assets/sidar-icons.svg#doctor"></use></svg></b><h2 data-i18n="partners_card_3_title">Beauty Professionals</h2><p data-i18n="partners_card_3_text">Our platform collaborates with beauty experts who can provide professional guidance and support.</p></article>
-      </div>
-    </div>
-  </section>
-  <section class="sidar-partner-value">
-    <div class="sidar-page-shell"><div class="sidar-partner-value-head"><span data-i18n="why_partner">// Why Partner with SIDAR</span><h2 data-i18n="partnership_benefits">Benefits of <em>Partnership</em></h2></div>
-      <div class="sidar-partner-benefits"><article><span>01</span><h3 data-i18n="partner_benefit_1_title">AI-Matched Referrals</h3><p data-i18n="partner_benefit_1_text">Receive patients and customers who are specifically matched to your services based on their AI analysis results.</p></article><article><span>02</span><h3 data-i18n="partner_benefit_2_title">Data-Driven Insights</h3><p data-i18n="partner_benefit_2_text">Access aggregated beauty intelligence data to better understand your customer base.</p></article><article><span>03</span><h3 data-i18n="partner_benefit_3_title">Regional Reach</h3><p data-i18n="partner_benefit_3_text">Connect with users across the Gulf Cooperation Council through the SIDAR AI platform.</p></article><article><span>04</span><h3 data-i18n="partner_benefit_4_title">Trusted Network</h3><p data-i18n="partner_benefit_4_text">Be part of a curated, verified network of beauty professionals that users can trust.</p></article></div>
-      <div class="sidar-partner-cta"><span data-i18n="join_network">// Join the Network</span><h2 data-i18n="partners_cta_title">Through these partnerships, SIDAR AI aims to build a <em>trusted network</em> that connects technology, beauty expertise, and personalized recommendations.</h2><a href="#contact" data-i18n="become_partner">Become a Partner <i>↗</i></a></div>
-    </div>
-  </section>
 </section>
 
 <section class="route" id="pricing" data-route>
   <section class="sec sec-alt">
     <div class="wrap">
-      <div class="eyebrow" data-i18n="pricing">// Pricing</div>
+      <div class="eyebrow" data-i18n="pricing">Pricing</div>
       <h1 class="display" style="margin:0 0 1rem" data-i18n="pricing_title">Simple plans for <em>every stage</em></h1>
       <div class="partners-grid pricing-grid" id="pricingPlansContainer">
         <article class="partner-card">
@@ -800,6 +874,7 @@
             <li data-i18n="pricing_guest_feature_2">Basic report view</li>
             <li data-i18n="pricing_guest_feature_3">No cloud sync</li>
           </ul>
+          <a href="#scan" class="btn btn-secondary full-width" style="margin-top:auto" data-i18n="pricing_guest_cta">Start Free Scan</a>
         </article>
         <article class="partner-card">
           <div class="tag-badge" data-i18n="pricing_popular">Most Popular</div>
@@ -811,6 +886,7 @@
             <li data-i18n="pricing_plus_feature_2">Saved plans</li>
             <li data-i18n="pricing_plus_feature_3">Priority support</li>
           </ul>
+          <a href="#auth" class="btn btn-primary full-width" style="margin-top:auto" data-i18n="pricing_plus_cta">Get SIDAR Plus</a>
         </article>
         <article class="partner-card">
           <div class="tag-badge" data-i18n="pricing_business">Business</div>
@@ -822,6 +898,7 @@
             <li data-i18n="pricing_clinic_feature_2">Referrals</li>
             <li data-i18n="pricing_clinic_feature_3">Custom integrations</li>
           </ul>
+          <a href="#contact" class="btn btn-secondary full-width" style="margin-top:auto" data-i18n="pricing_clinic_cta">Contact Sales</a>
         </article>
       </div>
     </div>
@@ -831,7 +908,7 @@
 <section class="route" id="investors" data-route>
   <section class="sec" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
     <div class="wrap">
-      <div class="eyebrow rv" data-i18n="investors_eyebrow">// Investment Opportunity</div>
+      <div class="eyebrow rv" data-i18n="investors_eyebrow">Investment Opportunity</div>
       <div class="inv-hero-grid">
         <div>
           <h1 class="display rv" style="transition-delay:.1s;margin-bottom:1.2rem" data-i18n="investors_title">The Future of<br><em>BeautyTech</em><br>is Now</h1>
@@ -854,13 +931,13 @@
     <div class="wrap">
       <div class="investor-story-grid">
         <div>
-          <div class="eyebrow rv" data-i18n="market_opportunity">// Market Opportunity</div>
+          <div class="eyebrow rv" data-i18n="market_opportunity">Market Opportunity</div>
           <h2 class="h2 rv" style="transition-delay:.1s;margin-bottom:1rem" data-i18n="market_opportunity_title">A Rapidly <em>Growing</em> Market</h2>
           <p class="body-text rv" style="transition-delay:.15s;margin-bottom:1rem" data-i18n="market_opportunity_text_1">The global beauty and skincare industry continues to grow rapidly, with increasing demand for personalized beauty solutions powered by technology.</p>
           <p class="body-text rv" style="transition-delay:.18s" data-i18n="market_opportunity_text_2">Artificial intelligence is becoming a key driver of innovation in the beauty industry, enabling more accurate analysis, personalized recommendations, and smarter beauty experiences.</p>
         </div>
         <div>
-          <div class="eyebrow rv" style="transition-delay:.05s" data-i18n="our_vision">// Our Vision</div>
+          <div class="eyebrow rv" style="transition-delay:.05s" data-i18n="our_vision">Our Vision</div>
           <h2 class="h2 rv" style="transition-delay:.15s;margin-bottom:1rem" data-i18n="our_vision_title">Built to <em>Scale</em></h2>
           <p class="body-text rv" style="transition-delay:.2s;margin-bottom:1.5rem" data-i18n="our_vision_text">SIDAR AI aims to become a leading beauty intelligence platform in the Middle East, starting with markets such as Dubai and expanding across the region.</p>
 
@@ -874,10 +951,10 @@
       </div>
 
       <div class="inv-cta rv" style="transition-delay:.2s;margin-top:3rem">
-        <div class="eyebrow" style="display:block;margin-bottom:.8rem" data-i18n="investor_relations">// Investor Relations</div>
+        <div class="eyebrow" style="display:block;margin-bottom:.8rem" data-i18n="investor_relations">Investor Relations</div>
         <h2 class="h2" style="margin-bottom:1rem" data-i18n="investor_relations_title">We welcome <em>strategic investors</em><br>who share our vision</h2>
         <p class="lead" style="margin:0 auto 2.5rem;text-align:center;max-width:520px" data-i18n="investor_relations_desc">We welcome strategic investors and partners who share our vision of building the future of beauty intelligence through advanced technology.</p>
-        <button class="btn-p"><a href="#contact" data-i18n="get_in_touch">Get in touch</a></button>
+        <a href="#contact" class="btn btn-primary" data-i18n="get_in_touch">Get in touch</a>
       </div>
     </div>
   </section>
@@ -886,7 +963,7 @@
 <section class="route" id="about" data-route>
   <div class="about-intro">
     <div class="wrap-sm">
-      <div class="eyebrow rv" style="display:block" data-i18n="about_eyebrow">// About SIDAR AI</div>
+      <div class="eyebrow rv" style="display:block" data-i18n="about_eyebrow">About SIDAR AI</div>
       <h1 class="display rv" style="transition-delay:.1s;margin-bottom:1.2rem" data-i18n="about_title">We are <em>SIDAR AI</em></h1>
       <p class="lead rv" style="transition-delay:.18s;margin:0 auto 2rem" data-i18n="about_desc">SIDAR AI is an innovative beauty technology platform that combines artificial intelligence with beauty science to deliver intelligent insights about skin and hair health.</p>
 
@@ -909,12 +986,12 @@
 
   <section class="sec sec-alt">
     <div class="wrap">
-      <div class="eyebrow rv" data-i18n="what_sets_us_apart">// What Sets Us Apart</div>
+      <div class="eyebrow rv" data-i18n="what_sets_us_apart">What Sets Us Apart</div>
       <h2 class="h2 rv" style="transition-delay:.1s;margin-bottom:.8rem" data-i18n="tech_meets_beauty">Technology meets <em>Beauty Science</em></h2>
       <p class="lead rv" style="transition-delay:.15s;margin-bottom:3rem" data-i18n="tech_meets_beauty_desc">By combining technology, data, and beauty expertise, SIDAR AI aims to transform the way people understand and improve their appearance.</p>
 
       <div class="values-grid">
-        <div class="val-card rv"><div class="val-ico">🔬</div><div class="val-t" data-i18n="value_1_title">Scientific Precision</div><div class="val-txt" data-i18n="value_1_text">Every analysis grounded in dermatology science and validated AI models.</div></div>
+        <div class="val-card rv"><div class="val-ico">🔬</div><div class="val-t" data-i18n="value_1_title">Smart & Personalized Analysis</div><div class="val-txt" data-i18n="value_1_text">We use AI technologies to analyze images and provide aesthetic indicators and tailored insights, within system capabilities and analysis parameters.</div></div>
         <div class="val-card rv" style="transition-delay:.1s"><div class="val-ico">🔒</div><div class="val-t" data-i18n="value_2_title">Privacy First</div><div class="val-txt" data-i18n="value_2_text">Your skin data encrypted and never shared without explicit consent.</div></div>
         <div class="val-card rv" style="transition-delay:.2s"><div class="val-ico">🌟</div><div class="val-t" data-i18n="value_3_title">Regional Expertise</div><div class="val-txt" data-i18n="value_3_text">Built specifically for Middle Eastern skin tones, types, and beauty standards.</div></div>
         <div class="val-card rv" style="transition-delay:.05s"><div class="val-ico">⚡</div><div class="val-t" data-i18n="value_4_title">Continuous Innovation</div><div class="val-txt" data-i18n="value_4_text">Constantly improving models with the latest AI research breakthroughs.</div></div>
@@ -928,12 +1005,12 @@
 
   <section class="sec">
     <div class="wrap" style="text-align:center">
-      <div class="eyebrow rv" style="display:block" data-i18n="journey">// Journey</div>
+      <div class="eyebrow rv" style="display:block" data-i18n="journey">Journey</div>
       <h2 class="h2 rv" style="transition-delay:.1s;margin-bottom:3rem" data-i18n="our_story">Our <em>Story</em></h2>
       <div class="about-story-grid">
         <div class="card rv">
           <div style="font-family:'DM Mono',monospace;font-size:.62rem;color:var(--gold);margin-bottom:.5rem;letter-spacing:.1em" data-i18n="story_founded_label">FOUNDED</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;margin-bottom:.3rem">2024</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;margin-bottom:.3rem">2026</div>
           <p class="body-text" data-i18n="story_founded_text">Launched in Dubai with a vision to transform beauty through AI technology.</p>
         </div>
         <div class="card rv" style="transition-delay:.12s">
@@ -954,7 +1031,7 @@
 <section class="route" id="faq" data-route>
   <section class="sec">
     <div class="wrap">
-      <div class="eyebrow" data-i18n="faq_eyebrow">// Questions</div>
+      <div class="eyebrow" data-i18n="faq_eyebrow">Questions</div>
       <h1 class="display" style="margin:0 0 3rem" data-i18n="faq_title">Frequently Asked <em>Questions</em></h1>
       
       <div id="faqAccordion" class="faq-layout">
@@ -968,14 +1045,14 @@
 <section class="route" id="contact" data-route>
   <section class="sec sec-alt">
     <div class="wrap">
-      <div class="eyebrow" data-i18n="contact_eyebrow">// Contact Us</div>
+      <div class="eyebrow" data-i18n="contact_eyebrow">Contact Us</div>
       <h1 class="display" style="margin:0 0 1rem" data-i18n="contact_heading">Get in <em>Touch</em></h1>
 
       <div class="contact-layout">
         <div class="cform">
           <div class="h3" style="margin-bottom:1rem" data-i18n="contact_send">Send a Message</div>
 
-          <div id="cFormWrap" class="form-grid">
+          <div id="cFormWrap" class="form-grid two-col">
             <label>
               <span data-i18n="contact_first">First Name</span>
               <input id="contactFirst" class="fi" type="text" data-i18n-placeholder="first_name_placeholder" placeholder="Osama">
@@ -1027,7 +1104,7 @@
     <div class="wrap">
       <div class="privacy-shell">
         <article class="glass privacy-hero">
-          <div class="eyebrow" data-i18n="privacy_eyebrow">// Legal</div>
+          <div class="eyebrow" data-i18n="privacy_eyebrow">Legal</div>
           <h1 class="display" style="margin:0 0 1rem" data-i18n="privacy_title">Privacy <em>Policy</em></h1>
           <p class="lead" style="margin:0" data-i18n="privacy_subtitle">Privacy Policy</p>
         </article>
@@ -1223,6 +1300,8 @@ function switchParam(btn, id) {
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="./js/config.js"></script>
 <script src="./js/translations.js"></script>
 <script src="./js/supabase.js"></script>

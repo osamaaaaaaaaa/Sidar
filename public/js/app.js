@@ -1,8 +1,9 @@
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 (function () {
+  const initialUrlLang = new URLSearchParams(window.location.search).get('lang');
   const state = {
-    lang: localStorage.getItem('sidar_lang') || window.SIDAR_CONFIG?.DEFAULT_LANG || 'en',
+    lang: initialUrlLang || localStorage.getItem('sidar_lang') || window.SIDAR_CONFIG?.DEFAULT_LANG || 'ar',
     currentUser: null,
     selectedFiles: [],
     focusSelections: new Map(),
@@ -31,7 +32,66 @@ const require = createRequire(import.meta.url);
     'AF','AL','DZ','AD','AO','AG','AR','AM','AU','AT','AZ','BS','BH','BD','BB','BY','BE','BZ','BJ','BT','BO','BA','BW','BR','BN','BG','BF','BI','CV','KH','CM','CA','CF','TD','CL','CN','CO','KM','CG','CD','CR','CI','HR','CU','CY','CZ','DK','DJ','DM','DO','EC','EG','SV','GQ','ER','EE','SZ','ET','FJ','FI','FR','GA','GM','GE','DE','GH','GR','GD','GT','GN','GW','GY','HT','HN','HU','IS','IN','ID','IR','IQ','IE','IL','IT','JM','JP','JO','KZ','KE','KI','KW','KG','LA','LV','LB','LS','LR','LY','LI','LT','LU','MG','MW','MY','MV','ML','MT','MH','MR','MU','MX','FM','MD','MC','MN','ME','MA','MZ','MM','NA','NR','NP','NL','NZ','NI','NE','NG','KP','MK','NO','OM','PK','PW','PA','PG','PY','PE','PH','PL','PT','QA','RO','RU','RW','KN','LC','VC','WS','SM','ST','SA','SN','RS','SC','SL','SG','SK','SI','SB','SO','ZA','KR','SS','ES','LK','SD','SR','SE','CH','SY','TJ','TZ','TH','TL','TG','TO','TT','TN','TR','TM','TV','UG','UA','AE','GB','US','UY','UZ','VU','VA','VE','VN','YE','ZM','ZW'
   ];
 
+  const POPULAR_COUNTRY_CODES = [
+    'SA', 'AE', 'EG', 'KW', 'QA', 'BH', 'OM', 'JO', 'IQ', 'MA', 'DZ', 'TN', 'LB', 'SD', 'LY', 'YE', 'SY', 'PS', 'GB', 'US', 'TR', 'DE', 'FR'
+  ];
+
+  const TIMEZONE_TO_COUNTRY = {
+    'Asia/Riyadh': 'SA',
+    'Asia/Dubai': 'AE',
+    'Africa/Cairo': 'EG',
+    'Asia/Kuwait': 'KW',
+    'Asia/Qatar': 'QA',
+    'Asia/Bahrain': 'BH',
+    'Asia/Muscat': 'OM',
+    'Asia/Amman': 'JO',
+    'Asia/Baghdad': 'IQ',
+    'Asia/Beirut': 'LB',
+    'Africa/Casablanca': 'MA',
+    'Africa/Algiers': 'DZ',
+    'Africa/Tunis': 'TN',
+    'Africa/Khartoum': 'SD',
+    'Africa/Tripoli': 'LY',
+    'Asia/Damascus': 'SY',
+    'Asia/Gaza': 'PS',
+    'Asia/Hebron': 'PS',
+    'Asia/Jerusalem': 'PS',
+    'Asia/Aden': 'YE',
+    'Europe/London': 'GB',
+    'America/New_York': 'US',
+    'America/Chicago': 'US',
+    'America/Denver': 'US',
+    'America/Los_Angeles': 'US',
+    'Europe/Paris': 'FR',
+    'Europe/Berlin': 'DE',
+    'Europe/Rome': 'IT',
+    'Europe/Madrid': 'ES',
+    'Europe/Istanbul': 'TR',
+  };
+
+  function getCountryFlag(code) {
+    if (!code || code.length !== 2) return '';
+    const codePoints = code.toUpperCase().split('').map((c) => 127397 + c.charCodeAt(0));
+    return String.fromCodePoint(...codePoints);
+  }
+
+  function detectUserCountry() {
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      if (TIMEZONE_TO_COUNTRY[tz]) return TIMEZONE_TO_COUNTRY[tz];
+      const lang = (navigator.languages?.[0] || navigator.language || '');
+      const parts = lang.split('-');
+      if (parts.length > 1 && parts[1].length === 2) {
+        const code = parts[1].toUpperCase();
+        if (COUNTRY_CODES.includes(code)) return code;
+      }
+    } catch (_) {}
+    return 'SA';
+  }
+
   const elements = {
+    langBtnEn: document.getElementById('langBtnEn'),
+    langBtnAr: document.getElementById('langBtnAr'),
     langToggleBtn: document.getElementById('langToggleBtn'),
     mobileLangToggleBtn: document.getElementById('mobileLangToggleBtn'),
     mobileTopLangToggleBtn: document.getElementById('mobileTopLangToggleBtn'),
@@ -214,7 +274,7 @@ const require = createRequire(import.meta.url);
       faq_title: 'Common <em>questions</em>',
 
       contact_heading: 'Get in <em>Touch</em>',
-      contact_eyebrow: '// Contact Us',
+      contact_eyebrow: 'Contact Us',
       contact_send: 'Send a Message',
       contact_first: 'First Name',
       contact_last: 'Last Name',
@@ -235,7 +295,7 @@ const require = createRequire(import.meta.url);
       guest_mode_start: 'Start as Guest',
       guest_mode_login: 'Login / Sign up',
 
-      auth_access: '// Account Access',
+      auth_access: 'Account Access',
       auth_title: 'Sign in to save reports, plans, and settings',
   auth_desc: 'Create your account or sign in to save reports, manage your routines, and access your personalized SIDAR account.',
       email: 'Email',
@@ -479,7 +539,7 @@ const require = createRequire(import.meta.url);
       faq_title: 'الأسئلة <em>الشائعة</em>',
 
       contact_heading: 'تواصل <em>معنا</em>',
-      contact_eyebrow: '// تواصل معنا',
+      contact_eyebrow: 'تواصل معنا',
       contact_send: 'أرسل رسالة',
       contact_first: 'الاسم الأول',
       contact_last: 'اسم العائلة',
@@ -675,7 +735,7 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
 
   const extraTranslations = {
     en: {
-      auth_access: '// Account Access',
+      auth_access: 'Account Access',
       dashboard_gender: 'Gender',
       dashboard_height: 'Height (cm)',
       dashboard_weight: 'Weight (kg)',
@@ -691,7 +751,7 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
       skin_goals_label: 'Skin goals',
     },
     ar: {
-      auth_access: '// الوصول للحساب',
+      auth_access: 'الوصول للحساب',
       dashboard_gender: 'الجنس',
       dashboard_height: 'الطول (سم)',
       dashboard_weight: 'الوزن (كجم)',
@@ -773,83 +833,374 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
     }
   }
 
+  function normalizeCountrySearchText(str) {
+    return String(str || '')
+      .trim()
+      .toLowerCase()
+      .replace(/[أإآ]/g, 'ا')
+      .replace(/ة/g, 'ه')
+      .replace(/ى/g, 'ي');
+  }
+
+  function getCountrySearchTokens(str) {
+    const norm = normalizeCountrySearchText(str);
+    if (!norm) return [];
+    const stripped = norm
+      .replace(/^(المملكه العربيه |المملكه |جمهوريه |الجمهوريه |دوله |سلطنه |مملكه |اماره |اتحاد |ال)/, '')
+      .replace(/^ال/, '')
+      .trim();
+    const words = norm.split(/\s+/).map((w) => w.replace(/^ال/, ''));
+    return [norm, stripped, ...words].filter(Boolean);
+  }
+
+  function filterCountryListContainer(listContainer, emptyMsg, rawQuery) {
+    if (!listContainer) return;
+    const q = normalizeCountrySearchText(rawQuery);
+    const options = [...listContainer.querySelectorAll('.sidar-select-option')];
+    if (!q) {
+      options.forEach((optBtn) => optBtn.classList.remove('is-hidden'));
+      listContainer.querySelectorAll('.sidar-select-group-title').forEach((titleEl) => {
+        titleEl.style.display = 'block';
+      });
+      if (emptyMsg) emptyMsg.style.display = 'none';
+      return;
+    }
+
+    const seenCodes = new Set();
+    const prefixMatches = [];
+    const substringMatches = [];
+
+    options.forEach((optBtn) => {
+      const code = optBtn.dataset.value || '';
+      const arName = optBtn.dataset.arName || '';
+      const enName = optBtn.dataset.enName || '';
+      const labelText = optBtn.textContent || '';
+      const tokens = [
+        ...getCountrySearchTokens(labelText),
+        ...getCountrySearchTokens(arName),
+        ...getCountrySearchTokens(enName),
+        normalizeCountrySearchText(code),
+      ];
+      const isPrefix = tokens.some((tok) => tok.startsWith(q));
+      const isSub = isPrefix || tokens.some((tok) => tok.includes(q));
+      if (isPrefix) {
+        prefixMatches.push(optBtn);
+      } else if (isSub) {
+        substringMatches.push(optBtn);
+      }
+    });
+
+    const useOnlyPrefix = prefixMatches.length > 0;
+    const allowedSet = new Set(useOnlyPrefix ? prefixMatches : substringMatches);
+    let matchCount = 0;
+
+    options.forEach((optBtn) => {
+      const code = optBtn.dataset.value || '';
+      let show = allowedSet.has(optBtn);
+      if (show && code) {
+        if (seenCodes.has(code)) {
+          show = false;
+        } else {
+          seenCodes.add(code);
+        }
+      }
+      optBtn.classList.toggle('is-hidden', !show);
+      if (show) matchCount++;
+    });
+
+    listContainer.querySelectorAll('.sidar-select-group-title').forEach((titleEl) => {
+      titleEl.style.display = 'none';
+    });
+    if (emptyMsg) emptyMsg.style.display = matchCount === 0 ? 'block' : 'none';
+  }
+
+  function appendScanSelectOption(option, container, select, wrapper, trigger) {
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = `sidar-select-option${option.value === select.value ? ' selected' : ''}`;
+    item.textContent = option.textContent;
+    item.setAttribute('role', 'option');
+    item.setAttribute('aria-selected', String(option.value === select.value));
+    if (option.value) item.dataset.value = option.value;
+    const enName = getCountryName(option.value, 'en') || '';
+    const arName = getCountryName(option.value, 'ar') || '';
+    item.dataset.enName = enName;
+    item.dataset.arName = arName;
+    item.dataset.search = `${option.textContent} ${option.value} ${enName} ${arName}`;
+    item.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      select.value = option.value;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      wrapper.classList.remove('open');
+      wrapper.closest('label')?.classList.remove('has-open-select');
+      trigger.setAttribute('aria-expanded', 'false');
+      refreshScanSelects();
+    });
+    container.appendChild(item);
+  }
+
   function refreshScanSelects() {
-    document.querySelectorAll('#scan .sidar-select').forEach((wrapper) => {
+    document.querySelectorAll('.sidar-select').forEach((wrapper) => {
       const select = wrapper.querySelector('select');
       const trigger = wrapper.querySelector('.sidar-select-trigger');
       const menu = wrapper.querySelector('.sidar-select-menu');
       if (!select || !trigger || !menu) return;
       const selectedOption = select.options[select.selectedIndex];
-      trigger.querySelector('span').textContent = selectedOption?.textContent?.trim() || t('select');
+      const isCountry = select.classList.contains('country-select');
+
+      if (isCountry) {
+        const triggerInput = trigger.querySelector('.sidar-country-trigger-input');
+        if (triggerInput) {
+          triggerInput.placeholder = state.lang === 'ar'
+            ? 'ابحث بكتابة أول حرف أو اختر الدولة...'
+            : 'Type first letter or select country...';
+          triggerInput.value = select.value ? (selectedOption?.textContent?.trim() || '') : '';
+        } else {
+          const spanEl = trigger.querySelector('span');
+          if (spanEl) spanEl.textContent = selectedOption?.textContent?.trim() || t('select_country');
+        }
+      } else {
+        const spanEl = trigger.querySelector('span');
+        if (spanEl) spanEl.textContent = selectedOption?.textContent?.trim() || t('select');
+      }
+
       menu.innerHTML = '';
-      [...select.options].forEach((option) => {
-        const item = document.createElement('button');
-        item.type = 'button';
-        item.className = `sidar-select-option${option.value === select.value ? ' selected' : ''}`;
-        item.textContent = option.textContent;
-        item.setAttribute('role', 'option');
-        item.setAttribute('aria-selected', String(option.value === select.value));
-        item.addEventListener('click', () => {
-          select.value = option.value;
-          select.dispatchEvent(new Event('change', { bubbles: true }));
-          wrapper.classList.remove('open');
-          trigger.setAttribute('aria-expanded', 'false');
-          refreshScanSelects();
+
+      if (isCountry) {
+        const searchBox = document.createElement('div');
+        searchBox.className = 'sidar-country-search-bar';
+
+        const searchInput = document.createElement('input');
+        searchInput.type = 'search';
+        searchInput.className = 'sidar-country-search-input';
+        searchInput.placeholder = state.lang === 'ar' ? '🔍 اكتب أول حرف للبحث عن الدولة...' : '🔍 Type first letter to search...';
+        searchInput.setAttribute('autocomplete', 'off');
+
+        const detectBtn = document.createElement('button');
+        detectBtn.type = 'button';
+        detectBtn.className = 'sidar-country-detect-btn';
+        detectBtn.innerHTML = state.lang === 'ar' ? '📍 تلقائي' : '📍 Auto';
+        detectBtn.title = state.lang === 'ar' ? 'تحديد موقعي تلقائياً' : 'Detect my location';
+        detectBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const detected = detectUserCountry();
+          if (detected) {
+            select.value = detected;
+            select.dispatchEvent(new Event('change', { bubbles: true }));
+            wrapper.classList.remove('open');
+            wrapper.closest('label')?.classList.remove('has-open-select');
+            trigger.setAttribute('aria-expanded', 'false');
+            refreshScanSelects();
+            showToast((state.lang === 'ar' ? 'تم تحديد موقعك: ' : 'Detected your location: ') + getCountryName(detected) + ' 📍');
+          }
         });
-        menu.appendChild(item);
-      });
+
+        searchBox.appendChild(searchInput);
+        searchBox.appendChild(detectBtn);
+        searchBox.addEventListener('click', (e) => e.stopPropagation());
+        menu.appendChild(searchBox);
+
+        const listContainer = document.createElement('div');
+        listContainer.className = 'sidar-country-list-scroll';
+
+        const emptyMsg = document.createElement('div');
+        emptyMsg.className = 'sidar-select-empty-msg';
+        emptyMsg.textContent = state.lang === 'ar' ? 'لم يتم العثور على دولة مطابقة' : 'No matching country found';
+        emptyMsg.style.display = 'none';
+
+        searchInput.addEventListener('input', () => {
+          filterCountryListContainer(listContainer, emptyMsg, searchInput.value);
+        });
+
+        [...select.children].forEach((child) => {
+          if (child.tagName === 'OPTGROUP') {
+            const titleEl = document.createElement('div');
+            titleEl.className = 'sidar-select-group-title';
+            titleEl.textContent = child.label;
+            listContainer.appendChild(titleEl);
+
+            [...child.children].forEach((option) => {
+              appendScanSelectOption(option, listContainer, select, wrapper, trigger);
+            });
+          } else if (child.tagName === 'OPTION') {
+            if (child.value) {
+              appendScanSelectOption(option, listContainer, select, wrapper, trigger);
+            }
+          }
+        });
+
+        listContainer.appendChild(emptyMsg);
+        menu.appendChild(listContainer);
+      } else {
+        [...select.options].forEach((option) => {
+          appendScanSelectOption(option, menu, select, wrapper, trigger);
+        });
+      }
     });
   }
 
+  let scanSelectOutsideBound = false;
   function initScanSelects() {
-    const selects = document.querySelectorAll('#scan .scan-details-grid select');
+    const selects = document.querySelectorAll('#scan .scan-details-grid select, select.country-select');
     selects.forEach((select, index) => {
       if (select.closest('.sidar-select')) return;
+      const isCountry = select.classList.contains('country-select');
       const wrapper = document.createElement('div');
-      wrapper.className = 'sidar-select';
-      const trigger = document.createElement('button');
-      trigger.type = 'button';
-      trigger.className = 'sidar-select-trigger';
+      wrapper.className = isCountry ? 'sidar-select sidar-country-select' : 'sidar-select';
+
+      const trigger = document.createElement(isCountry ? 'div' : 'button');
+      if (!isCountry) trigger.type = 'button';
+      trigger.className = isCountry ? 'sidar-select-trigger sidar-country-trigger' : 'sidar-select-trigger';
       trigger.setAttribute('aria-haspopup', 'listbox');
       trigger.setAttribute('aria-expanded', 'false');
-      trigger.innerHTML = '<span></span><i aria-hidden="true"></i>';
+
+      if (isCountry) {
+        trigger.innerHTML = '<input type="text" class="sidar-country-trigger-input" autocomplete="off" spellcheck="false" /><i aria-hidden="true"></i>';
+      } else {
+        trigger.innerHTML = '<span></span><i aria-hidden="true"></i>';
+      }
+
       const menu = document.createElement('div');
       menu.className = 'sidar-select-menu';
       menu.setAttribute('role', 'listbox');
       menu.id = `sidar-select-${index}`;
       trigger.setAttribute('aria-controls', menu.id);
+
+      menu.addEventListener('mousedown', (e) => {
+        if (!e.target.closest('input')) {
+          e.preventDefault();
+        }
+      });
+
       select.parentNode.insertBefore(wrapper, select);
       wrapper.append(select, trigger, menu);
-      trigger.addEventListener('click', () => {
-        const shouldOpen = !wrapper.classList.contains('open');
-        document.querySelectorAll('#scan .sidar-select.open').forEach((item) => {
+
+      const openDropdown = () => {
+        document.querySelectorAll('.sidar-select.open').forEach((item) => {
+          if (item === wrapper) return;
           item.classList.remove('open');
+          item.closest('label')?.classList.remove('has-open-select');
           item.querySelector('.sidar-select-trigger')?.setAttribute('aria-expanded', 'false');
         });
-        wrapper.classList.toggle('open', shouldOpen);
-        trigger.setAttribute('aria-expanded', String(shouldOpen));
-      });
+        wrapper.classList.add('open');
+        wrapper.closest('label')?.classList.add('has-open-select');
+        trigger.setAttribute('aria-expanded', 'true');
+        const listContainer = wrapper.querySelector('.sidar-country-list-scroll');
+        const emptyMsg = wrapper.querySelector('.sidar-select-empty-msg');
+        if (listContainer) filterCountryListContainer(listContainer, emptyMsg, '');
+        const searchInput = wrapper.querySelector('.sidar-country-search-input');
+        if (searchInput) searchInput.value = '';
+      };
+
+      if (isCountry) {
+        const triggerInput = trigger.querySelector('.sidar-country-trigger-input');
+        const chevron = trigger.querySelector('i');
+
+        triggerInput.addEventListener('focus', () => {
+          openDropdown();
+          setTimeout(() => triggerInput.select(), 10);
+        });
+
+        triggerInput.addEventListener('click', (event) => {
+          event.stopPropagation();
+          if (!wrapper.classList.contains('open')) {
+            openDropdown();
+          }
+        });
+
+        triggerInput.addEventListener('input', () => {
+          if (!wrapper.classList.contains('open')) {
+            openDropdown();
+          }
+          const listContainer = wrapper.querySelector('.sidar-country-list-scroll');
+          const emptyMsg = wrapper.querySelector('.sidar-select-empty-msg');
+          filterCountryListContainer(listContainer, emptyMsg, triggerInput.value);
+          const searchInput = wrapper.querySelector('.sidar-country-search-input');
+          if (searchInput) searchInput.value = triggerInput.value;
+        });
+
+        triggerInput.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            const firstMatch = wrapper.querySelector('.sidar-country-list-scroll .sidar-select-option:not(.is-hidden)');
+            if (firstMatch) firstMatch.click();
+          } else if (event.key === 'Escape') {
+            wrapper.classList.remove('open');
+            wrapper.closest('label')?.classList.remove('has-open-select');
+            trigger.setAttribute('aria-expanded', 'false');
+            refreshScanSelects();
+          }
+        });
+
+        chevron?.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          const shouldOpen = !wrapper.classList.contains('open');
+          if (shouldOpen) {
+            openDropdown();
+            triggerInput.focus();
+          } else {
+            wrapper.classList.remove('open');
+            wrapper.closest('label')?.classList.remove('has-open-select');
+            trigger.setAttribute('aria-expanded', 'false');
+            refreshScanSelects();
+          }
+        });
+      } else {
+        trigger.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          const shouldOpen = !wrapper.classList.contains('open');
+          document.querySelectorAll('.sidar-select.open').forEach((item) => {
+            item.classList.remove('open');
+            item.closest('label')?.classList.remove('has-open-select');
+            item.querySelector('.sidar-select-trigger')?.setAttribute('aria-expanded', 'false');
+          });
+          wrapper.classList.toggle('open', shouldOpen);
+          wrapper.closest('label')?.classList.toggle('has-open-select', shouldOpen);
+          trigger.setAttribute('aria-expanded', String(shouldOpen));
+        });
+      }
+
       select.addEventListener('change', refreshScanSelects);
     });
+    if (!scanSelectOutsideBound) {
+      scanSelectOutsideBound = true;
+      document.addEventListener('click', (event) => {
+        if (event.target.closest('.sidar-select')) return;
+        document.querySelectorAll('.sidar-select.open').forEach((item) => {
+          item.classList.remove('open');
+          item.closest('label')?.classList.remove('has-open-select');
+          item.querySelector('.sidar-select-trigger')?.setAttribute('aria-expanded', 'false');
+        });
+        refreshScanSelects();
+      });
+    }
     refreshScanSelects();
   }
 
   function applyStaticTranslations() {
     const langMap = staticTranslations[state.lang] || staticTranslations.en;
 
-    document.querySelectorAll('a[data-p="landing"]').forEach((el) => setNodeText(el, langMap.nav_home));
-    document.querySelectorAll('a[data-p="how"]').forEach((el) => setNodeText(el, langMap.nav_how));
-    document.querySelectorAll('a[data-p="partners"]').forEach((el) => setNodeText(el, langMap.nav_partners));
-    document.querySelectorAll('a[data-p="faq"]').forEach((el) => setNodeText(el, langMap.nav_faq));
-    document.querySelectorAll('a[data-p="investors"]').forEach((el) => setNodeText(el, langMap.nav_investors));
-    document.querySelectorAll('a[data-p="pricing"]').forEach((el) => setNodeText(el, langMap.nav_pricing));
-    document.querySelectorAll('a[data-p="about"]').forEach((el) => setNodeText(el, langMap.nav_about));
-    document.querySelectorAll('a[data-p="contact"]').forEach((el) => setNodeText(el, langMap.nav_contact));
-    document.querySelectorAll('a[data-p="auth"]').forEach((el) => setNodeText(el, langMap.nav_my_account));
+    document.querySelectorAll('.nav-links a[data-p="landing"]').forEach((el) => setNodeText(el, langMap.nav_home));
+    document.querySelectorAll('.nav-links a[data-p="how"]').forEach((el) => setNodeText(el, langMap.nav_how));
+    document.querySelectorAll('.nav-links a[data-p="faq"]').forEach((el) => setNodeText(el, langMap.nav_faq));
+    document.querySelectorAll('.nav-links a[data-p="investors"]').forEach((el) => setNodeText(el, langMap.nav_investors));
+    document.querySelectorAll('.nav-links a[data-p="pricing"]').forEach((el) => setNodeText(el, langMap.nav_pricing));
+    document.querySelectorAll('.nav-links a[data-p="about"]').forEach((el) => setNodeText(el, langMap.nav_about));
+    document.querySelectorAll('.nav-links a[data-p="contact"]').forEach((el) => setNodeText(el, langMap.nav_contact));
+    document.querySelectorAll('.nav-links a[data-p="auth"]').forEach((el) => setNodeText(el, langMap.nav_my_account));
 
-    [elements.navLoginBtn, elements.heroLoginBtn, elements.footerLoginBtn].forEach((el) => {
+    [elements.navLoginBtn, elements.footerLoginBtn].forEach((el) => {
       if (el && !el.dataset.authState) el.textContent = langMap.nav_login;
     });
+
+    if (elements.heroLoginBtn) {
+      const heroText = document.getElementById('heroLoginText') || elements.heroLoginBtn;
+      heroText.textContent = langMap.nav_my_account;
+    }
 
     if (elements.logoutBtn) elements.logoutBtn.textContent = langMap.nav_logout;
     if (elements.footerMyAccountBtn) elements.footerMyAccountBtn.textContent = langMap.nav_my_account;
@@ -858,7 +1209,6 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
     const mobileKeys = [
       langMap.nav_home,
       langMap.nav_how,
-      langMap.nav_partners,
       langMap.nav_faq,
       langMap.nav_investors,
       langMap.nav_pricing,
@@ -1139,13 +1489,17 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     document.body.classList.toggle('lang-ar', lang === 'ar');
+    document.body.classList.toggle('lang-en', lang === 'en');
 
     if (elements.langToggleBtn) elements.langToggleBtn.textContent = lang === 'ar' ? 'EN' : 'AR';
+    if (elements.langBtnEn) elements.langBtnEn.classList.toggle('active', lang === 'en');
+    if (elements.langBtnAr) elements.langBtnAr.classList.toggle('active', lang === 'ar');
     if (elements.mobileLangToggleBtn) elements.mobileLangToggleBtn.textContent = lang === 'ar' ? 'EN' : 'AR';
     if (elements.mobileTopLangToggleBtn) elements.mobileTopLangToggleBtn.textContent = lang === 'ar' ? 'EN' : 'AR';
     if (elements.mobileDrawerLanguageValue) elements.mobileDrawerLanguageValue.textContent = lang === 'ar' ? 'EN' : 'AR';
 
     applyTranslations();
+    if (typeof renderLiveFaqs === 'function') renderLiveFaqs();
     if (elements.cameraFrame) elements.cameraFrame.textContent = t(`camera_frame_${cameraTarget}`);
     populateCountrySelects();
     refreshScanSelects();
@@ -1156,14 +1510,8 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
   }
 
   function embedScanIntoHow() {
-    const howRoute = document.getElementById('how');
-    const scanSection = document.getElementById('scan');
-    if (!howRoute || !scanSection || howRoute.contains(scanSection)) return;
-
-    scanSection.classList.remove('route', 'active-route');
-    scanSection.removeAttribute('data-route');
-    scanSection.classList.add('embedded-scan-section');
-    howRoute.appendChild(scanSection);
+    // Keep #scan as its own standalone dedicated route so clicking #scan opens the full luxury analysis page
+    return;
   }
 
   function closeMobileMenu() {
@@ -1180,6 +1528,20 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
     if (isOpen) elements.mobileDrawerClose?.focus({ preventScroll: true });
   }
 
+  function updateNavActiveIndicator(routeId) {
+    document.querySelectorAll('.nav-links a').forEach((link) => {
+      const href = link.getAttribute('href') || '';
+      const target = href.replace('#', '') || link.dataset.p;
+      const isActive = target === routeId;
+      link.classList.toggle('on', isActive);
+      if (isActive) {
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+  }
+
   function activateRoute(routeId) {
     routes.forEach((route) => {
       const isActive = route.id === routeId;
@@ -1189,12 +1551,13 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
         requestAnimationFrame(() => route.classList.add('route-enter'));
       }
     });
+    updateNavActiveIndicator(routeId);
   }
 
   function navigate(hash) {
     const rawId = hash.replace('#', '') || 'landing';
-    let routeId = rawId === 'scan' ? 'how' : (routeIds.includes(rawId) ? rawId : 'landing');
-    const anchorTarget = rawId === 'scan' ? 'scan' : (routeIds.includes(rawId) ? null : rawId);
+    let routeId = routeIds.includes(rawId) ? rawId : 'landing';
+    const anchorTarget = routeIds.includes(rawId) ? null : rawId;
 
     if (routeId === 'dashboard' && !state.currentUser) routeId = 'guest';
 
@@ -1216,7 +1579,16 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
   function bindRouter() {
     window.addEventListener('hashchange', () => navigate(window.location.hash));
     document.querySelectorAll('a[href^="#"]').forEach((link) => {
-      link.addEventListener('click', () => setTimeout(closeMobileMenu, 120));
+      link.addEventListener('click', () => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          const target = href.replace('#', '');
+          if (routeIds.includes(target)) {
+            updateNavActiveIndicator(target);
+          }
+        }
+        setTimeout(closeMobileMenu, 120);
+      });
     });
     navigate(window.location.hash || '#landing');
   }
@@ -1530,7 +1902,7 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
       await elements.cameraVideo.play();
       elements.cameraEmptyState?.classList.add('hidden');
       elements.cameraCaptureBtn.disabled = false;
-      elements.cameraStatus.textContent = state.lang === 'ar' ? 'ثبت المنطقة داخل الإطار ثم التقط الصورة.' : 'Hold the selected area inside the frame, then capture.';
+      elements.cameraStatus.textContent = state.lang === 'ar' ? 'وجّه الكاميرا ثم التقط الصورة.' : 'Point the camera, then capture.';
     } catch (error) {
       console.error('Camera access failed', error);
       elements.cameraStatus.textContent = state.lang === 'ar' ? 'تعذر تشغيل الكاميرا. تأكد من السماح بإذن الكاميرا ثم أعد المحاولة.' : 'Could not start the camera. Allow camera permission and try again.';
@@ -1951,8 +2323,14 @@ function renderProducts(container, items, showPrice = true) {
 
     if (elements.resultPriority) elements.resultPriority.textContent = localizedPriority;
     if (elements.resultPriorityClone) elements.resultPriorityClone.textContent = localizedPriority;
-    if (elements.resultConfidence) elements.resultConfidence.textContent = result.ai_confidence || '--';
-    if (elements.resultConfidenceClone) elements.resultConfidenceClone.textContent = result.ai_confidence || '--';
+    const healthScoreFormatted = scoreSet.overall != null ? `${Math.round(scoreSet.overall)}%` : (result.ai_confidence || '--');
+    if (elements.resultConfidence) elements.resultConfidence.textContent = healthScoreFormatted;
+    if (elements.resultConfidenceClone) elements.resultConfidenceClone.textContent = healthScoreFormatted;
+    const isHair = scoreSet.target === 'hair';
+    const healthLabel = isHair ? (state.lang === 'ar' ? 'صحة الشعر' : 'Hair Health') : (state.lang === 'ar' ? 'صحة البشرة' : 'Skin Health');
+    document.querySelectorAll('[data-i18n="confidence_label"]').forEach((node) => {
+      node.textContent = healthLabel;
+    });
     if (elements.resultImageQuality) elements.resultImageQuality.textContent = localizedQuality;
     if (elements.resultImageQualityClone) elements.resultImageQualityClone.textContent = localizedQuality;
 
@@ -2105,11 +2483,6 @@ function renderProducts(container, items, showPrice = true) {
     }
 
     clearTimeout(analysisLoadingHideTimer);
-    if (preview && state.selectedFiles[0]) {
-      if (analysisLoadingPreviewUrl) URL.revokeObjectURL(analysisLoadingPreviewUrl);
-      analysisLoadingPreviewUrl = URL.createObjectURL(state.selectedFiles[0]);
-      preview.src = analysisLoadingPreviewUrl;
-    }
 
     const stages = state.lang === 'ar'
       ? [
@@ -2250,82 +2623,412 @@ function renderProducts(container, items, showPrice = true) {
     return `
       <article class="sidar-pdf-report" dir="${isArabic ? 'rtl' : 'ltr'}" lang="${isArabic ? 'ar' : 'en'}">
         <header class="pdf-header">
-          <div class="pdf-brand"><img src="/assets/logo.jpeg" alt="SIDAR AI" /><span>SIDAR <small>AI</small></span></div>
-          <div class="pdf-header-copy"><b>${label('تقرير خاص', 'PRIVATE REPORT')}</b><span>${new Date().toLocaleDateString(isArabic ? 'ar-EG' : 'en-GB')}</span></div>
+          <div class="pdf-brand">
+            <img src="./assets/sidar-emblem-clean.png" alt="SIDAR AI" crossorigin="anonymous" />
+            <div class="pdf-brand-text">
+              <span>SIDAR <small>AI</small></span>
+              <em>${label('منصة سدر مساعدك الذكي للجمال والعناية الشخصية', 'Intelligent Beauty & Wellness Assistant')}</em>
+            </div>
+          </div>
+          <div class="pdf-header-copy">
+            <b>${label('تقرير تحليلي رسمي', 'OFFICIAL REPORT')}</b>
+            <span>${new Date().toLocaleDateString(isArabic ? 'ar-EG' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+          </div>
         </header>
         <section class="pdf-hero">
-          <div><span>${label('تحليل مدعوم بالذكاء الاصطناعي', 'AI-POWERED ANALYSIS')}</span><h1>${escapeHtml(reportTitle)}</h1><p>${escapeHtml(score.label || label('البشرة والشعر', 'Skin & Hair'))}</p></div>
-          <div class="pdf-score"><b>${score.overall == null ? '--' : Math.round(score.overall)}</b><span>/ 100</span></div>
+          <div>
+            <span>${label('تحليل متقدم بالذكاء الاصطناعي · SIDAR AI', 'ADVANCED AI-POWERED ANALYSIS · SIDAR')}</span>
+            <h1>${escapeHtml(reportTitle)}</h1>
+            <p>${escapeHtml(score.label || label('صحة البشرة والشعر', 'Skin & Hair Health Profile'))}</p>
+          </div>
+          <div class="pdf-score">
+            <b>${score.overall == null ? '--' : Math.round(score.overall)}</b>
+            <span>/ 100</span>
+          </div>
         </section>
-        <section class="pdf-section pdf-summary"><h2>${label('الملخص', 'Summary')}</h2><p>${escapeHtml(summary)}</p><div class="pdf-meta"><span><b>${label('الأولوية', 'Priority')}</b>${escapeHtml(localizePriority(result.case_priority || '--'))}</span><span><b>${label('جودة الصورة', 'Image quality')}</b>${escapeHtml(localizeImageQuality(result.image_quality || '--'))}</span><span><b>${label('ثقة الذكاء الاصطناعي', 'AI confidence')}</b>${escapeHtml(result.ai_confidence || '--')}</span></div></section>
-        <section class="pdf-section"><h2>${label('مؤشرات التحليل', 'Analysis indicators')}</h2><div class="pdf-metrics">${metricCards}</div></section>
-        <section class="pdf-section"><h2>${label('الملاحظات المرئية', 'Visible indicators')}</h2>${reportPdfList(findings, label('لا توجد ملاحظات مرئية إضافية في النتيجة الحالية.', 'No additional visible indicators were returned.'))}</section>
-        <section class="pdf-two-column"><div class="pdf-section"><h2>${label('روتين الصباح', 'Morning routine')}</h2>${reportPdfList(result.morning_routine, label('لا توجد خطوات صباحية متاحة.', 'No morning routine steps available.'))}</div><div class="pdf-section"><h2>${label('روتين المساء', 'Evening routine')}</h2>${reportPdfList(result.evening_routine, label('لا توجد خطوات مسائية متاحة.', 'No evening routine steps available.'))}</div></section>
-        <section class="pdf-two-column"><div class="pdf-section"><h2>${label('منتجات مقترحة', 'Suggested products')}</h2>${productList}</div><div class="pdf-section"><h2>${label('أطباء مقترحون', 'Suggested doctors')}</h2>${doctorList}</div></section>
-        <footer class="pdf-footer"><span>SIDAR AI</span><p>${label('هذه النتيجة إرشادية وليست تشخيصاً طبياً. استشر مختصاً عند الحاجة.', 'This report is informational and not a medical diagnosis. Consult a qualified professional when needed.')}</p></footer>
+        <section class="pdf-section pdf-summary">
+          <h2>${label('الملخص التشخيصي', 'Executive Summary')}</h2>
+          <p>${escapeHtml(summary)}</p>
+          <div class="pdf-meta">
+            <span><b>${label('الأولوية', 'Priority')}</b>${escapeHtml(localizePriority(result.case_priority || '--'))}</span>
+            <span><b>${label('جودة الفحص', 'Image quality')}</b>${escapeHtml(localizeImageQuality(result.image_quality || '--'))}</span>
+            <span><b>${label('صحة البشرة', 'Skin health')}</b>${escapeHtml(score.overall == null ? (result.ai_confidence || '--') : `${Math.round(score.overall)}%`)}</span>
+          </div>
+        </section>
+        <section class="pdf-section">
+          <h2>${label('مؤشرات الصحة والحيوية', 'Clinical Indicators')}</h2>
+          <div class="pdf-metrics">${metricCards}</div>
+        </section>
+        <section class="pdf-section">
+          <h2>${label('الملاحظات والأنماط المرئية', 'Visible Indicators')}</h2>
+          ${reportPdfList(findings, label('لا توجد ملاحظات مرئية إضافية في النتيجة الحالية.', 'No additional visible indicators were returned.'))}
+        </section>
+        <section class="pdf-two-column">
+          <div class="pdf-section">
+            <h2>${label('روتين الصباح', 'Morning routine')}</h2>
+            ${reportPdfList(result.morning_routine, label('لا توجد خطوات صباحية متاحة.', 'No morning routine steps available.'))}
+          </div>
+          <div class="pdf-section">
+            <h2>${label('روتين المساء', 'Evening routine')}</h2>
+            ${reportPdfList(result.evening_routine, label('لا توجد خطوات مسائية متاحة.', 'No evening routine steps available.'))}
+          </div>
+        </section>
+        <section class="pdf-two-column">
+          <div class="pdf-section">
+            <h2>${label('منتجات مقترحة موثقة', 'Suggested products')}</h2>
+            ${productList}
+          </div>
+          <div class="pdf-section">
+            <h2>${label('أطباء معتمدون', 'Suggested doctors')}</h2>
+            ${doctorList}
+          </div>
+        </section>
+        <footer class="pdf-footer">
+          <div class="pdf-footer-brand">
+            <span>SIDAR <small>AI</small></span>
+            <em>${label('منصة سدر مساعدك الذكي للجمال والعناية الشخصية', 'SIDAR AI Beauty & Personal Care')}</em>
+          </div>
+          <p>${label('هذه النتيجة إرشادية وتثقيفية بالذكاء الاصطناعي وليست بديلاً عن الاستشارة الطبية المباشرة. يُنصح بمراجعة طبيب مختص عند الحاجة.', 'This report is informational and AI-generated, not a medical diagnosis. Consult a certified medical specialist when needed.')}</p>
+        </footer>
       </article>`;
+  }
+
+  async function getPdfLibraries() {
+    if (window.SidarPdf?.load) {
+      try {
+        const res = await window.SidarPdf.load();
+        if (res?.jsPDF && res?.html2canvas) return res;
+      } catch (err) {
+        console.warn('SidarPdf.load fallback:', err);
+      }
+    }
+    let jsPDF = window.jspdf?.jsPDF || window.jsPDF;
+    let html2canvas = window.html2canvas;
+    if (jsPDF && html2canvas) return { jsPDF, html2canvas };
+
+    const loadScript = (src) => new Promise((resolve, reject) => {
+      const existing = document.querySelector(`script[src="${src}"]`);
+      if (existing) {
+        if (existing.dataset.loaded || window.jspdf || window.html2canvas) return resolve();
+        existing.addEventListener('load', () => resolve());
+        existing.addEventListener('error', () => reject(new Error('Failed loading ' + src)));
+        return;
+      }
+      const s = document.createElement('script');
+      s.src = src;
+      s.async = true;
+      s.onload = () => { s.dataset.loaded = 'true'; resolve(); };
+      s.onerror = () => reject(new Error('Failed loading ' + src));
+      document.head.appendChild(s);
+    });
+
+    await Promise.all([
+      !html2canvas ? loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js') : Promise.resolve(),
+      !jsPDF ? loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js') : Promise.resolve(),
+    ]);
+
+    jsPDF = window.jspdf?.jsPDF || window.jsPDF;
+    html2canvas = window.html2canvas;
+    return { jsPDF, html2canvas };
   }
 
   async function createReportPdf() {
     if (!state.currentResult) throw new Error(state.lang === 'ar' ? 'لا يوجد تقرير لتصديره بعد.' : 'There is no report to export yet.');
-    const pdfBridge = window.SidarPdf;
-    const { jsPDF, html2canvas } = pdfBridge?.load ? await pdfBridge.load() : (pdfBridge || {});
-    if (!jsPDF || !html2canvas) throw new Error(state.lang === 'ar' ? 'تعذر تجهيز ملف PDF. أعد تحميل الصفحة وحاول مرة أخرى.' : 'Unable to prepare the PDF. Reload the page and try again.');
+    const cacheKey = `${state.lang || 'ar'}`;
+    if (state.currentResult._cachedPdf && state.currentResult._cachedPdf.lang === cacheKey) {
+      return state.currentResult._cachedPdf;
+    }
+    if (state.currentResult._pdfPromise && state.currentResult._pdfPromiseLang === cacheKey) {
+      return state.currentResult._pdfPromise;
+    }
 
-    const host = document.createElement('div');
-    host.style.cssText = 'position:fixed;left:-20000px;top:0;width:794px;pointer-events:none;z-index:-1;';
-    host.innerHTML = buildPdfReportMarkup();
-    document.body.appendChild(host);
-    try {
-      await document.fonts?.ready;
-      const canvas = await html2canvas(host.firstElementChild, { scale: 2, backgroundColor: '#F7F3FA', useCORS: true, logging: false });
-      const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4', compress: true });
-      const pageWidth = 210;
-      const pageHeight = 297;
-      const margin = 10;
-      const contentWidth = pageWidth - margin * 2;
-      const contentHeight = pageHeight - margin * 2;
-      const imageHeight = (canvas.height * contentWidth) / canvas.width;
-      const image = canvas.toDataURL('image/jpeg', 0.94);
-      let offsetY = margin;
-      let remainingHeight = imageHeight;
-      pdf.addImage(image, 'JPEG', margin, offsetY, contentWidth, imageHeight, undefined, 'FAST');
-      remainingHeight -= contentHeight;
-      while (remainingHeight > 0) {
-        offsetY -= contentHeight;
-        pdf.addPage();
+    const targetResult = state.currentResult;
+    targetResult._pdfPromiseLang = cacheKey;
+    targetResult._pdfPromise = (async () => {
+      const { jsPDF, html2canvas } = await getPdfLibraries();
+      if (!jsPDF || !html2canvas) throw new Error(state.lang === 'ar' ? 'تعذر تجهيز مكتبات PDF. أعد تحميل الصفحة وحاول مرة أخرى.' : 'Unable to prepare PDF libraries. Reload the page and try again.');
+
+      const host = document.createElement('div');
+      host.style.cssText = 'position:fixed;left:-10000px;top:0;width:794px;pointer-events:none;opacity:1;z-index:-1;background:#FAF8F1;';
+      host.innerHTML = buildPdfReportMarkup();
+      document.body.appendChild(host);
+      try {
+        await document.fonts?.ready;
+        const images = [...host.querySelectorAll('img')];
+        await Promise.all(images.map((img) => {
+          if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+          return new Promise((resolve) => {
+            const done = () => resolve();
+            img.addEventListener('load', done, { once: true });
+            img.addEventListener('error', done, { once: true });
+            window.setTimeout(done, 800);
+          });
+        }));
+        const canvas = await html2canvas(host.firstElementChild, { scale: 2, backgroundColor: '#FAF8F1', useCORS: true, allowTaint: true, logging: false });
+        const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4', compress: true });
+        const pageWidth = 210;
+        const pageHeight = 297;
+        const margin = 10;
+        const contentWidth = pageWidth - margin * 2;
+        const contentHeight = pageHeight - margin * 2;
+        const imageHeight = (canvas.height * contentWidth) / canvas.width;
+        const image = canvas.toDataURL('image/jpeg', 0.94);
+        let offsetY = margin;
+        let remainingHeight = imageHeight;
         pdf.addImage(image, 'JPEG', margin, offsetY, contentWidth, imageHeight, undefined, 'FAST');
         remainingHeight -= contentHeight;
+        while (remainingHeight > 0) {
+          offsetY -= contentHeight;
+          pdf.addPage();
+          pdf.addImage(image, 'JPEG', margin, offsetY, contentWidth, imageHeight, undefined, 'FAST');
+          remainingHeight -= contentHeight;
+        }
+        pdf.setProperties({ title: 'SIDAR AI Report', subject: 'Skin & Hair Analysis', author: 'SIDAR AI' });
+        const blob = pdf.output('blob');
+        const filename = `sidar-ai-report-${new Date().toISOString().slice(0, 10)}.pdf`;
+        const file = new File([blob], filename, { type: 'application/pdf' });
+        const pdfData = { blob, filename, file, lang: cacheKey };
+        targetResult._cachedPdf = pdfData;
+        return pdfData;
+      } finally {
+        host.remove();
+        targetResult._pdfPromise = null;
       }
-      pdf.setProperties({ title: 'SIDAR AI Report', subject: 'Skin & Hair Analysis', author: 'SIDAR AI' });
-      return { blob: pdf.output('blob'), filename: `sidar-ai-report-${new Date().toISOString().slice(0, 10)}.pdf` };
-    } finally {
-      host.remove();
-    }
+    })();
+
+    return targetResult._pdfPromise;
+  }
+
+  function warmUpReportPdf() {
+    if (!state.currentResult) return;
+    window.setTimeout(() => {
+      createReportPdf().catch((err) => console.warn('Background PDF warmup skipped:', err));
+    }, 150);
   }
 
   function downloadBlob(blob, filename) {
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
     anchor.href = url;
-    anchor.download = filename;
+    anchor.download = filename || 'sidar-ai-report.pdf';
+    anchor.rel = 'noopener';
+    anchor.style.display = 'none';
+    document.body.appendChild(anchor);
     anchor.click();
-    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    window.setTimeout(() => {
+      anchor.remove();
+    }, 300);
+    window.setTimeout(() => URL.revokeObjectURL(url), 120000);
+  }
+
+  function openPdfPreviewModal(pdfData = null) {
+    let modal = document.getElementById('sidarPdfPreviewModal');
+    if (modal) modal.remove();
+
+    const isAr = state.lang === 'ar';
+    modal = document.createElement('div');
+    modal.id = 'sidarPdfPreviewModal';
+    modal.className = 'sidar-pdf-modal-backdrop';
+    modal.setAttribute('dir', isAr ? 'rtl' : 'ltr');
+    modal.innerHTML = `
+      <div class="sidar-pdf-modal-dialog" role="dialog" aria-modal="true" aria-label="${isAr ? 'معاينة ومشاركة تقرير PDF' : 'Preview & Share PDF Report'}">
+        <div class="sidar-pdf-modal-toolbar">
+          <div class="sidar-pdf-modal-title">
+            <img src="./assets/sidar-emblem-clean.png" alt="SIDAR AI" />
+            <div>
+              <strong>${isAr ? 'تقرير سدر الرسمي (PDF)' : 'Official SIDAR AI Report (PDF)'}</strong>
+              <small>${isAr ? 'جاهز للمشاركة أو التحميل أو الطباعة الفورية' : 'Ready for instant sharing, download, or printing'}</small>
+            </div>
+          </div>
+          <div class="sidar-pdf-modal-actions">
+            <button type="button" class="sidar-pdf-modal-btn is-primary" id="modalSharePdfBtn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+              <span>${isAr ? 'مشاركة PDF' : 'Share PDF'}</span>
+            </button>
+            <button type="button" class="sidar-pdf-modal-btn" id="modalDownloadPdfBtn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span>${isAr ? 'تحميل PDF' : 'Download'}</span>
+            </button>
+            <button type="button" class="sidar-pdf-modal-btn" id="modalPrintPdfBtn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              <span>${isAr ? 'طباعة' : 'Print'}</span>
+            </button>
+            <button type="button" class="sidar-pdf-modal-close" id="modalClosePdfBtn" aria-label="${isAr ? 'إغلاق' : 'Close'}">✕</button>
+          </div>
+        </div>
+        <div class="sidar-pdf-modal-body" id="sidarPdfModalBody">
+          ${buildPdfReportMarkup()}
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+    document.body.classList.add('modal-open');
+
+    const closeModal = () => {
+      modal.remove();
+      document.body.classList.remove('modal-open');
+    };
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+    modal.querySelector('#modalClosePdfBtn')?.addEventListener('click', closeModal);
+
+    modal.querySelector('#modalSharePdfBtn')?.addEventListener('click', async () => {
+      const cached = pdfData || state.currentResult?._cachedPdf;
+      if (cached?.file && navigator.canShare?.({ files: [cached.file] })) {
+        try {
+          await navigator.share({
+            title: isAr ? 'تقرير تحليل سدر للذكاء الاصطناعي' : 'SIDAR AI Analysis Report',
+            files: [cached.file],
+          });
+          return;
+        } catch (err) {
+          if (err.name === 'AbortError') return;
+        }
+      }
+      if (cached?.blob) {
+        downloadBlob(cached.blob, cached.filename);
+        showToast(isAr ? 'تم تحميل تقرير الـ PDF بنجاح 📄' : 'PDF report downloaded successfully 📄');
+      }
+    });
+
+    modal.querySelector('#modalDownloadPdfBtn')?.addEventListener('click', async () => {
+      const cached = pdfData || state.currentResult?._cachedPdf || (await createReportPdf());
+      if (cached?.blob) {
+        downloadBlob(cached.blob, cached.filename);
+        showToast(isAr ? 'تم تحميل تقرير الـ PDF بنجاح 📄' : 'PDF report downloaded successfully 📄');
+      }
+    });
+
+    modal.querySelector('#modalPrintPdfBtn')?.addEventListener('click', () => {
+      window.print();
+    });
+  }
+
+  async function copyTextToClipboard(text) {
+    if (navigator.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch (_) {}
+    }
+    try {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.left = '-9999px';
+      textarea.style.top = '0';
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      const success = document.execCommand('copy');
+      document.body.removeChild(textarea);
+      return success;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function buildShareSummaryText() {
+    const res = state.currentResult;
+    if (!res) return '';
+    const isAr = state.lang === 'ar';
+    const score = buildScoreSet(res);
+    const title = res.title || (isAr ? 'تقرير تحليل البشرة والشعر' : 'Skin & Hair Analysis Report');
+    const priority = localizePriority(res.case_priority || '--');
+    const scoreVal = score.overall != null ? `${Math.round(score.overall)}%` : '--';
+    const summary = res.summary || res.guidance || res.problem_description || '';
+    
+    if (isAr) {
+      return `🌿 *تقرير منصة سدر للذكاء الاصطناعي — SIDAR AI*\n\n` +
+        `📋 *الحالة:* ${title}\n` +
+        `✨ *صحة البشرة:* ${scoreVal} (الأولوية: ${priority})\n` +
+        (summary ? `🔍 *الملخص:* ${summary.slice(0, 150)}${summary.length > 150 ? '...' : ''}\n\n` : '\n') +
+        `🔗 *رابط المنصة:* https://sidarai.com`;
+    } else {
+      return `🌿 *SIDAR AI — Skin & Hair Intelligence Report*\n\n` +
+        `📋 *Result:* ${title}\n` +
+        `✨ *Skin Health:* ${scoreVal} (Priority: ${priority})\n` +
+        (summary ? `🔍 *Summary:* ${summary.slice(0, 150)}${summary.length > 150 ? '...' : ''}\n\n` : '\n') +
+        `🔗 *Platform:* https://sidarai.com`;
+    }
+  }
+
+  function buildFullClinicalReportText() {
+    const res = state.currentResult;
+    if (!res) return '';
+    const isAr = state.lang === 'ar';
+    const score = buildScoreSet(res);
+    const title = res.title || (isAr ? 'تقرير تحليل البشرة والشعر' : 'Skin & Hair Analysis Report');
+    const priority = localizePriority(res.case_priority || '--');
+    const scoreVal = score.overall != null ? `${Math.round(score.overall)}%` : '--';
+    const summary = res.summary || res.guidance || res.problem_description || '';
+    const morning = (res.morning_routine || []).map((step, i) => `${i + 1}. ${typeof step === 'string' ? step : step.title || step.name}`).join('\n');
+    const evening = (res.evening_routine || []).map((step, i) => `${i + 1}. ${typeof step === 'string' ? step : step.title || step.name}`).join('\n');
+    const dateStr = new Date().toLocaleDateString(isAr ? 'ar-EG' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    if (isAr) {
+      return `═══════════════════════════════\n` +
+        `✨ تقرير منصة سدر للذكاء الاصطناعي ✨\n` +
+        `═══════════════════════════════\n` +
+        `📅 التاريخ: ${dateStr}\n` +
+        `📋 الحالة: ${title}\n` +
+        `⭐ صحة البشرة: ${scoreVal}\n` +
+        `🎯 درجة الأولوية: ${priority}\n\n` +
+        `📝 الملخص التشخيصي:\n${summary}\n\n` +
+        (morning ? `☀️ روتين العناية الصباحي:\n${morning}\n\n` : '') +
+        (evening ? `🌙 روتين العناية المسائي:\n${evening}\n\n` : '') +
+        `💡 ملاحظة: هذا التقرير استرشادي بالذكاء الاصطناعي.\n` +
+        `🔗 https://sidarai.com\n` +
+        `═══════════════════════════════`;
+    } else {
+      return `═══════════════════════════════\n` +
+        `✨ SIDAR AI CLINICAL REPORT ✨\n` +
+        `═══════════════════════════════\n` +
+        `📅 Date: ${dateStr}\n` +
+        `📋 Finding: ${title}\n` +
+        `⭐ Skin Health: ${scoreVal}\n` +
+        `🎯 Priority: ${priority}\n\n` +
+        `📝 Summary:\n${summary}\n\n` +
+        (morning ? `☀️ Morning Routine:\n${morning}\n\n` : '') +
+        (evening ? `🌙 Evening Routine:\n${evening}\n\n` : '') +
+        `💡 Notice: This report is informational AI guidance.\n` +
+        `🔗 https://sidarai.com\n` +
+        `═══════════════════════════════`;
+    }
   }
 
   async function runPdfAction(button, action) {
-    if (!state.currentResult) return;
+    if (!state.currentResult) {
+      showToast(state.lang === 'ar' ? 'ابدأ تحليل الحالة أولاً لتصدير التقرير.' : 'Analyze a case first to export the report.', 'error');
+      return;
+    }
+    const cacheKey = `${state.lang || 'ar'}`;
+    const cached = state.currentResult._cachedPdf?.lang === cacheKey ? state.currentResult._cachedPdf : null;
+    if (cached) {
+      try {
+        await action(cached, true);
+      } catch (error) {
+        console.error(error);
+        showToast(error.message || (state.lang === 'ar' ? 'تعذر تنفيذ الإجراء.' : 'Action failed.'), 'error');
+      }
+      return;
+    }
+
     if (button) {
       button.disabled = true;
       button.classList.add('is-action-loading');
       button.setAttribute('aria-busy', 'true');
     }
+    showToast(state.lang === 'ar' ? 'جاري تجهيز تقرير PDF...' : 'Preparing PDF report...', 'info');
     try {
       const pdf = await createReportPdf();
-      await action(pdf);
+      await action(pdf, false);
     } catch (error) {
       console.error(error);
-      showToast(error.message || (state.lang === 'ar' ? 'تعذر إنشاء ملف PDF.' : 'Unable to create the PDF.'), 'error');
+      openPdfPreviewModal(null);
     } finally {
       if (button) {
         button.disabled = false;
@@ -2336,24 +3039,123 @@ function renderProducts(container, items, showPrice = true) {
   }
 
   function downloadReport(event) {
-    const button = event?.currentTarget || elements.downloadReportBtn;
-    return runPdfAction(button, ({ blob, filename }) => {
+    const button = event?.currentTarget || document.getElementById('shareDownloadBtn') || elements.downloadReportBtn;
+    return runPdfAction(button, async (pdfData) => {
+      const { blob, filename, file } = pdfData;
+      const isIos = /iPad|iPhone|iPod/i.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
       downloadBlob(blob, filename);
-      showToast(state.lang === 'ar' ? 'تم حفظ تقرير PDF.' : 'PDF report saved.');
+      if (isIos && file && navigator.canShare?.({ files: [file] })) {
+        try {
+          await navigator.share({
+            title: state.lang === 'ar' ? 'تقرير تحليل سدر للذكاء الاصطناعي' : 'SIDAR AI Analysis Report',
+            files: [file],
+          });
+          return;
+        } catch (err) {
+          if (err.name === 'AbortError') return;
+        }
+      }
+      showToast(state.lang === 'ar' ? 'تم تجهيز وتحميل تقرير الـ PDF بنجاح 📄' : 'PDF report downloaded successfully 📄');
     });
   }
 
-  function shareReportPdf(event) {
-    const button = event?.currentTarget;
-    return runPdfAction(button, async ({ blob, filename }) => {
-      const file = new File([blob], filename, { type: 'application/pdf' });
+  async function handleShareWhatsapp(event) {
+    if (!state.currentResult) {
+      showToast(state.lang === 'ar' ? 'ابدأ تحليل الحالة أولاً لمشاركة التقرير.' : 'Analyze a case first to share the report.', 'error');
+      return;
+    }
+    const button = event?.currentTarget || elements.shareWhatsappBtn || document.getElementById('shareWhatsappBtn');
+    return runPdfAction(button, async (pdfData, isSyncGesture) => {
+      const { blob, filename } = pdfData;
+      const file = pdfData.file || new File([blob], filename, { type: 'application/pdf' });
       if (navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ files: [file], title: 'SIDAR AI Report' });
-        return;
+        try {
+          await navigator.share({
+            title: state.lang === 'ar' ? 'تقرير تحليل سدر للذكاء الاصطناعي' : 'SIDAR AI Analysis Report',
+            files: [file],
+          });
+          return;
+        } catch (err) {
+          if (err.name === 'AbortError') return;
+          if (!isSyncGesture) {
+            openPdfPreviewModal(pdfData);
+            return;
+          }
+        }
       }
       downloadBlob(blob, filename);
-      showToast(state.lang === 'ar' ? 'تم تنزيل ملف PDF لمشاركته.' : 'PDF downloaded and ready to share.');
+      const summaryText = encodeURIComponent(buildShareSummaryText());
+      const whatsappUrl = `https://wa.me/?text=${summaryText}`;
+      const win = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+      if (!win) {
+        openPdfPreviewModal(pdfData);
+      }
+      showToast(
+        state.lang === 'ar'
+          ? 'تم تحميل ملف تقرير الـ PDF بنجاح 📄 يمكنك إرفاقه الآن في محادثة واتساب.'
+          : 'PDF report downloaded successfully 📄 You can now attach it in WhatsApp.',
+        'success'
+      );
     });
+  }
+
+  async function handleOpenPdfReport(event) {
+    if (!state.currentResult) {
+      showToast(state.lang === 'ar' ? 'ابدأ تحليل الحالة أولاً لمعاينة التقرير.' : 'Analyze a case first to preview the report.', 'error');
+      return;
+    }
+    const button = event?.currentTarget || elements.shareFullReportBtn || document.getElementById('shareFullReportBtn');
+    const cacheKey = `${state.lang || 'ar'}`;
+    const cached = state.currentResult._cachedPdf?.lang === cacheKey ? state.currentResult._cachedPdf : null;
+    openPdfPreviewModal(cached);
+    if (!cached) {
+      createReportPdf().catch(() => {});
+    }
+  }
+
+  async function handleNativeShare(event) {
+    if (!state.currentResult) {
+      showToast(state.lang === 'ar' ? 'ابدأ تحليل الحالة أولاً لمشاركة التقرير.' : 'Analyze a case first to share the report.', 'error');
+      return;
+    }
+    const button = event?.currentTarget || document.getElementById('shareNativeBtn');
+    return runPdfAction(button, async (pdfData, isSyncGesture) => {
+      const { blob, filename } = pdfData;
+      const file = pdfData.file || new File([blob], filename, { type: 'application/pdf' });
+      if (navigator.canShare?.({ files: [file] })) {
+        try {
+          await navigator.share({
+            title: state.lang === 'ar' ? 'تقرير تحليل سدر للذكاء الاصطناعي' : 'SIDAR AI Analysis Report',
+            files: [file],
+          });
+          return;
+        } catch (err) {
+          if (err.name === 'AbortError') return;
+          if (!isSyncGesture) {
+            openPdfPreviewModal(pdfData);
+            return;
+          }
+        }
+      }
+      downloadBlob(blob, filename);
+      openPdfPreviewModal(pdfData);
+      showToast(
+        state.lang === 'ar' ? 'تم تجهيز تقرير الـ PDF للمشاركة والتحميل 📄' : 'PDF report ready to share & download 📄',
+        'success'
+      );
+    });
+  }
+
+  async function handleShareInstagram(event) {
+    return handleNativeShare(event);
+  }
+
+  async function handleShareTiktok(event) {
+    return handleNativeShare(event);
+  }
+
+  async function handleCopyFullReport(event) {
+    return handleOpenPdfReport(event);
   }
 
   async function saveCurrentScan() {
@@ -2493,15 +3295,10 @@ function renderProducts(container, items, showPrice = true) {
     });
 
     if (elements.heroLoginBtn) {
-      if (isLoggedIn) {
-        elements.heroLoginBtn.textContent = state.lang === 'ar' ? 'لوحة التحكم' : 'Dashboard';
-        elements.heroLoginBtn.setAttribute('href', '#dashboard');
-        elements.heroLoginBtn.dataset.authState = 'dashboard';
-      } else {
-        elements.heroLoginBtn.textContent = state.lang === 'ar' ? 'إنشاء حساب' : 'Sign Up';
-        elements.heroLoginBtn.setAttribute('href', '#auth');
-        elements.heroLoginBtn.dataset.authState = '';
-      }
+      const heroText = document.getElementById('heroLoginText') || elements.heroLoginBtn;
+      heroText.textContent = state.lang === 'ar' ? 'حسابي' : 'My Account';
+      elements.heroLoginBtn.setAttribute('href', isLoggedIn ? '#dashboard' : '#auth');
+      elements.heroLoginBtn.dataset.authState = isLoggedIn ? 'dashboard' : 'auth';
     }
   }
 
@@ -2534,31 +3331,6 @@ function renderProducts(container, items, showPrice = true) {
     renderHistory(state.history);
   }
 
-  async function hydrateSession() {
-    try {
-      const { data } = await window.SidarSupabase.getSession();
-      state.currentUser = data?.session?.user || null;
-      updateAuthUi();
-      // Dashboard history/profile hydration is not part of the startup gate.
-      // Keep it in the background so the loader only waits for auth readiness.
-      loadDashboardData().catch((error) => console.error('Background dashboard hydration failed', error));
-
-      const client = window.SidarSupabase.getClient();
-      if (client) {
-        client.auth.onAuthStateChange(async (_event, sessionState) => {
-          state.currentUser = sessionState?.user || null;
-          updateAuthUi();
-
-          if (state.currentUser) await window.SidarSupabase.ensureProfile(state.currentUser);
-          await loadDashboardData();
-        });
-      }
-    } catch (error) {
-      console.error(error);
-      setProfile(null, state.profile);
-      renderHistory();
-    }
-  }
 
   async function onLogin(event) {
     event.preventDefault();
@@ -2737,6 +3509,8 @@ function renderProducts(container, items, showPrice = true) {
   }
 
   function bindEvents() {
+    elements.langBtnEn?.addEventListener('click', () => setLanguage('en'));
+    elements.langBtnAr?.addEventListener('click', () => setLanguage('ar'));
     elements.langToggleBtn?.addEventListener('click', () => setLanguage(state.lang === 'ar' ? 'en' : 'ar'));
     elements.mobileLangToggleBtn?.addEventListener('click', () => setLanguage(state.lang === 'ar' ? 'en' : 'ar'));
     elements.mobileTopLangToggleBtn?.addEventListener('click', () => setLanguage(state.lang === 'ar' ? 'en' : 'ar'));
@@ -2750,13 +3524,17 @@ function renderProducts(container, items, showPrice = true) {
       if (event.key === 'Escape') {
         closeMobileMenu();
         closeCameraCapture();
-        document.querySelectorAll('#scan .sidar-select.open').forEach((item) => item.classList.remove('open'));
+        document.querySelectorAll('#scan .sidar-select.open').forEach((item) => {
+          item.classList.remove('open');
+          item.closest('label')?.classList.remove('has-open-select');
+        });
       }
     });
     document.addEventListener('click', (event) => {
       if (event.target.closest('#scan .sidar-select')) return;
       document.querySelectorAll('#scan .sidar-select.open').forEach((item) => {
         item.classList.remove('open');
+        item.closest('label')?.classList.remove('has-open-select');
         item.querySelector('.sidar-select-trigger')?.setAttribute('aria-expanded', 'false');
       });
     });
@@ -2764,6 +3542,20 @@ function renderProducts(container, items, showPrice = true) {
     elements.scanForm?.addEventListener('submit', analyzeScan);
     elements.downloadReportBtn?.addEventListener('click', downloadReport);
     elements.saveScanBtn?.addEventListener('click', saveCurrentScan);
+
+    const scanAutoDetectBtn = document.getElementById('scanAutoDetectBtn');
+    if (scanAutoDetectBtn) {
+      scanAutoDetectBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const detected = detectUserCountry();
+        if (detected && elements.scanForm?.location_text) {
+          elements.scanForm.location_text.value = detected;
+          elements.scanForm.location_text.dispatchEvent(new Event('change', { bubbles: true }));
+          refreshScanSelects();
+          showToast((state.lang === 'ar' ? 'تم تحديد موقعك: ' : 'Detected your location: ') + getCountryName(detected) + ' 📍');
+        }
+      });
+    }
 
     elements.newScanBtn?.addEventListener('click', () => {
       clearAllFocusSelections();
@@ -2876,6 +3668,11 @@ function renderProducts(container, items, showPrice = true) {
   }
 
   function populateCountrySelects() {
+    const isAr = state.lang === 'ar';
+    const remainingCodes = COUNTRY_CODES
+      .filter((code) => !POPULAR_COUNTRY_CODES.includes(code))
+      .sort((a, b) => getCountryName(a, isAr ? 'ar' : 'en').localeCompare(getCountryName(b, isAr ? 'ar' : 'en'), isAr ? 'ar' : 'en'));
+
     document.querySelectorAll('select.country-select').forEach((select) => {
       const currentValue = select.value || select.dataset.value || '';
       select.innerHTML = '';
@@ -2885,14 +3682,32 @@ function renderProducts(container, items, showPrice = true) {
       placeholder.textContent = t('select_country');
       select.appendChild(placeholder);
 
-      COUNTRY_CODES.forEach((code) => {
+      const popGroup = document.createElement('optgroup');
+      popGroup.label = isAr ? '⭐ الأكثر استخداماً' : '⭐ Popular Countries';
+      POPULAR_COUNTRY_CODES.forEach((code) => {
         const option = document.createElement('option');
         option.value = code;
-        option.textContent = getCountryName(code);
-        select.appendChild(option);
+        option.textContent = getCountryName(code, isAr ? 'ar' : 'en');
+        popGroup.appendChild(option);
       });
+      select.appendChild(popGroup);
 
-      if (currentValue) select.value = currentValue;
+      const allGroup = document.createElement('optgroup');
+      allGroup.label = isAr ? '🌐 جميع الدول أبجدياً' : '🌐 All Countries (A-Z)';
+      remainingCodes.forEach((code) => {
+        const option = document.createElement('option');
+        option.value = code;
+        option.textContent = getCountryName(code, isAr ? 'ar' : 'en');
+        allGroup.appendChild(option);
+      });
+      select.appendChild(allGroup);
+
+      if (currentValue) {
+        select.value = currentValue;
+      } else if (select.name === 'location_text' && select.form?.id === 'scanForm') {
+        const detected = detectUserCountry();
+        if (detected) select.value = detected;
+      }
     });
   }
 
@@ -2931,6 +3746,9 @@ function renderProducts(container, items, showPrice = true) {
       select.appendChild(option);
     }
     select.value = normalizedValue;
+    if (typeof refreshScanSelects === 'function') {
+      refreshScanSelects();
+    }
   }
 
   function ensureAuthenticatedAction(messageKey) {
@@ -2947,7 +3765,16 @@ function renderProducts(container, items, showPrice = true) {
   function syncScanLocationField() {
     if (!elements.scanForm?.location_text) return;
     if (!elements.scanForm.location_text.value.trim()) {
-      setSelectValue(elements.scanForm.location_text, getProfileLocation(), getProfileLocationLabel());
+      const profileLoc = getProfileLocation();
+      if (profileLoc) {
+        setSelectValue(elements.scanForm.location_text, profileLoc, getProfileLocationLabel());
+      } else {
+        const detected = detectUserCountry();
+        if (detected) {
+          elements.scanForm.location_text.value = detected;
+        }
+      }
+      refreshScanSelects();
     }
   }
 
@@ -3184,8 +4011,14 @@ function renderProducts(container, items, showPrice = true) {
 
     if (elements.resultPriority) elements.resultPriority.textContent = localizedPriority;
     if (elements.resultPriorityClone) elements.resultPriorityClone.textContent = localizedPriority;
-    if (elements.resultConfidence) elements.resultConfidence.textContent = result.ai_confidence || '--';
-    if (elements.resultConfidenceClone) elements.resultConfidenceClone.textContent = result.ai_confidence || '--';
+    const healthScoreFormatted = scoreSet.overall != null ? `${Math.round(scoreSet.overall)}%` : (result.ai_confidence || '--');
+    if (elements.resultConfidence) elements.resultConfidence.textContent = healthScoreFormatted;
+    if (elements.resultConfidenceClone) elements.resultConfidenceClone.textContent = healthScoreFormatted;
+    const isHair = scoreSet.target === 'hair';
+    const healthLabel = isHair ? (state.lang === 'ar' ? 'صحة الشعر' : 'Hair Health') : (state.lang === 'ar' ? 'صحة البشرة' : 'Skin Health');
+    document.querySelectorAll('[data-i18n="confidence_label"]').forEach((node) => {
+      node.textContent = healthLabel;
+    });
     if (elements.resultImageQuality) elements.resultImageQuality.textContent = localizedQuality;
     if (elements.resultImageQualityClone) elements.resultImageQualityClone.textContent = localizedQuality;
 
@@ -3325,29 +4158,55 @@ function renderProducts(container, items, showPrice = true) {
       }
     }
 
+    const saveBtn = elements.saveScanBtn || document.getElementById('saveScanBtn');
+    if (saveBtn) {
+      saveBtn.classList.toggle('is-saved', Boolean(result?.saved_scan_id || result?.id));
+    }
+    warmUpReportPdf();
+
     if (navigateToPage) window.location.hash = '#results';
   }
 
-  async function saveCurrentScan() {
-    if (!state.currentResult) return;
+  async function saveCurrentScan(event) {
+    const isManualClick = Boolean(event?.type === 'click');
+    if (!state.currentResult) {
+      if (isManualClick) {
+        showToast(state.lang === 'ar' ? 'ابدأ تحليل الحالة أولاً لحفظ التقرير.' : 'Analyze a case first to save the report.', 'error');
+      }
+      return;
+    }
+    const saveBtn = elements.saveScanBtn || document.getElementById('saveScanBtn');
     if (!ensureAuthenticatedAction()) return;
-    if (state.currentResult.saved_scan_id) {
-      showToast(state.lang === 'ar' ? 'هذا التقرير محفوظ بالفعل في الحساب.' : 'This report is already saved to your account.');
+    if (state.currentResult.saved_scan_id || state.currentResult.id) {
+      if (saveBtn) saveBtn.classList.add('is-saved');
+      if (isManualClick) {
+        showToast(state.lang === 'ar' ? 'تم حفظ التقرير في حسابك بنجاح ✓' : 'Report saved to your account ✓');
+      }
       return;
     }
 
     const payload = buildUnifiedScanPayload(state.currentResult);
 
     try {
+      if (saveBtn && isManualClick) {
+        saveBtn.disabled = true;
+        saveBtn.classList.add('is-action-loading');
+      }
       const { data, error } = await window.SidarSupabase.saveScan({ user_id: state.currentUser.id, ...payload });
       if (error) throw error;
 
       state.currentResult.saved_scan_id = data?.id || true;
-      showToast(state.lang === 'ar' ? 'تم حفظ التقرير كاملًا في الحساب.' : 'Full report saved to your account.');
+      if (saveBtn) saveBtn.classList.add('is-saved');
+      showToast(state.lang === 'ar' ? 'تم حفظ التقرير في حسابك بنجاح ✓' : 'Full report saved to your account ✓');
       await loadDashboardData();
     } catch (error) {
       console.error(error);
-      showToast(error.message || 'Unable to save.', 'error');
+      showToast(error.message || (state.lang === 'ar' ? 'تعذر حفظ التقرير.' : 'Unable to save.'), 'error');
+    } finally {
+      if (saveBtn && isManualClick) {
+        saveBtn.disabled = false;
+        saveBtn.classList.remove('is-action-loading');
+      }
     }
   }
 
@@ -3584,7 +4443,8 @@ function renderProducts(container, items, showPrice = true) {
     });
 
     if (elements.heroLoginBtn) {
-      elements.heroLoginBtn.textContent = isLoggedIn ? t('nav_my_account') : t('sign_up');
+      const heroText = document.getElementById('heroLoginText') || elements.heroLoginBtn;
+      heroText.textContent = state.lang === 'ar' ? 'حسابي' : 'My Account';
       elements.heroLoginBtn.setAttribute('href', isLoggedIn ? '#dashboard' : '#auth');
     }
   }
@@ -3599,10 +4459,24 @@ function renderProducts(container, items, showPrice = true) {
       return;
     }
 
-    const profileRes = await window.SidarSupabase.getProfile(state.currentUser.id);
-    if (profileRes.error) throw profileRes.error;
+    let profileRes = { data: null, error: null };
+    try {
+      profileRes = await window.SidarSupabase.getProfile(state.currentUser.id);
+    } catch (err) {
+      console.warn('Error fetching profile:', err);
+    }
 
-    state.profile = profileRes.data || (await window.SidarSupabase.ensureProfile(state.currentUser)) || {};
+    try {
+      state.profile = profileRes.data || (await window.SidarSupabase.ensureProfile(state.currentUser)) || {};
+    } catch (err) {
+      console.warn('Error ensuring profile:', err);
+      const metadata = state.currentUser.user_metadata || {};
+      state.profile = {
+        id: state.currentUser.id,
+        email: state.currentUser.email,
+        full_name: metadata.full_name || metadata.name || state.currentUser.email?.split('@')[0] || 'User',
+      };
+    }
     setProfile(state.currentUser, state.profile);
     const securityEmail = document.getElementById('accountSecurityEmail');
     if (securityEmail) securityEmail.textContent = state.currentUser.email || state.profile.email || '--';
@@ -3624,6 +4498,28 @@ function renderProducts(container, items, showPrice = true) {
 
   async function hydrateSession() {
     try {
+      // Detect if user is returning from OAuth callback (Google, Apple, etc.)
+      const searchParams = new URLSearchParams(window.location.search);
+      const hashStr = (window.location.hash || '').replace(/^#/, '');
+      const hashParams = new URLSearchParams(hashStr);
+      let hadOAuthParams = false;
+      try {
+        hadOAuthParams =
+          searchParams.has('code') ||
+          hashStr.includes('access_token=') ||
+          searchParams.has('error') ||
+          hashStr.includes('error=') ||
+          sessionStorage.getItem('sidar_oauth_pending') === 'true';
+      } catch (_) {}
+
+      if (searchParams.has('error') || hashStr.includes('error=')) {
+        try { sessionStorage.removeItem('sidar_oauth_pending'); } catch (_) {}
+        const errorDesc = searchParams.get('error_description') || hashParams.get('error_description') || '';
+        showToast(errorDesc || (state.lang === 'ar' ? 'تم إلغاء تسجيل الدخول أو حدث خطأ.' : 'Sign-in cancelled or failed.'), 'error');
+        window.history.replaceState(null, '', window.location.pathname + '#auth');
+        navigate('#auth');
+      }
+
       // Mobile networks can leave an auth request pending indefinitely. The
       // startup gate only needs a bounded session check; the profile/history
       // refresh continues after the interface is usable.
@@ -3635,24 +4531,45 @@ function renderProducts(container, items, showPrice = true) {
       state.currentUser = data?.session?.user || null;
       updateAuthUi();
       loadDashboardData().catch((error) => console.error('Background dashboard hydration failed', error));
-      if (state.currentUser && ['#dashboard', '#auth'].includes(window.location.hash)) {
-        navigate(window.location.hash);
+
+      if (state.currentUser) {
+        if (hadOAuthParams) {
+          try { sessionStorage.removeItem('sidar_oauth_pending'); } catch (_) {}
+          window.history.replaceState(null, '', window.location.pathname);
+          showToast(state.lang === 'ar' ? 'تم تسجيل الدخول بنجاح.' : 'Signed in successfully.');
+          handlePostAuthSuccess();
+        } else if (['#dashboard', '#auth', '#account'].includes(window.location.hash)) {
+          handlePostAuthSuccess();
+        }
       }
 
       const client = window.SidarSupabase.getClient();
       if (client) {
-        client.auth.onAuthStateChange((_event, sessionState) => {
+        client.auth.onAuthStateChange((event, sessionState) => {
+          const prevUser = state.currentUser;
           state.currentUser = sessionState?.user || null;
           updateAuthUi();
-          // Supabase keeps an auth lock while this callback is running. Deferring
-          // database work prevents sign-in from waiting forever on that lock.
+
           window.setTimeout(() => {
             (async () => {
               try {
                 if (state.currentUser) await window.SidarSupabase.ensureProfile(state.currentUser);
                 await loadDashboardData();
-                if (state.currentUser && ['#dashboard', '#auth'].includes(window.location.hash)) {
-                  navigate(window.location.hash);
+
+                if (state.currentUser && (!prevUser || event === 'SIGNED_IN')) {
+                  const currentHash = window.location.hash;
+                  let hadPending = false;
+                  try {
+                    hadPending = sessionStorage.getItem('sidar_oauth_pending') === 'true';
+                  } catch (_) {}
+                  const hasTokenInUrl = window.location.search.includes('code=') || currentHash.includes('access_token=');
+
+                  if (hadPending || hasTokenInUrl || ['#dashboard', '#auth', '#account'].includes(currentHash)) {
+                    try { sessionStorage.removeItem('sidar_oauth_pending'); } catch (_) {}
+                    window.history.replaceState(null, '', window.location.pathname);
+                    showToast(state.lang === 'ar' ? 'تم تسجيل الدخول بنجاح.' : 'Signed in successfully.');
+                    handlePostAuthSuccess();
+                  }
                 }
               } catch (error) {
                 console.error('Post-auth session sync failed', error);
@@ -3853,11 +4770,14 @@ function renderProducts(container, items, showPrice = true) {
 
   function navigate(hash) {
     const rawId = hash.replace('#', '') || 'landing';
-    let routeId = rawId === 'account' ? 'dashboard' : (rawId === 'scan' ? 'how' : (routeIds.includes(rawId) ? rawId : 'landing'));
-    const anchorTarget = rawId === 'account' ? null : (rawId === 'scan' ? 'scan' : (routeIds.includes(rawId) ? null : rawId));
+    let routeId = rawId === 'account' ? 'dashboard' : (routeIds.includes(rawId) ? rawId : 'landing');
+    const anchorTarget = rawId === 'account' ? null : (routeIds.includes(rawId) ? null : rawId);
 
     if ((routeId === 'dashboard' || routeId === 'auth') && state.currentUser) {
-      routeId = rawId === 'auth' ? 'dashboard' : routeId;
+      if (rawId === 'auth') {
+        window.location.hash = '#dashboard';
+      }
+      routeId = 'dashboard';
     }
 
     if (routeId === 'dashboard' && !state.currentUser) {
@@ -3865,6 +4785,9 @@ function renderProducts(container, items, showPrice = true) {
     }
 
     activateRoute(routeId);
+    if (typeof updateNavActiveIndicator === 'function') {
+      updateNavActiveIndicator(routeId);
+    }
     closeMobileMenu();
 
     requestAnimationFrame(() => {
@@ -3884,14 +4807,39 @@ function renderProducts(container, items, showPrice = true) {
 
     elements.logoutBtn?.classList.toggle('hidden', !isLoggedIn);
 
-    [elements.navLoginBtn, elements.footerLoginBtn].forEach((el) => {
-      if (!el) return;
-      el.classList.toggle('hidden', isLoggedIn);
-      el.dataset.authState = isLoggedIn ? 'hidden' : '';
-    });
+    // Dynamic TopNav Auth Button (دخول / حسابي)
+    const navAuthBtn = document.getElementById('navAuthBtn') || elements.navLoginBtn;
+    if (navAuthBtn) {
+      navAuthBtn.classList.remove('hidden');
+      navAuthBtn.removeAttribute('aria-hidden');
+      navAuthBtn.removeAttribute('tabindex');
+      const navAuthText = document.getElementById('navAuthText');
+      if (isLoggedIn) {
+        navAuthBtn.setAttribute('href', '#dashboard');
+        navAuthBtn.classList.add('is-logged-in');
+        const text = state.lang === 'ar' ? 'حسابي' : 'My Account';
+        navAuthBtn.setAttribute('title', text);
+        if (navAuthText) navAuthText.textContent = text;
+        else navAuthBtn.textContent = text;
+      } else {
+        navAuthBtn.setAttribute('href', '#auth');
+        navAuthBtn.classList.remove('is-logged-in');
+        const text = state.lang === 'ar' ? 'دخول' : 'Sign In';
+        navAuthBtn.setAttribute('title', text);
+        if (navAuthText) navAuthText.textContent = text;
+        else navAuthBtn.textContent = text;
+      }
+    }
+
+    if (elements.footerLoginBtn) {
+      elements.footerLoginBtn.classList.toggle('hidden', isLoggedIn);
+      elements.footerLoginBtn.dataset.authState = isLoggedIn ? 'hidden' : '';
+    }
 
     document.querySelectorAll('a[data-p="auth"]').forEach((el) => {
-      el.setAttribute('href', isLoggedIn ? '#account' : '#auth');
+      if (el.id !== 'navAuthBtn') {
+        el.setAttribute('href', isLoggedIn ? '#account' : '#auth');
+      }
     });
     if (elements.footerMyAccountBtn) elements.footerMyAccountBtn.setAttribute('href', isLoggedIn ? '#account' : '#auth');
     elements.mobileLogoutBtn?.classList.toggle('hidden', !isLoggedIn);
@@ -3908,8 +4856,9 @@ function renderProducts(container, items, showPrice = true) {
     }
 
     if (elements.heroLoginBtn) {
-      elements.heroLoginBtn.textContent = isLoggedIn ? t('nav_my_account') : t('sign_up');
-      elements.heroLoginBtn.setAttribute('href', isLoggedIn ? '#account' : '#auth');
+      const heroText = document.getElementById('heroLoginText') || elements.heroLoginBtn;
+      heroText.textContent = state.lang === 'ar' ? 'حسابي' : 'My Account';
+      elements.heroLoginBtn.setAttribute('href', isLoggedIn ? '#dashboard' : '#auth');
     }
   }
 
@@ -4130,9 +5079,6 @@ function renderProducts(container, items, showPrice = true) {
     const legacyLanguageField = elements.settingsForm?.querySelector('select[name="preferred_lang"]');
     if (legacyLanguageField?.closest('label')) legacyLanguageField.closest('label').remove();
     document.getElementById('guest')?.remove();
-    document.querySelector('.pricing-grid article:first-child')?.remove();
-    const faqItems = document.querySelectorAll('#faq .history-list article');
-    if (faqItems[2]?.textContent?.toLowerCase().includes('guest') || faqItems[2]?.textContent?.includes('ضيف')) faqItems[2].remove();
     syncScanLocationField();
     restorePendingScanState();
   }
@@ -4238,7 +5184,10 @@ function renderProducts(container, items, showPrice = true) {
     const modal = document.getElementById('deleteAccountModal');
     const phraseInput = document.getElementById('deleteAccountPhrase');
     const confirmButton = document.getElementById('confirmDeleteAccount');
-    const requiredPhrase = 'حذف حسابي';
+    const isPhraseValid = (text) => {
+      const val = (text || '').trim().toLowerCase();
+      return val === 'حذف حسابي' || val === 'delete my account';
+    };
 
     const closeDeleteModal = () => {
       if (!modal) return;
@@ -4262,14 +5211,14 @@ function renderProducts(container, items, showPrice = true) {
       if (event.target === modal) closeDeleteModal();
     });
     phraseInput?.addEventListener('input', () => {
-      if (confirmButton) confirmButton.disabled = phraseInput.value.trim() !== requiredPhrase;
+      if (confirmButton) confirmButton.disabled = !isPhraseValid(phraseInput.value);
     });
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape' && modal && !modal.hidden) closeDeleteModal();
     });
 
     confirmButton?.addEventListener('click', async () => {
-      if (phraseInput?.value.trim() !== requiredPhrase || !window.SidarSupabase?.deleteOwnAccount) return;
+      if (!isPhraseValid(phraseInput?.value) || !window.SidarSupabase?.deleteOwnAccount) return;
       const originalText = confirmButton.textContent;
       confirmButton.disabled = true;
       confirmButton.textContent = state.lang === 'ar' ? 'جارٍ حذف الحساب…' : 'Deleting account…';
@@ -4322,31 +5271,47 @@ function renderProducts(container, items, showPrice = true) {
     } catch (e) { console.error('FAQs sync error:', e); }
   }
 
-  function renderLivePricingPlans(plans) {
-    const container = document.getElementById('pricingPlansContainer');
-    if (!container) return;
-    container.innerHTML = plans.map(plan => `
-      <article class="partner-card">
-        <div class="tag-badge">${plan.status === 'Active' ? (state.lang === 'ar' ? 'نشط' : 'Active') : ''}</div>
-        <div class="h3" style="margin-top:.8rem">${escapeHtml(plan.name)}</div>
-        <div class="display compact-price">${plan.monthly_price === 0 ? (state.lang === 'ar' ? 'مجاني' : 'Free') : `$${plan.monthly_price}`}</div>
-        <ul class="discover-list compact-list">
-          ${(plan.features || '').split('\n').filter(f => f.trim()).map(f => `<li>${escapeHtml(f)}</li>`).join('')}
-        </ul>
-        <a href="#auth" class="btn btn-primary full-width" style="margin-top:1.5rem">${state.lang === 'ar' ? 'اشترك الآن' : 'Subscribe Now'}</a>
-      </article>
-    `).join('');
+  function renderLivePricingPlans(_plans) {
+    // Keep the official bilingual 3-tier pricing cards defined in legacy.html
+    // and translated via applyTranslations() so dummy/test DB rows don't break AR/EN UI.
+    return;
   }
 
   function renderLiveFaqs(faqs) {
     const container = document.getElementById('faqAccordion');
     if (!container) return;
     
-    container.innerHTML = faqs.map((f, idx) => `
-      <div class="faq-item rv" style="transition-delay:${idx * 0.05}s">
+    const isArabic = state.lang === 'ar';
+    const defaultFaqs = [
+      {
+        question: isArabic ? 'هل يقدم SIDAR تشخيصاً طبياً نهائياً؟' : 'Does SIDAR provide a final medical diagnosis?',
+        answer: isArabic ? 'لا. يقدم SIDAR تحليلاً وإرشادات جمالية وتوجيهية ذكية تستند إلى رؤية الحاسوب والذكاء الاصطناعي لفهم صحة البشرة والشعر، ولا يغني عن الاستشارة الطبية المتخصصة.' : 'No. SIDAR provides educational beauty guidance and AI-powered vision insights. It should not replace professional medical advice.'
+      },
+      {
+        question: isArabic ? 'كيف تتم معالجة صوري وحماية خصوصيتي؟' : 'How are my photos processed and privacy protected?',
+        answer: isArabic ? 'تتم معالجة الصور وفق أعلى معايير الخصوصية والأمان عبر خوارزميات مشفرة ومعالجة آمنة، ولا يتم مشاركة أي صور دون موافقتك الصريحة.' : 'All images are encrypted and processed securely according to strict privacy standards, used exclusively for your beauty assessment.'
+      },
+      {
+        question: isArabic ? 'هل يمكنني تجربة المنصة دون إنشاء حساب؟' : 'Can I use the platform without creating an account?',
+        answer: isArabic ? 'نعم. يتيح وضع الضيف تجربة تدفق التحليل الفوري وتصفح التقرير المبدئي على جهازك بكل سهولة وسرعة.' : 'Yes. Guest mode lets you test the instant analysis and review initial findings directly on your device.'
+      },
+      {
+        question: isArabic ? 'هل تدعم المنصة اللغتين العربية والإنجليزية بالكامل؟' : 'Are Arabic and English fully supported?',
+        answer: isArabic ? 'نعم، المنصة مصممة بتجربة ثنائية اللغة تدعم العربية والإنجليزية في جميع الواجهات والتقارير والتوصيات.' : 'Yes. The entire platform, reports, and recommendations are fully bilingual in both Arabic and English.'
+      }
+    ];
+
+    const hasArabicScript = (str) => /[\u0600-\u06FF]/.test(String(str || ''));
+    const langMatchedFaqs = Array.isArray(faqs)
+      ? faqs.filter(f => f && f.question && f.question.trim().length > 5 && hasArabicScript(f.question) === isArabic)
+      : [];
+    const validFaqs = langMatchedFaqs.length >= 2 ? langMatchedFaqs : defaultFaqs;
+    
+    container.innerHTML = validFaqs.map((f, idx) => `
+      <div class="faq-item rv${idx === 0 ? ' on' : ''}" style="transition-delay:${idx * 0.05}s">
         <div class="faq-q" onclick="this.parentElement.classList.toggle('on')">
           <span>${escapeHtml(f.question)}</span>
-          <i class="fa-solid fa-chevron-down"></i>
+          <i class="faq-chevron" aria-hidden="true">▾</i>
         </div>
         <div class="faq-a">
           <div class="faq-a-inner">
@@ -4434,13 +5399,23 @@ function renderProducts(container, items, showPrice = true) {
   };
 
   function bindShareAction() {
-    [
-      document.getElementById('shareNativeBtn'),
-      elements.shareWhatsappBtn,
-      elements.shareInstagramBtn,
-      elements.shareTiktokBtn,
-      elements.shareFullReportBtn,
-    ].filter(Boolean).forEach((button) => button.addEventListener('click', shareReportPdf));
+    const nativeBtn = document.getElementById('shareNativeBtn');
+    if (nativeBtn) nativeBtn.addEventListener('click', handleNativeShare);
+
+    const waBtn = elements.shareWhatsappBtn || document.getElementById('shareWhatsappBtn');
+    if (waBtn) waBtn.addEventListener('click', handleShareWhatsapp);
+
+    const downloadBtn = document.getElementById('shareDownloadBtn');
+    if (downloadBtn) downloadBtn.addEventListener('click', downloadReport);
+
+    const copyBtn = elements.shareFullReportBtn || document.getElementById('shareFullReportBtn');
+    if (copyBtn) copyBtn.addEventListener('click', handleCopyFullReport);
+
+    const igBtn = elements.shareInstagramBtn || document.getElementById('shareInstagramBtn');
+    if (igBtn) igBtn.addEventListener('click', handleShareInstagram);
+
+    const ttBtn = elements.shareTiktokBtn || document.getElementById('shareTiktokBtn');
+    if (ttBtn) ttBtn.addEventListener('click', handleShareTiktok);
   }
 
   function bindResultNavigation() {
@@ -4454,15 +5429,7 @@ function renderProducts(container, items, showPrice = true) {
   }
 
   function integrateAnalysisPreview() {
-    const preview = document.querySelector('#scan .analysis-panel');
-    const form = elements.scanForm;
-    const imageGrid = elements.imagePreviewGrid;
-    if (!preview || !form || !imageGrid || preview.parentElement === form) return;
-    // Keep the useful preview, but make it part of the upload journey rather
-    // than a disconnected dashboard column beside the form.
-    preview.hidden = false;
-    preview.classList.add('sidar-inline-review-card');
-    imageGrid.insertAdjacentElement('afterend', preview);
+    return;
   }
 
   async function init() {
