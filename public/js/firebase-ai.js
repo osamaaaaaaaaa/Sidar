@@ -1,5 +1,3 @@
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
 (function () {
   const cfg = window.SIDAR_CONFIG || {};
   const firebaseCfg = cfg.FIREBASE_CONFIG || {};

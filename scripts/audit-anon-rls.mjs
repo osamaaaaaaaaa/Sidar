@@ -1,5 +1,3 @@
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
 const url = String(process.env.SIDAR_SUPABASE_URL || '').replace(/\/$/, '');
 const anonKey = String(process.env.SIDAR_SUPABASE_ANON_KEY || '');
 

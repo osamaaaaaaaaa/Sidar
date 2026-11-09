@@ -1,5 +1,3 @@
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
 import { readFile } from 'node:fs/promises';
 
 const url = String(process.env.SIDAR_SUPABASE_URL || '').replace(/\/$/, '');

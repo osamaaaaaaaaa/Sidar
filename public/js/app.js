@@ -1,5 +1,3 @@
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
 (function () {
   const initialUrlLang = new URLSearchParams(window.location.search).get('lang');
   const state = {
