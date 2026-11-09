@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react';
 
 const legacyScripts = [
-  { src: '/js/config.js?v=20261105_v3' },
-  { src: '/js/translations.js?v=20261105_v3' },
+  { src: '/js/config.js?v=20261109' },
+  { src: '/js/translations.js?v=20261109' },
   { src: 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2' },
   { src: 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js' },
   { src: 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js' },
-  { src: '/js/supabase.js?v=20261105_v3' },
-  { src: '/js/firebase-ai.js?v=20261105_v3', type: 'module' },
-  { src: '/js/app.js?v=20261105_v3' },
+  { src: '/js/supabase.js?v=20261109' },
+  { src: '/js/firebase-ai.js?v=20261109', type: 'module' },
+  { src: '/js/app.js?v=20261109' },
 ];
+
+const surfaceMarkup = {
+  landing: '/landing.html',
+  analysis: '/analysis.html',
+};
 
 function loadLegacyScript({ src, type }) {
   return new Promise((resolve, reject) => {
@@ -49,11 +54,12 @@ function markSidarBooted() {
   window.__sidarLegacyBooted = true;
 }
 
-export default function LegacySidarExperience() {
+export default function LegacySidarExperience({ surface = 'landing' }) {
   const [markup, setMarkup] = useState('');
 
   useEffect(() => {
     let active = true;
+    const markupUrl = surfaceMarkup[surface] || surfaceMarkup.landing;
     const addedStyles = [];
     // The visible interface is injected before its legacy scripts finish
     // loading.  Keep the first CTA responsive instead of making visitors tap
@@ -69,7 +75,7 @@ export default function LegacySidarExperience() {
       }, 3500);
     };
     document.addEventListener('click', acknowledgeEarlyScanIntent, true);
-    fetch('/legacy.html?v=' + Date.now(), { cache: 'no-store' })
+    fetch(markupUrl + '?v=' + Date.now(), { cache: 'no-store' })
       .then((response) => {
         if (!response.ok) throw new Error('Unable to load the SIDAR interface.');
         return response.text();
@@ -93,7 +99,7 @@ export default function LegacySidarExperience() {
       document.removeEventListener('click', acknowledgeEarlyScanIntent, true);
       addedStyles.forEach((node) => node.remove());
     };
-  }, []);
+  }, [surface]);
 
   useEffect(() => {
     if (!markup || isSidarBooted()) return;

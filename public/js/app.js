@@ -20,6 +20,46 @@
 
   const routes = [...document.querySelectorAll('[data-route]')];
   const routeIds = routes.map((route) => route.id);
+
+  // The marketing site and the analysis workspace are separate deployments
+  // that share this runtime. Each surface only hosts its own routes; anything
+  // else is handed to the matching origin on the *other* subdomain.
+  const SURFACE = document.body.dataset.surface === 'analysis' ? 'analysis' : 'landing';
+  const ANALYSIS_ROUTES = new Set(['scan', 'results', 'auth', 'dashboard', 'account']);
+  const MARKETING_ROUTES = new Set(['landing', 'how', 'pricing', 'investors', 'about', 'faq', 'contact', 'privacy']);
+
+  function getSurfaceOrigins() {
+    const cfg = window.SIDAR_CONFIG || {};
+    const subdomain = cfg.APP_SUBDOMAIN || 'app';
+    const { hostname, protocol, port, origin } = window.location;
+    if (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(hostname)) {
+      return { marketing: `${origin}/index.html`, analysis: `${origin}/app.html` };
+    }
+    const marketingHost = hostname.startsWith(`${subdomain}.`) ? hostname.slice(subdomain.length + 1) : hostname;
+    const baseHost = marketingHost.replace(/^www\./, '');
+    const portSuffix = port ? `:${port}` : '';
+    const marketing = cfg.MARKETING_ORIGIN || `${protocol}//${marketingHost}${portSuffix}`;
+    const analysis = cfg.ANALYSIS_ORIGIN || `${protocol}//${subdomain}.${baseHost}${portSuffix}`;
+    return {
+      marketing: marketing.replace(/\/$/, ''),
+      analysis: analysis.replace(/\/$/, ''),
+    };
+  }
+
+  function crossSurfaceUrl(routeId) {
+    if (SURFACE === 'landing' && ANALYSIS_ROUTES.has(routeId)) {
+      return `${getSurfaceOrigins().analysis}#${routeId}`;
+    }
+    if (SURFACE === 'analysis' && MARKETING_ROUTES.has(routeId)) {
+      return `${getSurfaceOrigins().marketing}#${routeId}`;
+    }
+    return null;
+  }
+
+  function defaultRoute() {
+    return SURFACE === 'analysis' ? '#scan' : '#landing';
+  }
+
   const authTabs = [...document.querySelectorAll('[data-auth-tab]')];
   const authForms = {
     login: document.getElementById('loginForm'),
@@ -1553,7 +1593,12 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
   }
 
   function navigate(hash) {
-    const rawId = hash.replace('#', '') || 'landing';
+    const rawId = hash.replace('#', '') || defaultRoute().slice(1);
+    const crossUrl = crossSurfaceUrl(rawId);
+    if (crossUrl) {
+      window.location.assign(crossUrl);
+      return;
+    }
     let routeId = routeIds.includes(rawId) ? rawId : 'landing';
     const anchorTarget = routeIds.includes(rawId) ? null : rawId;
 
@@ -1576,6 +1621,16 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
 
   function bindRouter() {
     window.addEventListener('hashchange', () => navigate(window.location.hash));
+    // Cross-surface routes leave before the hash settles, so a marketing CTA
+    // does not flash an empty view on the way to the analysis subdomain.
+    document.addEventListener('click', (event) => {
+      const link = event.target.closest?.('a[href^="#"]');
+      if (!link) return;
+      const crossUrl = crossSurfaceUrl((link.getAttribute('href') || '').slice(1));
+      if (!crossUrl) return;
+      event.preventDefault();
+      window.location.assign(crossUrl);
+    }, true);
     document.querySelectorAll('a[href^="#"]').forEach((link) => {
       link.addEventListener('click', () => {
         const href = link.getAttribute('href');
@@ -1588,7 +1643,7 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
         setTimeout(closeMobileMenu, 120);
       });
     });
-    navigate(window.location.hash || '#landing');
+    navigate(window.location.hash || defaultRoute());
   }
 
   function bindAuthTabs() {
@@ -4767,7 +4822,12 @@ function renderProducts(container, items, showPrice = true) {
   }
 
   function navigate(hash) {
-    const rawId = hash.replace('#', '') || 'landing';
+    const rawId = hash.replace('#', '') || defaultRoute().slice(1);
+    const crossUrl = crossSurfaceUrl(rawId);
+    if (crossUrl) {
+      window.location.assign(crossUrl);
+      return;
+    }
     let routeId = rawId === 'account' ? 'dashboard' : (routeIds.includes(rawId) ? rawId : 'landing');
     const anchorTarget = rawId === 'account' ? null : (routeIds.includes(rawId) ? null : rawId);
 
@@ -5270,7 +5330,7 @@ function renderProducts(container, items, showPrice = true) {
   }
 
   function renderLivePricingPlans(_plans) {
-    // Keep the official bilingual 3-tier pricing cards defined in legacy.html
+    // Keep the official bilingual 3-tier pricing cards defined in landing.html
     // and translated via applyTranslations() so dummy/test DB rows don't break AR/EN UI.
     return;
   }

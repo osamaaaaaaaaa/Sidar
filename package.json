@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:app": "vite build --mode analysis",
+    "build:all": "npm run build && npm run build:app",
     "preview": "vite preview",
-    "check": "node --check public/js/app.js && node --check public/js/supabase.js && node --check public/js/firebase-ai.js && vite build",
+    "check": "node --check public/js/app.js && node --check public/js/supabase.js && node --check public/js/firebase-ai.js && npm run build:all",
     "smoke:release": "node scripts/release-smoke.mjs",
     "audit:privacy": "node scripts/audit-anon-rls.mjs"
   },

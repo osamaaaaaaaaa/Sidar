@@ -5,6 +5,11 @@ window.SIDAR_CONFIG = {
   AI_EDGE_FUNCTION_NAME: 'analyze-skin-scan',
   APP_NAME: 'SIDAR',
   DEFAULT_LANG: 'ar',
+  // Marketing site and analysis workspace are deployed separately.
+  // Empty origins are derived from the current host (app.<domain>).
+  APP_SUBDOMAIN: 'app',
+  MARKETING_ORIGIN: '',
+  ANALYSIS_ORIGIN: '',
   // Gemini is called only by the Supabase Edge Function. Never place a Gemini key here.
   USE_FIREBASE_AI_LOGIC: false,
   FIREBASE_GEMINI_MODEL: 'gemini-3.5-flash-lite'

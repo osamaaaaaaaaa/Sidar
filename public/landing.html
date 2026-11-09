@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title data-i18n="page_title">SIDAR AI — Beauty Intelligence Platform</title>
+<meta name="description" content="SIDAR AI combines artificial intelligence, computer vision, and beauty intelligence to analyze skin and hair and deliver personalized insights." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Tajawal:wght@300;400;500;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/styles.css" />
+<style>
+.privacy-shell{display:grid;gap:1.2rem;max-width:980px;margin:0 auto;}
+.privacy-hero{padding:2.2rem;}
+.privacy-copy{padding:2rem 2.2rem;line-height:1.9;}
+.privacy-copy h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--primary-dark, #0F5F4D);margin:0 0 .85rem;}
+.privacy-copy p,.privacy-copy li{font-size:.95rem;color:var(--muted);}
+.privacy-copy ul{margin:.45rem 0 0;padding-inline-start:1.25rem;}
+.privacy-copy .privacy-divider{height:1px;background:var(--bord2);margin:1.2rem 0;}
+@media(max-width:640px){.privacy-hero,.privacy-copy{padding:1.35rem;}}
+</style>
+</head>
+<body>
+<div id="splashScreen" class="splash-screen startup-loader" role="status" aria-live="polite" aria-busy="true">
+  <div class="logo-ring-container">
+    <div class="rings-animated"></div>
+    <div class="logo-static-center">
+      <img src="./assets/logo.jpeg" alt="SIDAR AI" />
+    </div>
+  </div>
+  <div class="splash-title">SIDAR AI</div>
+  <span class="startup-loader-label" data-i18n="startup_loading">Loading SIDAR…</span>
+</div>
+<nav id="topNav">
+  <div class="nav-brand-container">
+    <a class="logo sidar-brand-lockup" href="#landing">
+      <img src="./assets/sidar-emblem-clean.png" alt="SIDAR AI" class="nav-brand-emblem" />
+      <div class="logo-text-block">
+        <span class="logo-brand-name"><span class="logo-green">SIDAR</span> <span class="logo-gold">AI</span></span>
+        <span class="logo-tagline">BEAUTY INTELLIGENCE PLATFORM</span>
+      </div>
+    </a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#landing" data-p="landing" class="on" data-i18n="nav_home">الرئيسية</a></li>
+    <li><a href="#how" data-p="how" data-i18n="nav_how">كيف يعمل</a></li>
+    <li><a href="#pricing" data-p="pricing" data-i18n="nav_pricing">الأسعار</a></li>
+    <li><a href="#faq" data-p="faq" data-i18n="nav_faq">الأسئلة الشائعة</a></li>
+    <li><a href="#investors" data-p="investors" data-i18n="nav_investors">المستثمرون</a></li>
+    <li><a href="#about" data-p="about" data-i18n="nav_about">من نحن</a></li>
+    <li><a href="#contact" data-p="contact" data-i18n="nav_contact">تواصل معنا</a></li>
+  </ul>
+  <div class="nav-r">
+    <div class="nav-lang-switcher" id="langSwitchGroup">
+      <span class="globe-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+      </span>
+      <button id="langBtnEn" class="lang-text-btn" type="button">EN</button>
+      <span class="lang-divider">|</span>
+      <button id="langBtnAr" class="lang-text-btn active" type="button">العربية</button>
+    </div>
+    <a href="#auth" id="navAuthBtn" class="nav-auth-btn" aria-label="Account">
+      <span class="nav-auth-icon" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      </span>
+      <span id="navAuthText">دخول</span>
+    </a>
+    <button id="langToggleBtn" class="lang-mini hidden" type="button">AR</button>
+  </div>
+  <div class="nav-mobile-actions">
+    <button id="mobileTopLangToggleBtn" class="lang-mini mobile-top-lang" type="button">AR</button>
+    <button class="ham" id="menuBtn" type="button" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mob-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-drawer-panel" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <div class="mobile-drawer-head">
+      <a class="mobile-drawer-brand" href="#landing" aria-label="SIDAR AI"><img src="./assets/logo.jpeg" alt="" /><span>SIDAR <small>AI</small></span></a>
+      <button id="mobileDrawerClose" class="mobile-drawer-close" type="button" aria-label="Close menu"><span></span><span></span></button>
+    </div>
+    <div class="mobile-drawer-label" data-i18n="mobile_explore_label">Navigate SIDAR</div>
+    <nav class="mobile-drawer-links" aria-label="Main navigation">
+      <a href="#landing"><span class="mobile-nav-icon"><svg><use href="./assets/sidar-icons.svg#vision"></use></svg></span><b data-i18n="nav_home">Home</b><i aria-hidden="true">→</i></a>
+      <a href="#how"><span class="mobile-nav-icon"><svg><use href="./assets/sidar-icons.svg#report"></use></svg></span><b data-i18n="nav_how">How It Works</b><i aria-hidden="true">→</i></a>
+      <a href="#faq"><span class="mobile-nav-icon"><svg><use href="./assets/sidar-icons.svg#report"></use></svg></span><b data-i18n="nav_faq">FAQ</b><i aria-hidden="true">→</i></a>
+      <a href="#investors"><span class="mobile-nav-icon"><svg><use href="./assets/sidar-icons.svg#vision"></use></svg></span><b data-i18n="nav_investors">Investors</b><i aria-hidden="true">→</i></a>
+      <a href="#pricing"><span class="mobile-nav-icon"><svg><use href="./assets/sidar-icons.svg#product"></use></svg></span><b data-i18n="nav_pricing">Pricing</b><i aria-hidden="true">→</i></a>
+      <a href="#about"><span class="mobile-nav-icon"><svg><use href="./assets/sidar-icons.svg#doctor"></use></svg></span><b data-i18n="nav_about">About</b><i aria-hidden="true">→</i></a>
+      <a href="#contact"><span class="mobile-nav-icon"><svg><use href="./assets/sidar-icons.svg#clinic"></use></svg></span><b data-i18n="nav_contact">Contact</b><i aria-hidden="true">→</i></a>
+      <a href="#auth"><span class="mobile-nav-icon"><svg><use href="./assets/sidar-icons.svg#doctor"></use></svg></span><b data-i18n="nav_my_account">My Account</b><i aria-hidden="true">→</i></a>
+    </nav>
+    <div class="mobile-drawer-footer">
+      <button id="mobileDrawerLanguage" class="mobile-drawer-language" type="button"><span>◎</span><b data-i18n="mobile_language">Language</b><em id="mobileDrawerLanguageValue">AR</em></button>
+      <a id="mobileLoginBtn" class="mobile-drawer-login" href="#auth"><span aria-hidden="true">→</span><b data-i18n="nav_login">Login</b></a>
+      <button id="mobileLogoutBtn" class="mobile-drawer-logout hidden" type="button"><span aria-hidden="true">↗</span><b data-i18n="nav_logout">Logout</b></button>
+    </div>
+  </div>
+</div>
+<main>
+<section class="route active-route" id="landing" data-route>
+  <section class="sidar-luxury-hero" id="home-intro">
+    <!-- Glowing AI wireframe face on the right -->
+    <div class="hero-bg-ai-face" aria-hidden="true">
+      <img src="./assets/hero-ai-face-clean.png" alt="" />
+    </div>
+
+    <!-- Silk ribbon waves on the bottom left -->
+    <div class="hero-bg-silk" aria-hidden="true">
+      <img src="./assets/hero-silk-clean.png" alt="" />
+    </div>
+
+    <div class="hero-main-container">
+      <div class="hero-grid-2col">
+        <!-- Right Column: Text & Features (in RTL) -->
+        <div class="hero-content-col">
+          <div class="hero-kicker-badge">
+            <span class="kicker-line"></span>
+            <span class="kicker-text" data-i18n="landing_eyebrow">منصة سدر مساعدك الذكي للجمال والعناية الشخصية</span>
+            <span class="kicker-line"></span>
+          </div>
+
+          <h1 class="hero-main-headline" data-i18n="landing_title">افهم بشرتك وشعرك كما لم تعرفها من قبل</h1>
+
+          <p class="hero-main-description" data-i18n="landing_desc">
+            ذكاء اصطناعي يفهم بشرتك وشعرك، ويمنحك رؤى شخصية وتوصيات مصممة خصيصاً لك.
+          </p>
+
+          <div class="hero-cta-wrap">
+            <a href="#scan" class="hero-cta-pill-btn">
+              <span data-i18n="landing_cta_primary">ابدأ التحليل المجاني</span>
+              <span class="btn-arrow-icon" aria-hidden="true">→</span>
+            </a>
+            <a href="#auth" id="heroLoginBtn" class="hero-secondary-pill-btn">
+              <span class="hero-btn-icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </span>
+              <span id="heroLoginText" data-i18n="nav_my_account">حسابي</span>
+            </a>
+          </div>
+
+          <div class="hero-mini-features-row">
+            <div class="mini-feature-item">
+              <div class="mini-feat-icon-ring" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"></circle><path d="M9 10h.01M15 10h.01M9.5 15a3.5 3.5 0 0 0 5 0"></path><path d="M12 11v2"></path></svg>
+              </div>
+              <strong class="mini-feat-title" data-i18n="feature_skin_title">تحليل البشرة</strong>
+              <span class="mini-feat-sub" data-i18n="feature_skin_sub">تفاصيل دقيقة ورؤى أعمق</span>
+            </div>
+
+            <div class="mini-feature-item">
+              <div class="mini-feat-icon-ring" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"></circle><path d="M12 6c-2 3-3 7-2 11M12 6c2 3 3 7 2 11M12 6v11"></path></svg>
+              </div>
+              <strong class="mini-feat-title" data-i18n="feature_hair_title">تحليل الشعر</strong>
+              <span class="mini-feat-sub" data-i18n="feature_hair_sub">صحة وكثافة ولمعان</span>
+            </div>
+
+            <div class="mini-feature-item">
+              <div class="mini-feat-icon-ring" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="4" width="14" height="16" rx="2"></rect><path d="M9 8h6M9 12h6M9 16h4"></path></svg>
+              </div>
+              <strong class="mini-feat-title" data-i18n="feature_report_title">التقرير الشخصي</strong>
+              <span class="mini-feat-sub" data-i18n="feature_report_sub">خطة جمال مخصصة لك</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Left Column: The Floating Analysis Preview Card (in RTL) -->
+        <div class="hero-card-col">
+          <div class="hero-floating-card">
+            <!-- Card Header: Title on left, Badge on right (in LTR visual order: Badge, Title) -->
+            <div class="floating-card-header">
+              <span class="card-header-badge" data-i18n="card_badge">تحليل شامل</span>
+              <div class="card-header-right">
+                <span class="card-gold-dash" aria-hidden="true"></span>
+                <span data-i18n="card_title">تقرير الجمال بالذكاء الاصطناعي</span>
+              </div>
+            </div>
+
+            <!-- Card Middle: Animated Spinning Logo on left, Brand on right -->
+            <div class="floating-card-middle">
+              <div class="card-logo-spin-box">
+                <div class="logo-spin-halo">
+                  <div class="logo-spin-ring-outer" aria-hidden="true"></div>
+                  <div class="logo-spin-ring-inner" aria-hidden="true"></div>
+                  <img src="./assets/sidar-emblem-clean.png" alt="SIDAR AI" class="logo-spin-emblem" />
+                </div>
+              </div>
+
+              <div class="card-brand-box">
+                <div class="card-brand-title"><span class="logo-cream">SIDAR</span> <span class="logo-gold">AI</span></div>
+                <div class="card-brand-sub" data-i18n="card_brand_sub">ذكاء العناية بالبشرة والشعر</div>
+                <div class="card-brand-live-pill">
+                  <span class="live-dot-pulse" aria-hidden="true"></span>
+                  <span data-i18n="card_live_status">تحليل ذكي نشط</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Metrics (4 bars: icon and pct on left, bar in center, label on right) -->
+            <div class="floating-card-metrics">
+              <div class="metric-progress-row">
+                <span class="metric-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3c-4.5 6-7 9.5-7 13a7 7 0 0 0 14 0c0-3.5-2.5-7-7-13z"></path></svg>
+                </span>
+                <span class="metric-pct">75%</span>
+                <div class="metric-bar-track"><div class="metric-bar-fill" style="width: 75%;"></div></div>
+                <span class="metric-name" data-i18n="score_metric_hydration">الترطيب</span>
+              </div>
+
+              <div class="metric-progress-row">
+                <span class="metric-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L9.5 8.5 3 9.5l5 4.5-1.5 6.5L12 17l5.5 3.5-1.5-6.5 5-4.5-6.5-1z"></path></svg>
+                </span>
+                <span class="metric-pct">70%</span>
+                <div class="metric-bar-track"><div class="metric-bar-fill" style="width: 70%;"></div></div>
+                <span class="metric-name" data-i18n="score_metric_texture">وضوح الملمس</span>
+              </div>
+
+              <div class="metric-progress-row">
+                <span class="metric-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12c3-4 6-4 9 0s6 4 9 0"></path></svg>
+                </span>
+                <span class="metric-pct">78%</span>
+                <div class="metric-bar-track"><div class="metric-bar-fill" style="width: 78%;"></div></div>
+                <span class="metric-name" data-i18n="score_metric_fine_lines">الخطوط الدقيقة</span>
+              </div>
+
+              <div class="metric-progress-row">
+                <span class="metric-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5z"></path></svg>
+                </span>
+                <span class="metric-pct">84%</span>
+                <div class="metric-bar-track"><div class="metric-bar-fill" style="width: 84%;"></div></div>
+                <span class="metric-name" data-i18n="score_metric_tone">تناسق اللون</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Features Strip -->
+      <div class="hero-bottom-strip">
+        <div class="strip-item">
+          <div class="strip-icon-circle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+          </div>
+          <div class="strip-content">
+            <strong data-i18n="strip_experts_title">مسترشدون بتوصيات الخبراء</strong>
+            <span data-i18n="strip_experts_sub">ندمج بين الذكاء الاصطناعي والخبرة الطبية</span>
+          </div>
+        </div>
+
+        <div class="strip-item">
+          <div class="strip-icon-circle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 3.5 1 6-1 9a7 7 0 0 1-7 9z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+          </div>
+          <div class="strip-content">
+            <strong data-i18n="strip_natural_title">جمال طبيعي، بأسلوب علمي</strong>
+            <span data-i18n="strip_natural_sub">لنتائج تدوم</span>
+          </div>
+        </div>
+
+        <div class="strip-item">
+          <div class="strip-icon-circle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg>
+          </div>
+          <div class="strip-content">
+            <strong data-i18n="strip_privacy_title">خصوصيتك تهمنا</strong>
+            <span data-i18n="strip_privacy_sub">بياناتك آمنة وسرية</span>
+          </div>
+        </div>
+
+        <div class="strip-item">
+          <div class="strip-icon-circle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"></path></svg>
+          </div>
+          <div class="strip-content">
+            <strong data-i18n="strip_ai_title">تقنية الذكاء الاصطناعي المتقدمة</strong>
+            <span data-i18n="strip_ai_sub">تحليلات دقيقة ومخصصة</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <a href="#how" class="hero-scroll-cue">
+        <div class="mouse-icon" aria-hidden="true">
+          <span class="mouse-wheel"></span>
+        </div>
+        <span data-i18n="explore_more">اكتشف المزيد</span>
+        <div class="scroll-tick-line" aria-hidden="true"></div>
+      </a>
+    </div>
+  </section>
+
+</section>
+
+<section class="route" id="how" data-route>
+  <section class="sidar-how-hero">
+    <div class="sidar-page-shell">
+      <div class="sidar-page-index" data-i18n="how_page_index">SYSTEM / 01 — HOW IT WORKS</div>
+      <div class="sidar-how-layout">
+        <div>
+          <span class="sidar-page-kicker" data-i18n="how_kicker">THE SIDAR METHOD</span>
+          <h1 data-i18n="how_title">Simple. Intelligent.<br><em>Personalized.</em></h1>
+          <p data-i18n="how_desc">SIDAR AI uses advanced artificial intelligence and computer vision technology to analyze your skin and hair features and generate personalized beauty insights.</p>
+          <div class="sidar-how-meta"><span data-i18n="how_meta_1">PRIVATE IMAGE REVIEW</span><span data-i18n="how_meta_2">PERSONALIZED OUTPUT</span></div>
+        </div>
+        <div class="sidar-how-schematic" aria-hidden="true">
+          <div class="sidar-how-scanline"></div>
+          <div class="sidar-how-node sidar-how-node-a" data-i18n="how_node_a">PHOTO<br>INPUT</div>
+          <div class="sidar-how-node sidar-how-node-b" data-i18n="how_node_b">AI<br>VISION</div>
+          <div class="sidar-how-node sidar-how-node-c" data-i18n="how_node_c">YOUR<br>PLAN</div>
+          <svg viewBox="0 0 640 370"><path d="M93 94 C230 94 190 183 320 183 S412 270 552 270"/><path d="M93 275 C210 275 246 183 320 183"/></svg>
+          <b data-i18n="how_schematic_title">SIDAR<br>INTELLIGENCE<br>FLOW</b>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="sidar-how-steps-section">
+    <div class="sidar-page-shell">
+      <div class="sidar-section-bar"><span>01 — 03</span><p data-i18n="how_desc_2">Our platform is designed to deliver accurate analysis and meaningful recommendations through a simple and user-friendly process.</p></div>
+      <div class="sidar-how-steps">
+        <article><div class="sidar-step-count">01 <i>✦</i></div><div class="sidar-step-symbol"><svg><use href="./assets/sidar-icons.svg#scan"></use></svg></div><h2 data-i18n="how_step_1_title">Upload Your Photo</h2><p data-i18n="how_step_1_text">Start by securely uploading a clear photo. Our system uses advanced image processing to prepare the image for analysis while maintaining user privacy and security.</p></article>
+        <article><div class="sidar-step-count">02 <i>✦</i></div><div class="sidar-step-symbol"><svg><use href="./assets/sidar-icons.svg#vision"></use></svg></div><h2 data-i18n="how_step_2_title">AI Beauty Analysis</h2><p data-i18n="how_step_2_text">SIDAR AI evaluates multiple beauty indicators including skin texture, pores, hydration level, wrinkles, and hair condition using advanced AI algorithms.</p></article>
+        <article><div class="sidar-step-count">03 <i>✦</i></div><div class="sidar-step-symbol"><svg><use href="./assets/sidar-icons.svg#report"></use></svg></div><h2 data-i18n="how_step_3_title">Receive Your Beauty Report</h2><p data-i18n="how_step_3_text">After analysis is completed, you will receive a personalized AI report containing insights, scores, and recommendations designed to help you better understand your skin and hair condition.</p><a href="#scan" data-i18n="how_begin_cta">Begin your analysis <i>↗</i></a></article>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="route" id="pricing" data-route>
+  <section class="sec sec-alt">
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="pricing">Pricing</div>
+      <h1 class="display" style="margin:0 0 1rem" data-i18n="pricing_title">Simple plans for <em>every stage</em></h1>
+      <div class="partners-grid pricing-grid" id="pricingPlansContainer">
+        <article class="partner-card">
+          <div class="tag-badge" data-i18n="pricing_free">Free</div>
+          <div class="h3" style="margin-top:.8rem" data-i18n="pricing_guest">Guest</div>
+          <p class="body-text" data-i18n="pricing_guest_desc">Run limited local analyses on one device.</p>
+          <div class="display compact-price">0</div>
+          <ul class="discover-list compact-list">
+            <li data-i18n="pricing_guest_feature_1">Local history</li>
+            <li data-i18n="pricing_guest_feature_2">Basic report view</li>
+            <li data-i18n="pricing_guest_feature_3">No cloud sync</li>
+          </ul>
+          <a href="#scan" class="btn btn-secondary full-width" style="margin-top:auto" data-i18n="pricing_guest_cta">Start Free Scan</a>
+        </article>
+        <article class="partner-card">
+          <div class="tag-badge" data-i18n="pricing_popular">Most Popular</div>
+          <div class="h3" style="margin-top:.8rem" data-i18n="pricing_plus">SIDAR Plus</div>
+          <p class="body-text" data-i18n="pricing_plus_desc">Save reports, sync dashboard, and manage routines.</p>
+          <div class="display compact-price">$9</div>
+          <ul class="discover-list compact-list">
+            <li data-i18n="pricing_plus_feature_1">Cloud history</li>
+            <li data-i18n="pricing_plus_feature_2">Saved plans</li>
+            <li data-i18n="pricing_plus_feature_3">Priority support</li>
+          </ul>
+          <a href="#auth" class="btn btn-primary full-width" style="margin-top:auto" data-i18n="pricing_plus_cta">Get SIDAR Plus</a>
+        </article>
+        <article class="partner-card">
+          <div class="tag-badge" data-i18n="pricing_business">Business</div>
+          <div class="h3" style="margin-top:.8rem" data-i18n="pricing_clinic">Clinic / Brand</div>
+          <p class="body-text" data-i18n="pricing_clinic_desc">For partner workflows and referral integrations.</p>
+          <div class="display compact-price" data-i18n="pricing_clinic_price">Custom</div>
+          <ul class="discover-list compact-list">
+            <li data-i18n="pricing_clinic_feature_1">Partner dashboard</li>
+            <li data-i18n="pricing_clinic_feature_2">Referrals</li>
+            <li data-i18n="pricing_clinic_feature_3">Custom integrations</li>
+          </ul>
+          <a href="#contact" class="btn btn-secondary full-width" style="margin-top:auto" data-i18n="pricing_clinic_cta">Contact Sales</a>
+        </article>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="route" id="investors" data-route>
+  <section class="sec" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
+    <div class="wrap">
+      <div class="eyebrow rv" data-i18n="investors_eyebrow">Investment Opportunity</div>
+      <div class="inv-hero-grid">
+        <div>
+          <h1 class="display rv" style="transition-delay:.1s;margin-bottom:1.2rem" data-i18n="investors_title">The Future of<br><em>BeautyTech</em><br>is Now</h1>
+          <p class="lead rv" style="transition-delay:.18s;margin-bottom:1.5rem" data-i18n="investors_desc">SIDAR AI is building an AI-powered beauty intelligence platform designed for the rapidly growing global beauty and wellness market.</p>
+          <p class="body-text rv" style="transition-delay:.22s;margin-bottom:2rem;max-width:480px" data-i18n="investors_desc_2">By combining artificial intelligence with beauty analytics, SIDAR AI aims to transform how individuals understand and manage their skin and hair health.</p>
+        </div>
+        <div class="market-cards">
+          <div class="m-card rv"><div class="m-val">$500B+</div><div class="m-lbl" data-i18n="investor_stat_1">Global Beauty Market</div></div>
+          <div class="m-card rv" style="transition-delay:.1s"><div class="m-val">$8B</div><div class="m-lbl" data-i18n="investor_stat_2">GCC Beauty Market</div></div>
+          <div class="m-card rv" style="transition-delay:.05s"><div class="m-val">23%</div><div class="m-lbl" data-i18n="investor_stat_3">Annual Tech Growth</div></div>
+          <div class="m-card rv" style="transition-delay:.15s"><div class="m-val">38M</div><div class="m-lbl" data-i18n="investor_stat_4">Internet Users — KSA</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="sec sec-alt">
+    <div class="wrap">
+      <div class="investor-story-grid">
+        <div>
+          <div class="eyebrow rv" data-i18n="market_opportunity">Market Opportunity</div>
+          <h2 class="h2 rv" style="transition-delay:.1s;margin-bottom:1rem" data-i18n="market_opportunity_title">A Rapidly <em>Growing</em> Market</h2>
+          <p class="body-text rv" style="transition-delay:.15s;margin-bottom:1rem" data-i18n="market_opportunity_text_1">The global beauty and skincare industry continues to grow rapidly, with increasing demand for personalized beauty solutions powered by technology.</p>
+          <p class="body-text rv" style="transition-delay:.18s" data-i18n="market_opportunity_text_2">Artificial intelligence is becoming a key driver of innovation in the beauty industry, enabling more accurate analysis, personalized recommendations, and smarter beauty experiences.</p>
+        </div>
+        <div>
+          <div class="eyebrow rv" style="transition-delay:.05s" data-i18n="our_vision">Our Vision</div>
+          <h2 class="h2 rv" style="transition-delay:.15s;margin-bottom:1rem" data-i18n="our_vision_title">Built to <em>Scale</em></h2>
+          <p class="body-text rv" style="transition-delay:.2s;margin-bottom:1.5rem" data-i18n="our_vision_text">SIDAR AI aims to become a leading beauty intelligence platform in the Middle East, starting with markets such as Dubai and expanding across the region.</p>
+
+          <div class="vision-items">
+            <div class="vi rv" style="transition-delay:.25s"><div class="vi-ico"><svg><use href="./assets/sidar-icons.svg#vision"></use></svg></div><div><div class="vi-title" data-i18n="vision_item_1_title">AI-Powered Beauty Analysis</div><div class="vi-text" data-i18n="vision_item_1_text">Continuous model improvement for unmatched regional accuracy.</div></div></div>
+            <div class="vi rv" style="transition-delay:.3s"><div class="vi-ico"><svg><use href="./assets/sidar-icons.svg#report"></use></svg></div><div><div class="vi-title" data-i18n="vision_item_2_title">Data-Driven Insights</div><div class="vi-text" data-i18n="vision_item_2_text">Intelligence engine learning from user data to improve recommendations.</div></div></div>
+            <div class="vi rv" style="transition-delay:.35s"><div class="vi-ico"><svg><use href="./assets/sidar-icons.svg#product"></use></svg></div><div><div class="vi-title" data-i18n="vision_item_3_title">Beauty Marketplace</div><div class="vi-text" data-i18n="vision_item_3_text">Curated product marketplace connected to AI analysis results.</div></div></div>
+            <div class="vi rv" style="transition-delay:.4s"><div class="vi-ico"><svg><use href="./assets/sidar-icons.svg#clinic"></use></svg></div><div><div class="vi-title" data-i18n="vision_item_4_title">Clinic Network</div><div class="vi-text" data-i18n="vision_item_4_text">Certified dermatologist and aesthetic clinic partner network.</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inv-cta rv" style="transition-delay:.2s;margin-top:3rem">
+        <div class="eyebrow" style="display:block;margin-bottom:.8rem" data-i18n="investor_relations">Investor Relations</div>
+        <h2 class="h2" style="margin-bottom:1rem" data-i18n="investor_relations_title">We welcome <em>strategic investors</em><br>who share our vision</h2>
+        <p class="lead" style="margin:0 auto 2.5rem;text-align:center;max-width:520px" data-i18n="investor_relations_desc">We welcome strategic investors and partners who share our vision of building the future of beauty intelligence through advanced technology.</p>
+        <a href="#contact" class="btn btn-primary" data-i18n="get_in_touch">Get in touch</a>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="route" id="about" data-route>
+  <div class="about-intro">
+    <div class="wrap-sm">
+      <div class="eyebrow rv" style="display:block" data-i18n="about_eyebrow">About SIDAR AI</div>
+      <h1 class="display rv" style="transition-delay:.1s;margin-bottom:1.2rem" data-i18n="about_title">We are <em>SIDAR AI</em></h1>
+      <p class="lead rv" style="transition-delay:.18s;margin:0 auto 2rem" data-i18n="about_desc">SIDAR AI is an innovative beauty technology platform that combines artificial intelligence with beauty science to deliver intelligent insights about skin and hair health.</p>
+
+      <div class="mission-split">
+        <div class="ms-card rv">
+          <div style="font-size:1.8rem;margin-bottom:.8rem">🎯</div>
+          <div class="h3" style="margin-bottom:.7rem" data-i18n="our_mission_title">Our Mission</div>
+          <p class="body-text" data-i18n="our_mission_text">Our mission is to empower users with intelligent beauty insights that help them make better decisions about skincare, haircare, and overall beauty wellness.</p>
+        </div>
+        <div class="ms-card rv" style="transition-delay:.12s">
+          <div style="font-size:1.8rem;margin-bottom:.8rem">🌍</div>
+          <div class="h3" style="margin-bottom:.7rem" data-i18n="our_vision_main_title">Our Vision</div>
+          <p class="body-text" data-i18n="our_vision_main_text">We aim to build one of the leading AI-powered beauty intelligence platforms in the region, providing users with data-driven beauty analysis and personalized beauty guidance.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <section class="sec sec-alt">
+    <div class="wrap">
+      <div class="eyebrow rv" data-i18n="what_sets_us_apart">What Sets Us Apart</div>
+      <h2 class="h2 rv" style="transition-delay:.1s;margin-bottom:.8rem" data-i18n="tech_meets_beauty">Technology meets <em>Beauty Science</em></h2>
+      <p class="lead rv" style="transition-delay:.15s;margin-bottom:3rem" data-i18n="tech_meets_beauty_desc">By combining technology, data, and beauty expertise, SIDAR AI aims to transform the way people understand and improve their appearance.</p>
+
+      <div class="values-grid">
+        <div class="val-card rv"><div class="val-ico">🔬</div><div class="val-t" data-i18n="value_1_title">Smart & Personalized Analysis</div><div class="val-txt" data-i18n="value_1_text">We use AI technologies to analyze images and provide aesthetic indicators and tailored insights, within system capabilities and analysis parameters.</div></div>
+        <div class="val-card rv" style="transition-delay:.1s"><div class="val-ico">🔒</div><div class="val-t" data-i18n="value_2_title">Privacy First</div><div class="val-txt" data-i18n="value_2_text">Your skin data encrypted and never shared without explicit consent.</div></div>
+        <div class="val-card rv" style="transition-delay:.2s"><div class="val-ico">🌟</div><div class="val-t" data-i18n="value_3_title">Regional Expertise</div><div class="val-txt" data-i18n="value_3_text">Built specifically for Middle Eastern skin tones, types, and beauty standards.</div></div>
+        <div class="val-card rv" style="transition-delay:.05s"><div class="val-ico">⚡</div><div class="val-t" data-i18n="value_4_title">Continuous Innovation</div><div class="val-txt" data-i18n="value_4_text">Constantly improving models with the latest AI research breakthroughs.</div></div>
+        <div class="val-card rv" style="transition-delay:.15s"><div class="val-ico">🤝</div><div class="val-t" data-i18n="value_5_title">Trusted Partnerships</div><div class="val-txt" data-i18n="value_5_text">Certified dermatologists validate all recommendations for accuracy.</div></div>
+        <div class="val-card rv" style="transition-delay:.25s"><div class="val-ico">💚</div><div class="val-t" data-i18n="value_6_title">Accessible Beauty</div><div class="val-txt" data-i18n="value_6_text">Making expert skincare intelligence accessible to everyone across the region.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="sec">
+    <div class="wrap" style="text-align:center">
+      <div class="eyebrow rv" style="display:block" data-i18n="journey">Journey</div>
+      <h2 class="h2 rv" style="transition-delay:.1s;margin-bottom:3rem" data-i18n="our_story">Our <em>Story</em></h2>
+      <div class="about-story-grid">
+        <div class="card rv">
+          <div style="font-family:'DM Mono',monospace;font-size:.62rem;color:var(--gold);margin-bottom:.5rem;letter-spacing:.1em" data-i18n="story_founded_label">FOUNDED</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;margin-bottom:.3rem">2026</div>
+          <p class="body-text" data-i18n="story_founded_text">Launched in Dubai with a vision to transform beauty through AI technology.</p>
+        </div>
+        <div class="card rv" style="transition-delay:.12s">
+          <div style="font-family:'DM Mono',monospace;font-size:.62rem;color:var(--gold);margin-bottom:.5rem;letter-spacing:.1em" data-i18n="story_market_label">MARKET</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;margin-bottom:.3rem">GCC</div>
+          <p class="body-text" data-i18n="story_market_text">Focused on the Gulf Cooperation Council with plans for regional expansion.</p>
+        </div>
+        <div class="card rv" style="transition-delay:.24s">
+          <div style="font-family:'DM Mono',monospace;font-size:.62rem;color:var(--gold);margin-bottom:.5rem;letter-spacing:.1em" data-i18n="story_mission_label">MISSION</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;margin-bottom:.3rem">AI + Beauty</div>
+          <p class="body-text" data-i18n="story_mission_text">Combining artificial intelligence and beauty science for smarter beauty decisions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="route" id="faq" data-route>
+  <section class="sec">
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="faq_eyebrow">Questions</div>
+      <h1 class="display" style="margin:0 0 3rem" data-i18n="faq_title">Frequently Asked <em>Questions</em></h1>
+      
+      <div id="faqAccordion" class="faq-layout">
+        <!-- Populated by JS -->
+        <p class="body-text" data-i18n="loading_faqs">Loading frequently asked questions...</p>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="route" id="contact" data-route>
+  <section class="sec sec-alt">
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="contact_eyebrow">Contact Us</div>
+      <h1 class="display" style="margin:0 0 1rem" data-i18n="contact_heading">Get in <em>Touch</em></h1>
+
+      <div class="contact-layout">
+        <div class="cform">
+          <div class="h3" style="margin-bottom:1rem" data-i18n="contact_send">Send a Message</div>
+
+          <div id="cFormWrap" class="form-grid two-col">
+            <label>
+              <span data-i18n="contact_first">First Name</span>
+              <input id="contactFirst" class="fi" type="text" data-i18n-placeholder="first_name_placeholder" placeholder="Osama">
+            </label>
+
+            <label>
+              <span data-i18n="contact_last">Last Name</span>
+              <input id="contactLast" class="fi" type="text" data-i18n-placeholder="last_name_placeholder" placeholder="Ahmed">
+            </label>
+
+            <label class="full-span">
+              <span data-i18n="contact_email">Email Address</span>
+              <input id="contactEmail" class="fi" type="email" data-i18n-placeholder="contact_email_placeholder" placeholder="Osama@company.com">
+            </label>
+
+            <label class="full-span">
+              <span data-i18n="contact_inquiry">Inquiry Type</span>
+              <select id="contactType" class="fi">
+                <option data-i18n="inquiry_partnership">Partnership Opportunity</option>
+                <option data-i18n="inquiry_investment">Investment Inquiry</option>
+                <option data-i18n="inquiry_clinic_brand">Clinic / Brand Collaboration</option>
+                <option data-i18n="inquiry_press">Press / Media</option>
+                <option data-i18n="inquiry_general">General Inquiry</option>
+              </select>
+            </label>
+
+            <label class="full-span">
+              <span data-i18n="contact_message">Message</span>
+              <textarea id="contactMessage" class="fi" data-i18n-placeholder="contact_message_placeholder" placeholder="Tell us about your interest in SIDAR AI..."></textarea>
+            </label>
+
+            <button class="btn btn-primary" onclick="submitForm()" type="button" data-i18n="contact_submit">
+              Send Message →
+            </button>
+          </div>
+
+          <div class="form-ok" id="formOk" style="display:none">
+            <div class="h3" data-i18n="contact_success">Message Sent!</div>
+            <p class="body-text" data-i18n="contact_success_copy">Thank you for reaching out. We'll respond within 24 hours.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section class="route" id="privacy" data-route>
+  <section class="sec" style="background:linear-gradient(180deg,var(--bg),var(--bg2))">
+    <div class="wrap">
+      <div class="privacy-shell">
+        <article class="glass privacy-hero">
+          <div class="eyebrow" data-i18n="privacy_eyebrow">Legal</div>
+          <h1 class="display" style="margin:0 0 1rem" data-i18n="privacy_title">Privacy <em>Policy</em></h1>
+          <p class="lead" style="margin:0" data-i18n="privacy_subtitle">Privacy Policy</p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_intro_title">Introduction</h3>
+          <p data-i18n="privacy_intro_p1">
+            SIDAR AI respects your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your information when you use the SIDAR AI website and services.
+          </p>
+          <p data-i18n="privacy_intro_p2">
+            By accessing or using SIDAR AI, you agree to the terms outlined in this Privacy Policy.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_collect_title">Information We Collect</h3>
+          <p data-i18n="privacy_collect_p1">
+            SIDAR AI may collect certain types of information in order to provide and improve our services.
+          </p>
+
+          <h4 data-i18n="privacy_personal_title">Personal Information</h4>
+          <p data-i18n="privacy_personal_p1">
+            When you create an account or contact us, we may collect:
+          </p>
+          <ul>
+            <li data-i18n="privacy_personal_li_1">Name</li>
+            <li data-i18n="privacy_personal_li_2">Email address</li>
+            <li data-i18n="privacy_personal_li_3">Account information</li>
+          </ul>
+
+          <h4 data-i18n="privacy_image_title">Image Data</h4>
+          <p data-i18n="privacy_image_p1">
+            When you use the AI analysis feature, you may upload photos for analysis. These images are processed by our artificial intelligence systems to generate beauty insights.
+          </p>
+          <p data-i18n="privacy_image_p2">
+            SIDAR AI does not use uploaded images for identification or facial recognition purposes.
+          </p>
+
+          <h4 data-i18n="privacy_usage_title">Usage Information</h4>
+          <p data-i18n="privacy_usage_p1">
+            We may automatically collect certain information when you use the platform, such as:
+          </p>
+          <ul>
+            <li data-i18n="privacy_usage_li_1">Device type</li>
+            <li data-i18n="privacy_usage_li_2">Browser type</li>
+            <li data-i18n="privacy_usage_li_3">Usage statistics</li>
+            <li data-i18n="privacy_usage_li_4">Interaction with the platform</li>
+          </ul>
+          <p data-i18n="privacy_usage_p2">
+            This information helps us improve the performance and user experience of our services.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_use_title">How We Use Your Information</h3>
+          <p data-i18n="privacy_use_p1">
+            The information we collect may be used to:
+          </p>
+          <ul>
+            <li data-i18n="privacy_use_li_1">Provide AI-powered skin and hair analysis</li>
+            <li data-i18n="privacy_use_li_2">Generate personalized beauty reports</li>
+            <li data-i18n="privacy_use_li_3">Improve platform performance and user experience</li>
+            <li data-i18n="privacy_use_li_4">Communicate with users regarding service updates</li>
+            <li data-i18n="privacy_use_li_5">Ensure security and prevent misuse of the platform</li>
+          </ul>
+          <p data-i18n="privacy_use_p2">
+            SIDAR AI does not sell personal information to third parties.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_ai_title">Image Processing and AI Analysis</h3>
+          <p data-i18n="privacy_ai_p1">
+            Images uploaded by users are processed by artificial intelligence systems to analyze skin and hair indicators.
+          </p>
+          <p data-i18n="privacy_ai_p2">
+            The purpose of this analysis is to provide personalized beauty insights and recommendations.
+          </p>
+          <p data-i18n="privacy_ai_p3">
+            Images may be temporarily processed to generate reports and improve system performance. SIDAR AI takes reasonable measures to protect this data.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_security_title">Data Security</h3>
+          <p data-i18n="privacy_security_p1">
+            SIDAR AI implements appropriate technical and organizational measures to protect user information from unauthorized access, misuse, or disclosure.
+          </p>
+          <p data-i18n="privacy_security_p2">
+            However, no system can guarantee absolute security, and users acknowledge that they share information at their own risk.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_thirdparty_title">Third-Party Services</h3>
+          <p data-i18n="privacy_thirdparty_p1">
+            SIDAR AI may use trusted third-party services to support certain features of the platform, including AI processing and analytics.
+          </p>
+          <p data-i18n="privacy_thirdparty_p2">
+            These services may have their own privacy policies and data handling practices.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_rights_title">User Rights</h3>
+          <p data-i18n="privacy_rights_p1">Users may request to:</p>
+          <ul>
+            <li data-i18n="privacy_rights_li_1">Access their personal information</li>
+            <li data-i18n="privacy_rights_li_2">Update account details</li>
+            <li data-i18n="privacy_rights_li_3">Request deletion of their account</li>
+          </ul>
+          <p data-i18n="privacy_rights_p2">
+            Requests may be submitted through our contact email.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_retention_title">Data Retention</h3>
+          <p data-i18n="privacy_retention_p1">
+            SIDAR AI retains user information only for as long as necessary to provide services, maintain platform functionality, and comply with applicable regulations.
+          </p>
+          <p data-i18n="privacy_retention_p2">
+            Users may request deletion of their account and associated data.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_children_title">Children’s Privacy</h3>
+          <p data-i18n="privacy_children_p1">
+            SIDAR AI services are not intended for individuals under the age of 18. We do not knowingly collect personal information from minors.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_changes_title">Changes to This Policy</h3>
+          <p data-i18n="privacy_changes_p1">
+            SIDAR AI may update this Privacy Policy periodically to reflect improvements to our services or legal requirements.
+          </p>
+          <p data-i18n="privacy_changes_p2">
+            Users are encouraged to review this page regularly for updates.
+          </p>
+        </article>
+
+        <article class="glass privacy-copy">
+          <h3 data-i18n="privacy_contact_title">Contact Us</h3>
+          <p data-i18n="privacy_contact_p1">
+            If you have questions regarding this Privacy Policy or the handling of your information, please contact us.
+          </p>
+          <p>
+            <span data-i18n="privacy_contact_email_label">Email:</span>
+            <a href="mailto:info@sidarai.com">info@sidarai.com</a>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <div class="logo-type">SIDAR <sup>AI</sup></div>
+      <p class="body-text" data-i18n="footer_title">AI-powered beauty intelligence platform. This production package merges the old working logic with the new premium website design.</p>
+      <p class="body-text">© <span id="year"></span> SIDAR AI</p>
+    </div>
+    <div class="footer-links">
+      <a href="#landing" data-i18n="nav_home">Home</a>
+      <a href="#about" data-i18n="footer_about_us">About Us</a>
+      <a href="#investors" data-i18n="footer_investors">Investors</a>
+      <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
+      <a href="#faq" data-i18n="nav_faq">FAQ</a>
+      <a href="#account" id="footerMyAccountBtn" data-i18n="nav_my_account">My Account</a>
+      <a href="#contact" data-i18n="nav_contact">Contact</a>
+      <a href="#privacy" data-i18n="Privacy">Privacy Policy</a>
+      <!-- <a href="#contact" data-i18n="nav_contact">Contact</a> -->
+    </div>
+  </div>
+</footer>
+
+<div id="toastContainer" class="toast-container"></div>
+</body>
+</html>

@@ -2,6 +2,13 @@ window.SIDAR_CONFIG = {
   APP_NAME: 'SIDAR',
   DEFAULT_LANG: 'en',
 
+  // Separate deployments: the marketing site and the analysis workspace.
+  // Leave the origins empty to derive them from the current host
+  // (marketing.example.com <-> app.example.com).
+  APP_SUBDOMAIN: 'app',
+  MARKETING_ORIGIN: '',
+  ANALYSIS_ORIGIN: '',
+
   // Supabase
   SUPABASE_URL: 'https://YOUR-PROJECT.supabase.co',
   SUPABASE_ANON_KEY: 'YOUR_SUPABASE_ANON_KEY',

@@ -19,10 +19,26 @@ This package merges:
 1. Install dependencies with `npm install`.
 2. Run `sql/production_schema.sql`, `sql/provider_catalog_migration.sql`, `sql/account_management_migration.sql`, `sql/privacy_hardening_migration.sql`, `sql/analysis_rate_limit_migration.sql`, then `sql/launch_security_baseline.sql` in the Supabase SQL editor. The last three are mandatory for an already deployed project.
 3. Confirm bucket name in `public/js/config.js` is `scan-images`. The default secure analysis path is the Supabase Edge Function below.
-4. Start locally with `npm run dev`; create deployment assets with `npm run build`.
-5. Deploy the generated `dist/` folder as a static site.
+4. Start locally with `npm run dev` (landing on `/`, analysis workspace on `/app.html`).
+5. Build both deployments with `npm run build:all`, or separately with `npm run build` / `npm run build:app`.
 
-Before deployment, run `npm run check` to validate the legacy runtime JavaScript and generate a clean React production build.
+Before deployment, run `npm run check` to validate the legacy runtime JavaScript and generate both production builds.
+
+## Two deployments
+
+The marketing site and the analysis workspace are separate builds that share this codebase:
+
+| Artifact | Entry | Deploy to |
+| --- | --- | --- |
+| `dist/` | `index.html` | marketing domain (e.g. `example.com`) |
+| `dist-app/` | `index.html` (built from `app.html`) | `app.example.com` |
+
+- `public/landing.html` holds the marketing routes (`landing`, `how`, `pricing`, `investors`, `about`, `faq`, `contact`, `privacy`).
+- `public/analysis.html` holds the workspace routes (`scan`, `results`, `auth`, `dashboard`).
+- Each build only runs the routes it owns: CTAs such as "Start Analysis" or "My Account" send visitors to the other subdomain, and workspace navigation links back to the marketing site.
+- Origins are derived from the current host using `APP_SUBDOMAIN` (default `app`) in `public/js/config.js`. Set `MARKETING_ORIGIN` / `ANALYSIS_ORIGIN` explicitly when the domains do not follow the `app.` pattern.
+
+After deploying, add the analysis origin to the Supabase Auth redirect allowlist and to the Edge Function `ALLOWED_ORIGINS` (comma-separated), otherwise OAuth and analysis requests from `app.example.com` are rejected.
 
 ## Image privacy (required before launch)
 
@@ -67,7 +83,7 @@ After applying `launch_security_baseline.sql`, run `npm run audit:privacy` with 
 
 The configured Firebase Web API key must be allowed to call `firebasevertexai.googleapis.com`. In Google Cloud Console for the Firebase project, enable **Firebase Vertex AI API** and either remove the API key's service restriction or explicitly allow `firebasevertexai.googleapis.com`. Keep appropriate HTTP-referrer restrictions for the deployed domain. The application reports this setup issue clearly instead of presenting a generic analysis failure.
 
-`index.html` is now the Vite/React entrypoint. The existing visual application is intentionally preserved in `public/legacy.html` and loaded through React while the screens are migrated incrementally; this keeps the current production design and interaction model unchanged.
+`index.html` and `app.html` are the Vite/React entrypoints for the landing site and the analysis workspace. The existing visual application is intentionally preserved in `public/landing.html` and `public/analysis.html` and loaded through React while the screens are migrated incrementally; this keeps the current production design and interaction model unchanged.
 
 ## Verified doctors and products
 
