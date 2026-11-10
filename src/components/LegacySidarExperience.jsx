@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 
 const legacyScripts = [
-  { src: '/js/config.js?v=20261109' },
-  { src: '/js/translations.js?v=20261109' },
+  { src: '/js/config.js?v=20261110' },
+  { src: '/js/translations.js?v=20261110' },
   { src: 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2' },
   { src: 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js' },
   { src: 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js' },
-  { src: '/js/supabase.js?v=20261109' },
-  { src: '/js/firebase-ai.js?v=20261109', type: 'module' },
-  { src: '/js/app.js?v=20261109' },
+  { src: '/js/supabase.js?v=20261110' },
+  { src: '/js/firebase-ai.js?v=20261110', type: 'module' },
+  { src: '/js/app.js?v=20261110' },
 ];
 
 const surfaceMarkup = {

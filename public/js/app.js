@@ -60,6 +60,19 @@
     return SURFACE === 'analysis' ? '#scan' : '#landing';
   }
 
+  // Marketing links to the portal become real cross-origin URLs that open in
+  // a new tab, so the landing page stays exactly where the visitor is.
+  function bindPortalLinks() {
+    if (SURFACE !== 'landing') return;
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+      const crossUrl = crossSurfaceUrl((link.getAttribute('href') || '').slice(1));
+      if (!crossUrl) return;
+      link.setAttribute('href', crossUrl);
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener');
+    });
+  }
+
   const authTabs = [...document.querySelectorAll('[data-auth-tab]')];
   const authForms = {
     login: document.getElementById('loginForm'),
@@ -1623,13 +1636,19 @@ auth_desc: 'أنشئ حسابك أو سجّل الدخول لحفظ التقار
     window.addEventListener('hashchange', () => navigate(window.location.hash));
     // Cross-surface routes leave before the hash settles, so a marketing CTA
     // does not flash an empty view on the way to the analysis subdomain.
+    // The portal is its own product, so the marketing site always opens it in
+    // a new tab and keeps the landing page in place.
     document.addEventListener('click', (event) => {
       const link = event.target.closest?.('a[href^="#"]');
       if (!link) return;
       const crossUrl = crossSurfaceUrl((link.getAttribute('href') || '').slice(1));
       if (!crossUrl) return;
       event.preventDefault();
-      window.location.assign(crossUrl);
+      if (SURFACE === 'landing') {
+        window.open(crossUrl, '_blank', 'noopener');
+      } else {
+        window.location.assign(crossUrl);
+      }
     }, true);
     document.querySelectorAll('a[href^="#"]').forEach((link) => {
       link.addEventListener('click', () => {
@@ -4918,6 +4937,8 @@ function renderProducts(container, items, showPrice = true) {
       heroText.textContent = state.lang === 'ar' ? 'حسابي' : 'My Account';
       elements.heroLoginBtn.setAttribute('href', isLoggedIn ? '#dashboard' : '#auth');
     }
+
+    bindPortalLinks();
   }
 
   function setProfile(user, profile = state.profile) {
