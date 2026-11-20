@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:skincare/Services/auth_profile_ui.dart';
-import 'package:skincare/Services/profile_values.dart';
 import 'package:skincare/Utils/AppColors.dart';
 import 'package:skincare/Utils/AppTheme.dart';
 import 'package:skincare/Views/Auth/SignUp.dart';
 import 'package:skincare/Views/Onboarding/ivory_motion_background.dart';
 import 'package:skincare/Views/Onboarding/animated_sidar_logo.dart';
 import 'package:skincare/Views/Onboarding/typewriter_question_header.dart';
+import 'package:skincare/Views/Onboarding/location_step.dart';
 
 class OnboardingQuestionnaireView extends StatefulWidget {
   const OnboardingQuestionnaireView({super.key});
@@ -26,12 +25,12 @@ class _OnboardingQuestionnaireViewState
   int? _selectedAge;
   String? _selectedGender;
   String? _selectedLocation;
+  String? _selectedCity;
   String? _selectedSkinType;
 
   // Option visibility flags for typewriter typing completion
   bool _step1OptionsVisible = false;
   bool _step2OptionsVisible = false;
-  bool _step3OptionsVisible = false;
   bool _step4OptionsVisible = false;
 
   bool get _isArabic =>
@@ -72,6 +71,7 @@ class _OnboardingQuestionnaireViewState
         initialAge: _selectedAge,
         initialGender: _selectedGender,
         initialLocation: _selectedLocation,
+        initialCity: _selectedCity,
         initialSkinType: _selectedSkinType,
       ),
     );
@@ -445,276 +445,16 @@ class _OnboardingQuestionnaireViewState
   // ==========================================
   // STEP 3: Location / Climate Question (with Typewriter Animation)
   // ==========================================
-  Widget _buildLocationStep() {
-    final locationOptions = [
-      {
-        'code': 'SA',
-        'icon': Icons.wb_sunny_rounded,
-        'labelAr': 'المملكة العربية السعودية',
-        'labelEn': 'Saudi Arabia',
-      },
-      {
-        'code': 'EG',
-        'icon': Icons.water_drop_rounded,
-        'labelAr': 'مصر',
-        'labelEn': 'Egypt',
-      },
-      {
-        'code': 'JO',
-        'icon': Icons.eco_rounded,
-        'labelAr': 'الأردن',
-        'labelEn': 'Jordan',
-      },
-      {
-        'code': 'TR',
-        'icon': Icons.ac_unit_rounded,
-        'labelAr': 'تركيا',
-        'labelEn': 'Türkiye',
-      },
-      {
-        'code': 'AE',
-        'icon': Icons.public_rounded,
-        'labelAr': 'الإمارات العربية المتحدة',
-        'labelEn': 'United Arab Emirates',
-      },
-      {
-        'code': 'OTHER',
-        'icon': Icons.search_rounded,
-        'labelAr': 'أخرى — اختر من كل الدول',
-        'labelEn': 'Other — browse all countries',
-      },
-    ];
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
-      child: Column(
-        children: [
-          const SizedBox(height: 10),
-
-          // Header with typewriter animation & slanted pencil
-          TypewriterQuestionHeader(
-            key: ValueKey('step_3_$_isArabic'),
-            title: _isArabic ? 'أين تقيم؟' : 'Where do you live?',
-            subtitle: _isArabic
-                ? 'يؤثر مناخ منطقتك في احتياجات بشرتك وشعرك ودرجة الترطيب المناسبة.'
-                : 'Your local climate affects your skin and hair hydration needs.',
-            onTypingComplete: () {
-              if (mounted) {
-                setState(() => _step3OptionsVisible = true);
-              }
-            },
-          ),
-
-          const SizedBox(height: 20),
-
-          // Options list with slide-up & fade-in animation
-          Expanded(
-            child: AnimatedOpacity(
-              opacity: _step3OptionsVisible ? 1.0 : 0.0,
-              duration: const Duration(milliseconds: 380),
-              curve: Curves.easeOut,
-              child: AnimatedSlide(
-                offset: _step3OptionsVisible
-                    ? Offset.zero
-                    : const Offset(0, 0.12),
-                duration: const Duration(milliseconds: 380),
-                curve: Curves.easeOutCubic,
-                child: ListView.separated(
-                  itemCount: locationOptions.length,
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 12),
-                  itemBuilder: (context, idx) {
-                    final item = locationOptions[idx];
-                    final code = item['code'] as String;
-                    final icon = item['icon'] as IconData;
-                    final isSelected = _selectedLocation == code;
-                    final label = _isArabic
-                        ? item['labelAr'] as String
-                        : item['labelEn'] as String;
-
-                    return _optionPill(
-                      label: label,
-                      icon: icon,
-                      isSelected: isSelected,
-                      onTap: () async {
-                        final selectedCountry = code == 'OTHER'
-                            ? await _pickOtherCountry()
-                            : code;
-                        if (selectedCountry == null || !mounted) return;
-                        setState(() => _selectedLocation = selectedCountry);
-                        Future.delayed(
-                          const Duration(milliseconds: 300),
-                          _goToNext,
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<String?> _pickOtherCountry() async {
-    const featuredCountries = {'SA', 'EG', 'JO', 'TR', 'AE'};
-    final searchController = TextEditingController();
-    final countries =
-        ProfileValues.countries
-            .where((code) => !featuredCountries.contains(code))
-            .toList()
-          ..sort((a, b) => countryLabel(a).compareTo(countryLabel(b)));
-
-    try {
-      return await showModalBottomSheet<String>(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        builder: (sheetContext) {
-          var query = '';
-          return StatefulBuilder(
-            builder: (context, setSheetState) {
-              final normalizedQuery = query.trim().toLowerCase();
-              final filteredCountries = countries.where((code) {
-                if (normalizedQuery.isEmpty) return true;
-                return code.toLowerCase().contains(normalizedQuery) ||
-                    countryLabel(code).toLowerCase().contains(normalizedQuery);
-              }).toList();
-
-              return SafeArea(
-                top: false,
-                child: Container(
-                  height: MediaQuery.sizeOf(context).height * 0.78,
-                  padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
-                  decoration: const BoxDecoration(
-                    color: AppColors.background,
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(28),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 42,
-                        height: 4,
-                        decoration: BoxDecoration(
-                          color: AppColors.borderSoft,
-                          borderRadius: BorderRadius.circular(99),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.public_rounded,
-                            color: AppColors.primary,
-                          ),
-                          const SizedBox(width: 9),
-                          Expanded(
-                            child: Text(
-                              _isArabic ? 'اختر دولتك' : 'Choose your country',
-                              style: AppTheme.headingStyle(fontSize: 19),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 14),
-                      TextField(
-                        controller: searchController,
-                        autofocus: true,
-                        onChanged: (value) =>
-                            setSheetState(() => query = value),
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(
-                            Icons.search_rounded,
-                            color: AppColors.primary,
-                          ),
-                          hintText: _isArabic
-                              ? 'ابحث عن دولة...'
-                              : 'Search countries...',
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide(
-                              color: AppColors.primary.withValues(alpha: 0.15),
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide(
-                              color: AppColors.primary.withValues(alpha: 0.15),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Expanded(
-                        child: filteredCountries.isEmpty
-                            ? Center(
-                                child: Text(
-                                  _isArabic
-                                      ? 'لا توجد دولة مطابقة'
-                                      : 'No matching country',
-                                  style: AppTheme.bodyStyle(
-                                    color: AppColors.textSecondary,
-                                  ),
-                                ),
-                              )
-                            : ListView.separated(
-                                keyboardDismissBehavior:
-                                    ScrollViewKeyboardDismissBehavior.onDrag,
-                                itemCount: filteredCountries.length,
-                                separatorBuilder: (_, _) => Divider(
-                                  height: 1,
-                                  color: AppColors.primary.withValues(
-                                    alpha: 0.09,
-                                  ),
-                                ),
-                                itemBuilder: (context, index) {
-                                  final code = filteredCountries[index];
-                                  return ListTile(
-                                    contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 4,
-                                    ),
-                                    leading: const Icon(
-                                      Icons.location_on_outlined,
-                                      color: AppColors.gold,
-                                    ),
-                                    title: Text(
-                                      countryLabel(code),
-                                      style: AppTheme.bodyStyle(
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    trailing: Text(
-                                      code,
-                                      textDirection: TextDirection.ltr,
-                                      style: AppTheme.bodyStyle(
-                                        color: AppColors.textSecondary,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    onTap: () =>
-                                        Navigator.of(sheetContext).pop(code),
-                                  );
-                                },
-                              ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
-        },
-      );
-    } finally {
-      searchController.dispose();
-    }
-  }
+  Widget _buildLocationStep() => LocationStep(
+    isArabic: _isArabic,
+    country: _selectedLocation,
+    city: _selectedCity,
+    onLocationChanged: (country, city) => setState(() {
+      _selectedLocation = country;
+      _selectedCity = city;
+    }),
+    onContinue: _goToNext,
+  );
 
   // ==========================================
   // STEP 4: Skin Type Question (with Typewriter Animation)

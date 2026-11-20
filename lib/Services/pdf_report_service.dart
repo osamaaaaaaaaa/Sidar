@@ -176,8 +176,12 @@ class PdfReportService {
         if (items.isEmpty)
           paragraph(
             label(
-              'لا توجد توصيات من الدليل متاحة.',
-              'No catalog recommendations available.',
+              doctors
+                  ? 'لا توجد توصيات أطباء متاحة.'
+                  : 'لا توجد منتجات مقترحة متاحة.',
+              doctors
+                  ? 'No recommended doctors available.'
+                  : 'No recommended products available.',
             ),
           ),
         for (final item in items) ...[
@@ -401,12 +405,12 @@ class PdfReportService {
             result.careStepsByLang(lang),
           ),
           ...catalog(
-            label('منتجات من الدليل', 'Catalog products'),
+            label('منتجات مقترحة', 'Recommended products'),
             result.products,
             doctors: false,
           ),
           ...catalog(
-            label('أطباء من الدليل', 'Catalog doctors'),
+            label('أطباء مقترحين', 'Recommended doctors'),
             result.doctors,
             doctors: true,
           ),

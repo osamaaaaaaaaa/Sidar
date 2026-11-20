@@ -17,7 +17,8 @@ class SettingsController extends GetxController {
   final SupabaseClient _supabase = Supabase.instance.client;
 
   final RxBool isLoading = true.obs;
-  final RxString userName = 'Sidar User'.obs;
+  final RxBool isProfileLoading = true.obs;
+  final RxString userName = ''.obs;
   final RxString userEmail = ''.obs;
   final RxInt scansCount = 0.obs;
   final RxBool notificationsEnabled = true.obs;
@@ -36,6 +37,7 @@ class SettingsController extends GetxController {
   Future<void> loadSettings() async {
     try {
       isLoading.value = true;
+      isProfileLoading.value = true;
 
       final user = _supabase.auth.currentUser;
       if (user == null) {
@@ -54,12 +56,13 @@ class SettingsController extends GetxController {
           .eq('id', user.id)
           .maybeSingle();
 
+      userName.value = (profile?['full_name'] ?? '').toString();
       if (profile != null) {
-        userName.value = (profile['full_name'] ?? 'Sidar User').toString();
         notificationsEnabled.value = profile['notifications_enabled'] == true;
         preferredLanguage.value = (profile['preferred_language'] ?? 'ar')
             .toString();
       }
+      isProfileLoading.value = false;
 
       try {
         final localEnabled = await RoutineNotificationService.instance
@@ -84,6 +87,7 @@ class SettingsController extends GetxController {
     } catch (_) {
       AppFeedback.error('settings_load_failed'.tr, title: 'settings_error'.tr);
     } finally {
+      isProfileLoading.value = false;
       isLoading.value = false;
     }
   }
@@ -508,13 +512,8 @@ class SettingsView extends StatelessWidget {
                           : 'Installed version: ${controller.appVersion.value}',
                       showDivider: false,
                       trailing: controller.isCheckingUpdates.value
-                          ? const SizedBox(
-                              width: 18,
-                              height: 18,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: AppColors.gold,
-                              ),
+                          ? _SettingsShimmer(
+                              child: _shimmerShape(width: 48, height: 20),
                             )
                           : Container(
                               padding: const EdgeInsets.symmetric(
@@ -795,12 +794,41 @@ class SettingsView extends StatelessWidget {
         ],
       ),
       child: Obx(() {
+        if (controller.isProfileLoading.value) {
+          return Semantics(
+            label: _isArabic ? 'جارٍ تحميل بيانات الحساب' : 'Loading account',
+            child: _SettingsShimmer(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      _shimmerShape(width: 58, height: 58, radius: 29),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _shimmerShape(width: 145, height: 15),
+                            const SizedBox(height: 9),
+                            _shimmerShape(width: 190, height: 11),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 18),
+                  _shimmerShape(width: double.infinity, height: 45, radius: 14),
+                ],
+              ),
+            ),
+          );
+        }
         final name = controller.userName.value.trim().isNotEmpty
             ? controller.userName.value.trim()
-            : 'Sidar User';
+            : (_isArabic ? 'الاسم غير متاح' : 'Name unavailable');
         final email = controller.userEmail.value.trim().isNotEmpty
             ? controller.userEmail.value.trim()
-            : 'user@sidar.ai';
+            : (_isArabic ? 'البريد الإلكتروني غير متاح' : 'Email unavailable');
         final initial = name.isNotEmpty ? name[0].toUpperCase() : 'S';
 
         return Column(
@@ -1386,5 +1414,69 @@ class SettingsView extends StatelessWidget {
     if (picked != null) {
       onPicked(picked);
     }
+  }
+}
+
+Widget _shimmerShape({
+  required double width,
+  required double height,
+  double radius = 6,
+}) {
+  return Container(
+    width: width,
+    height: height,
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(radius),
+    ),
+  );
+}
+
+class _SettingsShimmer extends StatefulWidget {
+  const _SettingsShimmer({required this.child});
+  final Widget child;
+
+  @override
+  State<_SettingsShimmer> createState() => _SettingsShimmerState();
+}
+
+class _SettingsShimmerState extends State<_SettingsShimmer>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animation = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _animation.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animation,
+      child: widget.child,
+      builder: (context, child) => ShaderMask(
+        blendMode: BlendMode.srcIn,
+        shaderCallback: (bounds) => LinearGradient(
+          begin: Alignment(-2 + 3 * _animation.value, 0),
+          end: Alignment(-1 + 3 * _animation.value, 0),
+          colors: [
+            AppColors.borderSoft,
+            AppColors.surface,
+            AppColors.borderSoft,
+          ],
+        ).createShader(bounds),
+        child: child,
+      ),
+    );
   }
 }

@@ -7,6 +7,7 @@ import 'package:skincare/Services/app_feedback.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skincare/Controllers/HomeController.dart';
 import 'package:skincare/Models/ScanAiModel.dart';
 import 'package:skincare/Services/ScanAiServices.dart';
@@ -87,6 +88,7 @@ class ScanController extends GetxController {
   final selectedIssueType = 'redness'.obs;
   final selectedSkinType = ''.obs;
   final locationText = ''.obs;
+  final selectedCity = RxnString();
   final userName = ''.obs;
   final userAge = RxnInt();
   final userGender = RxnString();
@@ -94,6 +96,11 @@ class ScanController extends GetxController {
   final userMedications = ''.obs;
   final userSunSensitive = false.obs;
   final isProfileLoaded = false.obs;
+  final isProfileLoading = false.obs;
+  bool _cityEdited = false;
+  String? _cityCountry;
+  String? _cityUserId;
+  String? _profileCity;
   final selectedSymptoms = <String>[].obs;
   final notes = ''.obs;
   final locationController = TextEditingController();
@@ -123,9 +130,10 @@ class ScanController extends GetxController {
     loadProfileDefaults();
   }
 
-  Future<bool> loadProfileDefaults() async {
+  Future<bool> loadProfileDefaults({bool refreshCity = false}) async {
     final user = _supabase.auth.currentUser;
     if (user == null) return false;
+    isProfileLoading.value = true;
     try {
       final profile = await _supabase
           .from('profiles')
@@ -174,6 +182,30 @@ class ScanController extends GetxController {
       final rawSun = profile?['sun_sensitive'] ?? homeProfile?['sun_sensitive'];
       userSunSensitive.value = rawSun == true;
 
+      final prefs = await SharedPreferences.getInstance();
+      if (isClosed || _supabase.auth.currentUser?.id != user.id) return false;
+      final savedCountry = prefs.getString('city_country_${user.id}');
+      final home = Get.isRegistered<HomeController>()
+          ? Get.find<HomeController>()
+          : null;
+      final homeCountry = home?.profile['location_text']?.toString();
+      final profileCity = savedCountry == rawLocation
+          ? prefs.getString('city_${user.id}')
+          : homeCountry == rawLocation
+          ? home?.selectedCity.value
+          : null;
+      if (refreshCity ||
+          !_cityEdited ||
+          _cityCountry != rawLocation ||
+          _cityUserId != user.id ||
+          _profileCity != profileCity) {
+        selectedCity.value = profileCity;
+        _cityCountry = rawLocation;
+        _cityUserId = user.id;
+        _cityEdited = false;
+      }
+      _profileCity = profileCity;
+
       isProfileLoaded.value = true;
       log(
         '[ScanController] Loaded clinical profile defaults: age=${userAge.value}, gender=${userGender.value}, skin=${selectedSkinType.value}, location=${locationText.value}, allergies=${userAllergies.value}, meds=${userMedications.value}, sunSensitive=${userSunSensitive.value}',
@@ -186,6 +218,8 @@ class ScanController extends GetxController {
         'Unable to load your profile. Please retry.',
       );
       return false;
+    } finally {
+      if (!isClosed) isProfileLoading.value = false;
     }
   }
 
@@ -391,7 +425,12 @@ class ScanController extends GetxController {
         'issue_type': selectedIssueType.value,
         'skin_type_context': selectedSkinType.value,
         'location_text': locationText.value,
-        'location_label': locationText.value,
+        'location_label':
+            selectedCity.value != null && selectedCity.value!.isNotEmpty
+            ? '${locationText.value} - ${selectedCity.value}'
+            : locationText.value,
+        if (selectedCity.value != null && selectedCity.value!.isNotEmpty)
+          'city': selectedCity.value,
         if (userAge.value != null) 'age': userAge.value,
         if (userGender.value != null && userGender.value!.isNotEmpty)
           'gender': userGender.value,
@@ -534,6 +573,15 @@ class ScanController extends GetxController {
   void _showError(String message) {
     errorMessage.value = message;
     AppFeedback.error(message, title: _text('تنبيه', 'Notice'));
+  }
+
+  void setScanCity(String? city) {
+    _cityEdited = true;
+    _cityCountry = locationText.value;
+    _cityUserId = _supabase.auth.currentUser?.id;
+    selectedCity.value = city == null || city.trim().isEmpty
+        ? null
+        : city.trim();
   }
 
   @override

@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:skincare/Controllers/HomeController.dart';
 import 'package:skincare/Services/auth_service.dart';
 import 'package:skincare/Services/auth_profile_ui.dart';
 import 'package:skincare/Services/profile_values.dart';
 import 'package:skincare/Utils/AppColors.dart';
 import 'package:skincare/Utils/AppTheme.dart';
+import 'package:skincare/Views/Shared/country_city_dropdown.dart';
+import 'package:skincare/Views/Onboarding/location_step.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class EditProfileView extends StatefulWidget {
   final bool isCompleteProfile;
 
-  const EditProfileView({
-    super.key,
-    this.isCompleteProfile = false,
-  });
+  const EditProfileView({super.key, this.isCompleteProfile = false});
 
   @override
   State<EditProfileView> createState() => _EditProfileViewState();
@@ -36,6 +37,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   String? _gender;
   String? _skinType;
   String? _country;
+  String? _city;
 
   @override
   void initState() {
@@ -71,6 +73,11 @@ class _EditProfileViewState extends State<EditProfileView> {
       _gender = ProfileValues.gender(row?['gender']);
       _skinType = ProfileValues.skinType(row?['skin_type']);
       _country = ProfileValues.country(row?['location_text']);
+      final prefs = await SharedPreferences.getInstance();
+      if (!mounted || _supabase.auth.currentUser?.id != user.id) return;
+      _city = prefs.getString('city_country_${user.id}') == _country
+          ? prefs.getString('city_${user.id}')
+          : null;
       _allergiesController.text = (row?['allergies'] ?? '').toString();
       _medicationsController.text = (row?['medications'] ?? '').toString();
       _sunSensitive = row?['sun_sensitive'] == true;
@@ -111,6 +118,21 @@ class _EditProfileViewState extends State<EditProfileView> {
         'medications': _medicationsController.text.trim(),
         'sun_sensitive': _sunSensitive,
       });
+
+      if (_supabase.auth.currentUser?.id != user.id) return;
+      final prefs = await SharedPreferences.getInstance();
+      if (_city != null && _city!.isNotEmpty && _country != null) {
+        await prefs.setString('city_${user.id}', _city!);
+        await prefs.setString('city_country_${user.id}', _country!);
+      } else {
+        await prefs.remove('city_${user.id}');
+        await prefs.remove('city_country_${user.id}');
+      }
+      if (Get.isRegistered<HomeController>()) {
+        final home = Get.find<HomeController>();
+        home.selectedCity.value = _city;
+        home.fetchClimateRadar(forceRefresh: true);
+      }
 
       if (mounted) {
         Get.back(result: true);
@@ -292,14 +314,51 @@ class _EditProfileViewState extends State<EditProfileView> {
                                         required: true,
                                       ),
                                       const SizedBox(height: 8),
-                                      profileDropdown(
-                                        label: authText('Country', 'الدولة'),
-                                        values: ProfileValues.countries,
+                                      LocationDropdown(
+                                        key: ValueKey(
+                                          'profile_country_${Get.locale?.languageCode}',
+                                        ),
                                         value: _country,
-                                        requiredValue: true,
-                                        country: true,
-                                        onChanged: (v) =>
-                                            setState(() => _country = v),
+                                        options:
+                                            (ProfileValues.countries.map((
+                                              code,
+                                            ) {
+                                              final names = countryNames[code];
+                                              return LocationOption(
+                                                code,
+                                                countryLabel(code),
+                                                '${names?.$1 ?? ''} ${names?.$2 ?? ''} $code',
+                                              );
+                                            }).toList()..sort(
+                                              (a, b) =>
+                                                  a.label.compareTo(b.label),
+                                            )),
+                                        hint: authText(
+                                          'Search countries',
+                                          'ابحث عن الدولة',
+                                        ),
+                                        icon: Icons.public_rounded,
+                                        noResults: authText(
+                                          'No results',
+                                          'لا توجد نتائج',
+                                        ),
+                                        onSelected: (value) => setState(() {
+                                          if (_country != value) _city = null;
+                                          _country = value;
+                                        }),
+                                      ),
+                                      const SizedBox(height: 16),
+                                      _buildFieldLabel(
+                                        authText('City', 'المدينة'),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      CountryCityDropdown(
+                                        country: _country,
+                                        city: _city,
+                                        isArabic:
+                                            Get.locale?.languageCode == 'ar',
+                                        onChanged: (value) =>
+                                            setState(() => _city = value),
                                       ),
                                     ],
                                   ),
@@ -333,7 +392,6 @@ class _EditProfileViewState extends State<EditProfileView> {
                                       ),
                                       const SizedBox(height: 8),
                                       profileDropdown(
-                                        label: authText('Skin type', 'نوع البشرة'),
                                         values: ProfileValues.skinTypes,
                                         value: _skinType,
                                         requiredValue: true,
@@ -622,7 +680,6 @@ class _EditProfileViewState extends State<EditProfileView> {
   }
 
   Widget _dropdownField() => profileDropdown(
-    label: authText('Gender (optional)', 'الجنس (اختياري)'),
     values: ProfileValues.genders,
     value: _gender,
     onChanged: (v) => setState(() => _gender = v),

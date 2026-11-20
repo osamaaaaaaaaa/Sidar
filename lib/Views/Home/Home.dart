@@ -309,7 +309,7 @@ class _HomeViewState extends State<HomeView>
           Row(
             children: [
               Text(
-                '${'greeting_morning'.tr}، ',
+                '${controller.greetingText}، ',
                 style: AppTheme.bodyStyle(
                   color: AppColors.textSecondary,
                   fontSize: 14,
@@ -766,10 +766,68 @@ class _HomeViewState extends State<HomeView>
                     fontWeight: FontWeight.w500,
                   ),
                 ),
+                const SizedBox(height: 14),
+
+                // Prominent CTA Button: Start Free Analysis (Moved up inside hero card)
+                GestureDetector(
+                  onTap: () => Get.to(() => ScanView()),
+                  child: Container(
+                    height: 52,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [
+                          Color(0xFFC8A66A),
+                          Color(0xFFD9BF8A),
+                          Color(0xFFB89454),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(14),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.gold.withValues(alpha: 0.35),
+                          blurRadius: 14,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.auto_awesome_rounded,
+                          color: Colors.black87,
+                          size: 20,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          isAr ? 'ابدأ التحليل المجاني' : 'Start Free Analysis',
+                          style: TextStyle(
+                            fontFamily: AppTheme.appFontFamily,
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 15,
+                            letterSpacing: 0.3,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Icon(
+                          isAr
+                              ? Icons.arrow_back_rounded
+                              : Icons.arrow_forward_rounded,
+                          color: Colors.black87,
+                          size: 18,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 14),
 
           // 3 Rich Stat Cards
           Row(
@@ -801,65 +859,6 @@ class _HomeViewState extends State<HomeView>
                 ),
               ),
             ],
-          ),
-          const SizedBox(height: 18),
-
-          // Prominent Single CTA Button: Start Free Analysis
-          GestureDetector(
-            onTap: () => Get.to(() => ScanView()),
-            child: Container(
-              height: 54,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [
-                    Color(0xFFC8A66A),
-                    Color(0xFFD9BF8A),
-                    Color(0xFFB89454),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.gold.withValues(alpha: 0.40),
-                    blurRadius: 16,
-                    offset: const Offset(0, 5),
-                    spreadRadius: 1,
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.auto_awesome_rounded,
-                    color: Colors.black87,
-                    size: 22,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    isAr ? 'ابدأ التحليل المجاني' : 'Start Free Analysis',
-                    style: TextStyle(
-                      fontFamily: AppTheme.appFontFamily,
-                      color: Colors.black87,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 16,
-                      letterSpacing: 0.3,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Icon(
-                    isAr
-                        ? Icons.arrow_back_rounded
-                        : Icons.arrow_forward_rounded,
-                    color: Colors.black87,
-                    size: 18,
-                  ),
-                ],
-              ),
-            ),
           ),
         ],
       ),

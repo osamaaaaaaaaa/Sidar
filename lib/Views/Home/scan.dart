@@ -2,12 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:skincare/Services/auth_profile_ui.dart';
 import 'package:skincare/Services/profile_values.dart';
 import 'package:skincare/Services/scan_controller.dart';
 import 'package:skincare/Utils/AppColors.dart';
 import 'package:skincare/Utils/AppTheme.dart';
 import 'package:skincare/Views/Settings/EditProfile.dart';
+import 'package:skincare/Views/Home/scan_city_field.dart';
 
 class ScanView extends StatelessWidget {
   ScanView({super.key});
@@ -46,7 +46,7 @@ class ScanView extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   // Step 3: Clinical Parameters
-                  _buildInputsSection(),
+                  _buildInputsSection(context),
                   const SizedBox(height: 24),
 
                   // Step 4: Actions (Start Analysis)
@@ -156,8 +156,10 @@ class ScanView extends StatelessWidget {
           child: Center(
             child: InkWell(
               onTap: () async {
-                await Get.to(() => const EditProfileView());
-                controller.loadProfileDefaults();
+                final saved = await Get.to(() => const EditProfileView());
+                if (saved == true) {
+                  controller.loadProfileDefaults(refreshCity: true);
+                }
               },
               borderRadius: BorderRadius.circular(12),
               child: Container(
@@ -528,7 +530,7 @@ class ScanView extends StatelessWidget {
     );
   }
 
-  Widget _buildInputsSection() {
+  Widget _buildInputsSection(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -594,6 +596,8 @@ class ScanView extends StatelessWidget {
                 ]);
               }),
               const SizedBox(height: 14),
+              ScanCityField(controller: controller, isArabic: _isArabic),
+              const SizedBox(height: 14),
               _chipsField(
                 label: _text('الأعراض الملاحظة', 'Observed Symptoms'),
                 valueBuilder: controller.selectedSymptoms.contains,
@@ -616,198 +620,6 @@ class ScanView extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildProfileDefaultsBanner() {
-    return Obx(() {
-      final hasSkin = controller.selectedSkinType.value.isNotEmpty;
-      final hasLocation = controller.locationText.value.isNotEmpty;
-      final isComplete = hasSkin && hasLocation;
-
-      final age = controller.userAge.value;
-      final gender = controller.userGender.value;
-      final allergies = controller.userAllergies.value;
-      final medications = controller.userMedications.value;
-      final sunSensitive = controller.userSunSensitive.value;
-
-      return Container(
-        margin: const EdgeInsets.only(bottom: 16),
-        padding: const EdgeInsets.all(13),
-        decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.90),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: isComplete
-                ? AppColors.gold.withValues(alpha: 0.35)
-                : Colors.amber.withValues(alpha: 0.55),
-            width: 1.1,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: (isComplete ? AppColors.gold : Colors.amber).withValues(
-                alpha: 0.06,
-              ),
-              blurRadius: 10,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 28,
-                  height: 28,
-                  decoration: BoxDecoration(
-                    color: AppColors.goldSoft,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: AppColors.gold.withValues(alpha: 0.4),
-                    ),
-                  ),
-                  child: const Icon(
-                    Icons.badge_outlined,
-                    color: AppColors.gold,
-                    size: 15,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    _text(
-                      'بيانات ملفك المعتمدة تلقائياً في التحليل',
-                      'Profile data applied to this scan',
-                    ),
-                    style: TextStyle(
-                      fontFamily: AppTheme.appFontFamily,
-                      fontSize: 12.5,
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    await Get.to(
-                      () => EditProfileView(isCompleteProfile: !isComplete),
-                    );
-                    controller.loadProfileDefaults();
-                  },
-                  borderRadius: BorderRadius.circular(8),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.goldSoft,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: AppColors.gold.withValues(alpha: 0.3),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          isComplete
-                              ? Icons.edit_outlined
-                              : Icons.add_circle_outline,
-                          size: 13,
-                          color: AppColors.gold,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          isComplete
-                              ? _text('تعديل', 'Edit')
-                              : _text('إكمال البيانات', 'Complete'),
-                          style: TextStyle(
-                            fontFamily: AppTheme.appFontFamily,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w800,
-                            color: AppColors.gold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Wrap(
-              spacing: 6,
-              runSpacing: 6,
-              children: [
-                _profileChip(
-                  icon: Icons.public_rounded,
-                  label:
-                      '${_text('الدولة:', 'Country:')} ${controller.locationText.value.isNotEmpty ? countryLabel(controller.locationText.value) : _text('غير محددة', 'None')}',
-                ),
-                _profileChip(
-                  icon: Icons.spa_outlined,
-                  label:
-                      '${_text('نوع البشرة:', 'Skin:')} ${controller.selectedSkinType.value.isNotEmpty ? _skinTypeLabel(controller.selectedSkinType.value) : _text('غير محدد', 'None')}',
-                ),
-                if (age != null || (gender != null && gender.isNotEmpty))
-                  _profileChip(
-                    icon: Icons.person_outline,
-                    label: [
-                      if (age != null) '$age ${_text('سنة', 'yrs')}',
-                      if (gender != null && gender.isNotEmpty)
-                        profileLabel(gender),
-                    ].join(' · '),
-                  ),
-                if (allergies.isNotEmpty)
-                  _profileChip(
-                    icon: Icons.warning_amber_rounded,
-                    label: '${_text('حساسية:', 'Allergy:')} $allergies',
-                  ),
-                if (medications.isNotEmpty)
-                  _profileChip(
-                    icon: Icons.medication_outlined,
-                    label: '${_text('أدوية:', 'Meds:')} $medications',
-                  ),
-                if (sunSensitive)
-                  _profileChip(
-                    icon: Icons.wb_sunny_outlined,
-                    label: _text('حساسية شمس', 'Sun sensitive'),
-                  ),
-              ],
-            ),
-          ],
-        ),
-      );
-    });
-  }
-
-  Widget _profileChip({required IconData icon, required String label}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: AppColors.background,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.primary.withValues(alpha: 0.12)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 12, color: AppColors.primary),
-          const SizedBox(width: 4),
-          Text(
-            label,
-            style: TextStyle(
-              fontFamily: AppTheme.appFontFamily,
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-              color: AppColors.primary,
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -1192,25 +1004,6 @@ class ScanView extends StatelessWidget {
         return _text('ملحوظة', 'Noticeable');
       case 'high':
         return _text('شديدة', 'Severe');
-      default:
-        return value;
-    }
-  }
-
-  String _skinTypeLabel(String value) {
-    switch (value) {
-      case 'normal':
-        return _text('عادية', 'Normal');
-      case 'dry':
-        return _text('جافة', 'Dry');
-      case 'oily':
-        return _text('دهنية', 'Oily');
-      case 'combination':
-        return _text('مختلطة', 'Combination');
-      case 'sensitive':
-        return _text('حساسة', 'Sensitive');
-      case 'unknown':
-        return _text('لا أعرف', "I don't know");
       default:
         return value;
     }

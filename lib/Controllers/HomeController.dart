@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:skincare/Models/ScanAiModel.dart';
 import 'package:skincare/Services/climate_radar_service.dart';
@@ -53,6 +54,7 @@ class HomeController extends GetxController {
   /// رادار المناخ الحي والبيئة المتصل بـ AI
   final climateData = Rxn<ClimateData>();
   final isClimateLoading = false.obs;
+  final selectedCity = RxnString();
   int _climateRequestId = 0;
 
   // =========================
@@ -108,6 +110,14 @@ class HomeController extends GetxController {
         fetchProducts(),
       ]);
 
+      final prefs = await SharedPreferences.getInstance();
+      if (_supabase.auth.currentUser?.id != user.id) return;
+      selectedCity.value =
+          prefs.getString('city_country_${user.id}') ==
+              profile['location_text']?.toString()
+          ? prefs.getString('city_${user.id}')
+          : null;
+
       await fetchClimateRadar();
 
       _calculateStats();
@@ -160,6 +170,7 @@ class HomeController extends GetxController {
       final countryCode = profile['location_text']?.toString();
       final data = await ClimateRadarService.instance.fetchClimateData(
         countryCode: countryCode,
+        cityName: selectedCity.value,
         isArabic: AppTheme.isArabic,
         forceRefresh: forceRefresh,
       );
@@ -172,6 +183,23 @@ class HomeController extends GetxController {
         isClimateLoading.value = false;
       }
     }
+  }
+
+  void updateSelectedCity(String city) {
+    selectedCity.value = city;
+    final id = _supabase.auth.currentUser?.id;
+    final country = profile['location_text']?.toString();
+    if (id != null && country != null) {
+      SharedPreferences.getInstance()
+          .then((prefs) async {
+            await prefs.setString('city_$id', city);
+            await prefs.setString('city_country_$id', country);
+          })
+          .catchError((Object e) {
+            log('[HomeController] Could not save selected city: $e');
+          });
+    }
+    fetchClimateRadar(forceRefresh: true);
   }
 
   Future<void> fetchUserProfile() async {
@@ -376,6 +404,7 @@ class HomeController extends GetxController {
 
     userId.value = null;
     userEmail.value = null;
+    selectedCity.value = null;
 
     recentScans.clear();
     diagnosisHistory.clear();
@@ -420,6 +449,15 @@ class HomeController extends GetxController {
   // GETTERS
   // =========================
   // bool get isGuest => isGuestMode.value;
+
+  String get greetingText {
+    final hour = DateTime.now().hour;
+    if (hour >= 4 && hour < 12) {
+      return 'greeting_morning'.tr;
+    } else {
+      return 'greeting_evening'.tr;
+    }
+  }
 
   String get displayName {
     final name = profile['full_name']?.toString().trim();

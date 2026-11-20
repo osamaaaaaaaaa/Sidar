@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+﻿import 'package:get/get.dart';
 
 class AppTransaltion extends Translations {
   @override
@@ -115,12 +115,17 @@ class AppTransaltion extends Translations {
       "scan_again": "إعادة الفحص",
       "user_name": "أسامة",
       "greeting_morning": "صباح الخير",
+      "greeting_evening": "مساء الخير",
+      "recommended_products": "منتجات مقترحة",
+      "recommended_doctors": "أطباء مقترحين",
+      "city": "المدينة",
+      "choose_city": "اختر المدينة",
       "future_of_your_skin_starts_here": "مستقبل بشرتك يبدأ هنا",
 
       "environment_alert_message":
           "تنبيه: الأشعة فوق البنفسجية مرتفعة جدًا اليوم. يُنصح باستخدام واقي شمس كل ساعتين.",
 
-      "smart_skin_analysis_title": "تحليل البشرة والشعر",
+      "smart_skin_analysis_title": "سدر مساعدك الشخصي للجمال والعناية",
       "smart_skin_analysis_desc":
           "اكتشف احتياجات بشرتك وشعرك عبر مسح دقيق بتقنيات الذكاء الاصطناعي.",
 
@@ -533,10 +538,15 @@ class AppTransaltion extends Translations {
       'start_analysis_now': 'Start Analysis Now',
       'smart': 'SMART',
       'greeting_morning': 'Good morning',
+      'greeting_evening': 'Good evening',
+      'recommended_products': 'Recommended Products',
+      'recommended_doctors': 'Recommended Doctors',
+      'city': 'City',
+      'choose_city': 'Choose City',
       'future_of_your_skin_starts_here': 'Future of your skin starts here',
       'environment_alert_message':
           'Alert: UV index is very high today. Please reapply sunscreen every 2 hours.',
-      'smart_skin_analysis_title': 'Skin & Hair Analysis',
+      'smart_skin_analysis_title': 'Sidar, your personal beauty assistant',
       'smart_skin_analysis_desc':
           'Discover your skin and hair needs with precise AI-powered scanning.',
       'start_scan_now': 'Start Scan',

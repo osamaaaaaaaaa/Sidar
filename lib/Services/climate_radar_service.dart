@@ -59,6 +59,82 @@ class ClimateRadarService {
   DateTime? _lastFetchTime;
   String? _lastLocationKey;
 
+  /// Saudi Arabia's 5 major geographical regions with distinct climates
+  static const List<Map<String, dynamic>> saudiRegions = [
+    {
+      'id': 'riyadh',
+      'regionAr': 'الوسطى',
+      'regionEn': 'Central',
+      'cityAr': 'الرياض',
+      'cityEn': 'Riyadh',
+      'labelAr': 'الرياض (المنطقة الوسطى)',
+      'labelEn': 'Riyadh (Central)',
+      'lat': 24.7136,
+      'lon': 46.6753,
+    },
+    {
+      'id': 'jeddah',
+      'regionAr': 'الغربية',
+      'regionEn': 'Western',
+      'cityAr': 'جدة',
+      'cityEn': 'Jeddah',
+      'labelAr': 'جدة (المنطقة الغربية)',
+      'labelEn': 'Jeddah (Western)',
+      'lat': 21.5433,
+      'lon': 39.1728,
+    },
+    {
+      'id': 'dammam',
+      'regionAr': 'الشرقية',
+      'regionEn': 'Eastern',
+      'cityAr': 'الدمام',
+      'cityEn': 'Dammam',
+      'labelAr': 'الدمام (المنطقة الشرقية)',
+      'labelEn': 'Dammam (Eastern)',
+      'lat': 26.4207,
+      'lon': 50.0888,
+    },
+    {
+      'id': 'abha',
+      'regionAr': 'الجنوبية',
+      'regionEn': 'Southern',
+      'cityAr': 'أبها',
+      'cityEn': 'Abha',
+      'labelAr': 'أبها (المنطقة الجنوبية)',
+      'labelEn': 'Abha (Southern)',
+      'lat': 18.2164,
+      'lon': 42.5053,
+    },
+    {
+      'id': 'tabuk',
+      'regionAr': 'الشمالية',
+      'regionEn': 'Northern',
+      'cityAr': 'تبوك',
+      'cityEn': 'Tabuk',
+      'labelAr': 'تبوك (المنطقة الشمالية)',
+      'labelEn': 'Tabuk (Northern)',
+      'lat': 28.3835,
+      'lon': 36.5662,
+    },
+  ];
+
+  static Map<String, dynamic>? findSaudiRegion(String? query) {
+    if (query == null || query.trim().isEmpty) return null;
+    final q = query.trim().toLowerCase();
+    for (final r in saudiRegions) {
+      if (r['id'] == q ||
+          r['cityAr'] == query.trim() ||
+          r['cityEn'].toString().toLowerCase() == q ||
+          r['labelAr'].toString().contains(query.trim()) ||
+          q.contains(r['id']) ||
+          q.contains(r['cityAr']) ||
+          q.contains(r['cityEn'].toString().toLowerCase())) {
+        return r;
+      }
+    }
+    return null;
+  }
+
   static const Map<String, Map<String, dynamic>> _countryCoords = {
     'EG': {
       'lat': 30.0444,
@@ -271,16 +347,40 @@ class ClimateRadarService {
 
   Future<ClimateData> fetchClimateData({
     String? countryCode,
+    String? cityName,
     bool isArabic = true,
     bool forceRefresh = false,
   }) async {
     final cleanCode = (countryCode ?? '').trim().toUpperCase();
-    final effectiveCode =
-        cleanCode.isNotEmpty && _countryCoords.containsKey(cleanCode)
-        ? cleanCode
-        : 'EG';
+    final effectiveCode = cleanCode.isNotEmpty ? cleanCode : 'EG';
 
-    final cacheKey = '$effectiveCode-${isArabic ? "ar" : "en"}';
+    final loc = _countryCoords[effectiveCode] ?? _countryCoords['EG']!;
+    double lat = loc['lat'] as double;
+    double lon = loc['lon'] as double;
+    String city = isArabic
+        ? (loc['cityAr'] as String)
+        : (loc['cityEn'] as String);
+    String country = isArabic
+        ? (loc['countryAr'] as String)
+        : (loc['countryEn'] as String);
+    String flag = loc['flag'] as String;
+
+    // Check if a specific Saudi region/city was requested
+    if (effectiveCode == 'SA' &&
+        cityName != null &&
+        cityName.trim().isNotEmpty) {
+      final region = findSaudiRegion(cityName);
+      if (region != null) {
+        lat = region['lat'] as double;
+        lon = region['lon'] as double;
+        city = isArabic
+            ? (region['cityAr'] as String)
+            : (region['cityEn'] as String);
+      }
+    }
+
+    final cacheKey =
+        '$effectiveCode-${(cityName ?? city).trim().toLowerCase()}-${isArabic ? "ar" : "en"}';
     if (!forceRefresh &&
         _cachedData != null &&
         _lastLocationKey == cacheKey &&
@@ -289,18 +389,42 @@ class ClimateRadarService {
       return _cachedData!;
     }
 
-    final loc = _countryCoords[effectiveCode] ?? _countryCoords['EG']!;
-    final double lat = loc['lat'] as double;
-    final double lon = loc['lon'] as double;
-    final String city = isArabic
-        ? (loc['cityAr'] as String)
-        : (loc['cityEn'] as String);
-    final String country = isArabic
-        ? (loc['countryAr'] as String)
-        : (loc['countryEn'] as String);
-    final String flag = loc['flag'] as String;
-
     try {
+      if (effectiveCode != 'SA' &&
+          cityName != null &&
+          cityName.trim().isNotEmpty) {
+        final geocodingUri =
+            Uri.https('geocoding-api.open-meteo.com', '/v1/search', {
+              'name': cityName.trim(),
+              'count': '100',
+              'language': isArabic ? 'ar' : 'en',
+              'countryCode': effectiveCode,
+            });
+        final response = await http
+            .get(geocodingUri)
+            .timeout(const Duration(seconds: 6));
+        if (response.statusCode != 200) throw Exception('City lookup failed');
+        final results =
+            (jsonDecode(response.body) as Map<String, dynamic>)['results']
+                as List<dynamic>? ??
+            [];
+        final matches = results.whereType<Map<String, dynamic>>().where(
+          (result) => result['country_code'] == effectiveCode,
+        );
+        if (matches.isEmpty) {
+          throw Exception('City not found in selected country');
+        }
+        final match = matches.first;
+        lat = (match['latitude'] as num).toDouble();
+        lon = (match['longitude'] as num).toDouble();
+        city = match['name'] as String;
+        country = match['country'] as String? ?? effectiveCode;
+        if (effectiveCode.length == 2) {
+          flag = String.fromCharCodes(
+            effectiveCode.codeUnits.map((code) => 0x1F1E6 + code - 65),
+          );
+        }
+      }
       // 1. Fetch Real Weather Forecast from Open-Meteo
       final weatherUri = Uri.parse(
         'https://api.open-meteo.com/v1/forecast?latitude=$lat&longitude=$lon&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code&daily=uv_index_max&timezone=auto',
@@ -410,9 +534,11 @@ class ClimateRadarService {
         stackTrace: s,
       );
       // If we had cached data, return it
-      if (_cachedData != null) return _cachedData!;
+      if (_cachedData != null && _lastLocationKey == cacheKey) {
+        return _cachedData!;
+      }
       // Return safe realistic fallback
-      return _generateFallback(effectiveCode, isArabic);
+      return _generateFallback(effectiveCode, isArabic, cityName);
     }
   }
 
@@ -574,15 +700,34 @@ class ClimateRadarService {
     }
   }
 
-  ClimateData _generateFallback(String code, bool isArabic) {
+  ClimateData _generateFallback(
+    String code,
+    bool isArabic, [
+    String? cityName,
+  ]) {
     final loc = _countryCoords[code] ?? _countryCoords['EG']!;
+    String city = cityName?.trim().isNotEmpty == true
+        ? cityName!.trim()
+        : (isArabic ? (loc['cityAr'] as String) : (loc['cityEn'] as String));
+    if (code == 'SA' && cityName != null && cityName.trim().isNotEmpty) {
+      final region = findSaudiRegion(cityName);
+      if (region != null) {
+        city = isArabic
+            ? (region['cityAr'] as String)
+            : (region['cityEn'] as String);
+      }
+    }
     return ClimateData(
-      city: isArabic ? (loc['cityAr'] as String) : (loc['cityEn'] as String),
-      country: isArabic
-          ? (loc['countryAr'] as String)
-          : (loc['countryEn'] as String),
+      city: city,
+      country: !_countryCoords.containsKey(code)
+          ? code
+          : (isArabic
+                ? (loc['countryAr'] as String)
+                : (loc['countryEn'] as String)),
       countryCode: code,
-      flag: loc['flag'] as String,
+      flag: code.length == 2 && RegExp(r'^[A-Z]{2}$').hasMatch(code)
+          ? String.fromCharCodes(code.codeUnits.map((c) => 0x1F1E6 + c - 65))
+          : loc['flag'] as String,
       temperature: 24.0,
       feelsLike: 23.5,
       humidity: 50,

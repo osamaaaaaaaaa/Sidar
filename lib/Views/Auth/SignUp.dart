@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skincare/Services/app_feedback.dart';
 import 'package:skincare/Services/app_config_service.dart';
 import 'package:skincare/Services/auth_service.dart';
@@ -17,6 +18,7 @@ class SignUpView extends StatefulWidget {
   final int? initialAge;
   final String? initialGender;
   final String? initialLocation;
+  final String? initialCity;
   final String? initialSkinType;
 
   const SignUpView({
@@ -24,6 +26,7 @@ class SignUpView extends StatefulWidget {
     this.initialAge,
     this.initialGender,
     this.initialLocation,
+    this.initialCity,
     this.initialSkinType,
   });
 
@@ -215,6 +218,22 @@ class _SignUpViewState extends State<SignUpView> {
       if (!mounted) return;
       if (authResponse.user == null) {
         throw Exception('Unable to create account right now.');
+      }
+      if (selectedCountry == widget.initialLocation &&
+          (widget.initialCity?.trim().isNotEmpty ?? false)) {
+        try {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString(
+            'city_${authResponse.user!.id}',
+            widget.initialCity!.trim(),
+          );
+          await prefs.setString(
+            'city_country_${authResponse.user!.id}',
+            selectedCountry!,
+          );
+        } catch (e) {
+          log('Could not save selected city: $e', name: 'SignUp');
+        }
       }
       if (authResponse.session == null) {
         _passwordController.clear();

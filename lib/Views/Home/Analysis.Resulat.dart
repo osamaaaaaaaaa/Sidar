@@ -978,16 +978,20 @@ class AnalysisResultView extends StatelessWidget {
       children: [
         Text(
           doctors
-              ? _label('أطباء من الدليل', 'Catalog doctors')
-              : _label('منتجات من الدليل', 'Catalog products'),
+              ? _label('أطباء مقترحين', 'Recommended doctors')
+              : _label('منتجات مقترحة', 'Recommended products'),
           style: AppTheme.headingStyle(fontSize: 20),
         ),
         const SizedBox(height: 12),
         if (items.isEmpty)
           _buildEmptyCard(
             _label(
-              'لا توجد توصيات من الدليل متاحة.',
-              'No catalog recommendations available.',
+              doctors
+                  ? 'لا توجد توصيات أطباء متاحة.'
+                  : 'لا توجد منتجات مقترحة متاحة.',
+              doctors
+                  ? 'No recommended doctors available.'
+                  : 'No recommended products available.',
             ),
           ),
         ...items.map((item) {

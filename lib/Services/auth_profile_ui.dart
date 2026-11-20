@@ -55,7 +55,6 @@ void authNotice(String message, {bool error = false}) {
 }
 
 Widget profileDropdown({
-  required String label,
   required List<String> values,
   required String? value,
   required ValueChanged<String?> onChanged,
@@ -66,9 +65,7 @@ Widget profileDropdown({
   isExpanded: true,
   dropdownColor: AppColors.surface,
   style: AppTheme.bodyStyle(),
-  decoration: AppTheme.inputDecoration(
-    hintText: label,
-  ).copyWith(labelText: label),
+  decoration: AppTheme.inputDecoration(hintText: authText('Select', 'اختر')),
   items: [
     if (!requiredValue)
       DropdownMenuItem(
