@@ -324,7 +324,7 @@ void main() {
           throwsFormatException,
         );
       }
-      for (final key in ['title', 'guidance', 'ai_confidence', 'disclaimer']) {
+      for (final key in ['title', 'guidance', 'disclaimer']) {
         for (final value in [null, '', '  ', 42]) {
           expect(
             () => ScanAiService.parseResponse({...webResponse(), key: value}),
@@ -333,6 +333,18 @@ void main() {
           );
         }
       }
+    });
+
+    test('accepts unavailable confidence and image quality', () {
+      final result = ScanAiService.parseResponse({
+        ...webResponse(),
+        'ai_confidence': '',
+        'image_quality': '',
+        'hydration_score': null,
+      });
+      expect(result.aiConfidence, isEmpty);
+      expect(result.imageQuality, isEmpty);
+      expect(result.hydrationScore, isNull);
     });
 
     test('requires usable string arrays and enforces website item caps', () {
@@ -381,7 +393,7 @@ void main() {
       expect(result.analysisTarget, 'skin');
       expect(result.urgency, 'medium');
       expect(result.shouldSeeDoctor, isFalse);
-      expect(result.imageQuality, 'Medium');
+      expect(result.imageQuality, '');
       expect(
         ScanAiService.parseResponse({
           ...webResponse(),

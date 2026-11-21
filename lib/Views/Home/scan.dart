@@ -216,11 +216,6 @@ class ScanView extends StatelessWidget {
         _text('فحص البشرة', 'Skin Analysis'),
         Icons.face_retouching_natural_rounded,
       ),
-      _TabData(
-        'hair_check',
-        _text('فحص الشعر', 'Hair Analysis'),
-        Icons.content_cut_rounded,
-      ),
     ];
 
     return Column(
@@ -228,7 +223,10 @@ class ScanView extends StatelessWidget {
       children: [
         _sectionHeader(
           _text('نوع الفحص', 'Scan Type'),
-          _text('اختر نوع الفحص المطلوب', 'Choose required scan type'),
+          _text(
+            'تحليل بشرة الوجه متاح حاليًا',
+            'Full-face skin analysis is currently available',
+          ),
         ),
         const SizedBox(height: 12),
         Obx(() {
@@ -241,16 +239,6 @@ class ScanView extends StatelessWidget {
                   selected: controller.selectedScanType.value == tabs[0].value,
                   onTap: () =>
                       controller.selectedScanType.value = tabs[0].value,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: _TabChip(
-                  label: tabs[1].label,
-                  icon: tabs[1].icon,
-                  selected: controller.selectedScanType.value == tabs[1].value,
-                  onTap: () =>
-                      controller.selectedScanType.value = tabs[1].value,
                 ),
               ),
             ],
@@ -267,8 +255,8 @@ class ScanView extends StatelessWidget {
         _sectionHeader(
           _text('صور الفحص', 'Scan Photos'),
           _text(
-            'التقط من الكاميرا أو اختر من المعرض (حتى 5 صور)',
-            'Capture from camera or gallery (max 5)',
+            'صورة واحدة كاملة للوجه بصيغة JPG أو PNG (حتى 10 ميجابايت)',
+            'One full-face JPG or PNG photo (up to 10 MB)',
           ),
         ),
         const SizedBox(height: 12),
@@ -312,7 +300,7 @@ class ScanView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            '${controller.selectedImages.length} / 5',
+                            '${controller.selectedImages.length} / 1',
                             style: TextStyle(
                               fontFamily: AppTheme.appFontFamily,
                               fontSize: 11,
@@ -537,7 +525,7 @@ class ScanView extends StatelessWidget {
         _sectionHeader(
           _text('بيانات الفحص', 'Scan Details'),
           _text(
-            'معلومات دقيقة تساعد الذكاء الاصطناعي على التشخيص',
+            'معلومات دقيقة تساعد في تخصيص التقرير',
             'Details that aid accurate diagnostic matching',
           ),
         ),

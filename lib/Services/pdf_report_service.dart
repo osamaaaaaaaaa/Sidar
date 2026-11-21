@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:skincare/Models/ScanAiModel.dart';
@@ -106,6 +107,7 @@ class PdfReportService {
     DateTime? reportTimestamp,
   }) async {
     final pdf = pw.Document();
+    final visualMaps = await _loadVisualMaps(result.visualAssets);
     // Bundled TrueType fonts cover both Arabic and Latin without network access.
     final regularFont = pw.Font.ttf(
       await rootBundle.load('assets/fonts/ar/IBMPlexSansArabic-Regular.ttf'),
@@ -286,6 +288,27 @@ class PdfReportService {
       ),
     );
 
+    pw.Widget visualMapTile(_PdfVisualMap map) => pw.Container(
+      width: 245,
+      padding: const pw.EdgeInsets.all(7),
+      decoration: pw.BoxDecoration(
+        color: PdfColors.white,
+        border: pw.Border.all(color: borderColor, width: .5),
+        borderRadius: pw.BorderRadius.circular(6),
+      ),
+      child: pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        children: [
+          pw.Text(
+            '${map.metric} - ${map.kind}',
+            style: pw.TextStyle(font: boldFont, fontSize: 9, color: emerald),
+          ),
+          pw.SizedBox(height: 5),
+          pw.Image(map.image, height: 135, fit: pw.BoxFit.contain),
+        ],
+      ),
+    );
+
     pdf.addPage(
       pw.Page(
         pageFormat: PdfPageFormat.a4,
@@ -404,6 +427,14 @@ class PdfReportService {
             label('العناية العامة', 'General care'),
             result.careStepsByLang(lang),
           ),
+          if (visualMaps.isNotEmpty) ...[
+            heading(label('الخرائط البصرية', 'Visual maps')),
+            pw.Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: visualMaps.map(visualMapTile).toList(),
+            ),
+          ],
           ...catalog(
             label('منتجات مقترحة', 'Recommended products'),
             result.products,
@@ -429,4 +460,57 @@ class PdfReportService {
     );
     return pdf.save();
   }
+
+  /// The maps have already been persisted by the server. This only consumes
+  /// their short-lived signed URLs while a user explicitly exports a report.
+  static Future<List<_PdfVisualMap>> _loadVisualMaps(
+    List<Map<String, dynamic>> assets,
+  ) async {
+    final selected = <Map<String, dynamic>>[];
+    final usedMetrics = <String>{};
+    for (final asset in assets) {
+      final kind = asset['asset_type']?.toString() ?? '';
+      final metric = asset['metric_id']?.toString() ?? '';
+      final url = asset['url']?.toString() ?? '';
+      if (!['overlay', 'heatmap', 'mask'].contains(kind) ||
+          metric.isEmpty ||
+          !url.startsWith('https://') ||
+          usedMetrics.contains('$metric:$kind')) {
+        continue;
+      }
+      usedMetrics.add('$metric:$kind');
+      selected.add(asset);
+      if (selected.length == 6) break;
+    }
+    final loaded = await Future.wait(
+      selected.map((asset) async {
+        try {
+          final response = await http.get(Uri.parse(asset['url'].toString()));
+          if (response.statusCode != 200 || response.bodyBytes.isEmpty) {
+            return null;
+          }
+          return _PdfVisualMap(
+            metric: asset['metric_id']?.toString() ?? '',
+            kind: asset['asset_type']?.toString() ?? '',
+            image: pw.MemoryImage(response.bodyBytes),
+          );
+        } catch (_) {
+          return null;
+        }
+      }),
+    );
+    return loaded.whereType<_PdfVisualMap>().toList();
+  }
+}
+
+class _PdfVisualMap {
+  const _PdfVisualMap({
+    required this.metric,
+    required this.kind,
+    required this.image,
+  });
+
+  final String metric;
+  final String kind;
+  final pw.MemoryImage image;
 }

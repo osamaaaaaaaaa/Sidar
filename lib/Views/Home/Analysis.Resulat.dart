@@ -10,6 +10,7 @@ import 'package:skincare/Services/pdf_report_service.dart';
 import 'package:skincare/Services/routine_notification_service.dart';
 import 'package:skincare/Utils/AppColors.dart';
 import 'package:skincare/Utils/AppTheme.dart';
+import 'package:skincare/Views/Home/visual_mapping_viewer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AnalysisResultView extends StatelessWidget {
@@ -95,6 +96,16 @@ class AnalysisResultView extends StatelessWidget {
                     _buildTopBar(),
                     const SizedBox(height: 26),
                     _buildHeroResultCard(),
+                    const SizedBox(height: 16),
+                    VisualMappingViewer(
+                      assets: result.visualAssets,
+                      isArabic: _isArabic,
+                      metrics: {
+                        'pore': result.poreClarityScore,
+                        'lines': result.fineLinesScore,
+                        'tone': result.overallToneScore,
+                      },
+                    ),
                     const SizedBox(height: 16),
                     _buildMeasurements(),
                     const SizedBox(height: 34),

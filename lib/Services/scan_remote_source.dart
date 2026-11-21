@@ -215,6 +215,21 @@ class ScanRemoteSource {
             .whereType<String>()
             .toList();
       }
+      final raw = scan['raw_ai_response'];
+      if (raw is Map && raw['visual_assets'] is List) {
+        final assets = List<Map<String, dynamic>>.from(
+          (raw['visual_assets'] as List).whereType<Map>(),
+        );
+        for (final asset in assets) {
+          final path = asset['storage_path']?.toString() ?? '';
+          if (path.startsWith('$userId/')) {
+            asset['url'] = await _client.storage
+                .from(bucketName)
+                .createSignedUrl(path, 3600);
+          }
+        }
+        raw['visual_assets'] = assets;
+      }
     }
     return scans;
   }

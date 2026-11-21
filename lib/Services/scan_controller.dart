@@ -251,34 +251,35 @@ class ScanController extends GetxController {
 
   Future<void> pickFromGallery() async {
     if (isAnalyzing.value) return;
-    final files = await _picker.pickMultiImage(
+    final file = await _picker.pickImage(
+      source: ImageSource.gallery,
       maxWidth: 1600,
       maxHeight: 1600,
       imageQuality: 78,
     );
-    for (final file in files) {
-      if (isClosed) return;
-      if (selectedImages.length >= 5) {
-        _showError(
-          _text('الحد الأقصى خمس صور.', 'You can upload up to five images.'),
-        );
-        break;
-      }
-      await _addFile(file);
-    }
+    if (file != null && !isClosed) await _addFile(file);
   }
 
   Future<void> _addFile(XFile file) async {
-    if (selectedImages.length >= 5 || isAnalyzing.value) return;
+    if (isAnalyzing.value) return;
+    if (selectedImages.isNotEmpty) {
+      _showError(
+        _text(
+          'احذف الصورة الحالية أولًا لاختيار صورة أخرى.',
+          'Remove the current photo before selecting another.',
+        ),
+      );
+      return;
+    }
     final bytes = await file.readAsBytes();
     final mime = lookupMimeType(file.name, headerBytes: bytes) ?? '';
-    if (!['image/jpeg', 'image/png', 'image/webp'].contains(mime) ||
+    if (!['image/jpeg', 'image/png'].contains(mime) ||
         bytes.isEmpty ||
         bytes.length > 10485760) {
       _showError(
         _text(
-          'استخدم صورة JPG أو PNG أو WEBP لا تتجاوز 10 ميجابايت.',
-          'Use a JPG, PNG or WEBP image up to 10 MB.',
+          'استخدم صورة JPG أو PNG لا تتجاوز 10 ميجابايت.',
+          'Use a JPG or PNG image up to 10 MB.',
         ),
       );
       return;
@@ -384,6 +385,27 @@ class ScanController extends GetxController {
       );
       return;
     }
+    if (selectedScanType.value != 'skin_check' ||
+        selectedBodyLocation.value != 'face') {
+      _showError(
+        _text(
+          'التحليل متاح حاليًا لصورة الوجه فقط، وليس الشعر أو مناطق الجسم الأخرى.',
+          'Analysis currently supports a full-face skin photo only.',
+        ),
+      );
+      return;
+    }
+    if (selectedImages.length != 1 ||
+        !['image/jpeg', 'image/png'].contains(selectedImages.first.mimeType) ||
+        selectedImages.first.bytes.length > 10 * 1024 * 1024) {
+      _showError(
+        _text(
+          'ارفع صورة واحدة كاملة للوجه بصيغة JPEG أو PNG وبحجم لا يتجاوز 10 ميغابايت.',
+          'Upload one full-face JPEG or PNG image up to 10 MB.',
+        ),
+      );
+      return;
+    }
     final uploadedPaths = <String>[];
     isAnalyzing.value = true;
     errorMessage.value = '';
@@ -463,12 +485,8 @@ class ScanController extends GetxController {
         languageCode: language,
         images: images
             .map(
-              (image) => ScanImageInput(
-                bytes: image.focusBytes ?? image.bytes,
-                mimeType: image.focusBytes == null
-                    ? image.mimeType
-                    : 'image/png',
-              ),
+              (image) =>
+                  ScanImageInput(bytes: image.bytes, mimeType: image.mimeType),
             )
             .toList(),
         scanType: input['scan_type'],
@@ -492,6 +510,7 @@ class ScanController extends GetxController {
           'skin_type': selectedSkinType.value,
           'location_text': locationText.value,
         },
+        originalImagePath: uploadedPaths.isEmpty ? null : uploadedPaths.first,
       );
       if (_supabase.auth.currentUser?.id != user.id)
         throw const AuthException('Your session changed. Sign in again.');

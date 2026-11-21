@@ -23,6 +23,10 @@ class ScanAiResult {
   final List<String> eveningRoutine;
   final List<Map<String, dynamic>> products;
   final List<Map<String, dynamic>> doctors;
+
+  /// Provider-backed visual maps only. Each item keeps the provider metric,
+  /// asset kind and the private-storage path used to regenerate access URLs.
+  final List<Map<String, dynamic>> visualAssets;
   final DateTime? createdAt;
 
   // Retained for reports saved by older bilingual mobile clients.
@@ -64,6 +68,7 @@ class ScanAiResult {
     this.eveningRoutine = const [],
     this.products = const [],
     this.doctors = const [],
+    this.visualAssets = const [],
     this.createdAt,
     this.summaryAr,
     this.summaryEn,
@@ -178,6 +183,7 @@ class ScanAiResult {
       eveningRoutine: _strings(pick(['evening_routine', 'eveningRoutine'])),
       products: _records(pick(['commercial_product_suggestions', 'products'])),
       doctors: _records(pick(['nearby_doctors', 'doctors'])),
+      visualAssets: _records(pick(['visual_assets', 'visualAssets'])),
       createdAt: created is DateTime
           ? created
           : DateTime.tryParse((created ?? '').toString()),
@@ -291,6 +297,7 @@ class ScanAiResult {
     'natural_product_suggestions': const <Map<String, dynamic>>[],
     'commercial_product_suggestions': products,
     'nearby_doctors': doctors,
+    'visual_assets': visualAssets,
     'created_at': createdAt?.toIso8601String(),
     'summary_ar': summaryAr,
     'summary_en': summaryEn,
