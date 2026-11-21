@@ -133,7 +133,7 @@ class _VisualMappingViewerState extends State<VisualMappingViewer> {
           if (_metricIds.isNotEmpty) ...[
             const SizedBox(height: 12),
             DropdownButtonFormField<String>(
-              value: _metric,
+              initialValue: _metric,
               decoration: InputDecoration(
                 labelText: _label('المقياس', 'Metric'),
                 border: OutlineInputBorder(
@@ -184,15 +184,17 @@ class _VisualMappingViewerState extends State<VisualMappingViewer> {
       child: Image.network(
         url,
         fit: BoxFit.contain,
-        errorBuilder: (_, __, ___) => _assetUnavailable(
+        errorBuilder: (context, error, stackTrace) => _assetUnavailable(
           _label('تعذر تحميل الخريطة.', 'The map could not be loaded.'),
         ),
       ),
     );
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(18),
-      child: AspectRatio(
-        aspectRatio: 1,
+    // A fixed viewport avoids passing an unbounded scroll height into
+    // InteractiveViewer while the network image is resolving.
+    return SizedBox(
+      height: 280,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(18),
         child: _compare && _kind != 'original'
             ? Row(
                 children: [
@@ -212,7 +214,7 @@ class _VisualMappingViewerState extends State<VisualMappingViewer> {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.goldSoft.withOpacity(.35),
+        color: AppColors.goldSoft.withValues(alpha: .35),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
@@ -257,7 +259,7 @@ class _VisualMappingViewerState extends State<VisualMappingViewer> {
     alignment: Alignment.center,
     padding: const EdgeInsets.all(24),
     decoration: BoxDecoration(
-      color: AppColors.goldSoft.withOpacity(.25),
+      color: AppColors.goldSoft.withValues(alpha: .25),
       borderRadius: BorderRadius.circular(18),
     ),
     child: Column(
